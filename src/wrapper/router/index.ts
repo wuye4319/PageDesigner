@@ -1,11 +1,11 @@
-import form from '@/form/router';
+import sheet from '@/designer/router';
 
 const routes = [
   {
     path: '',
-    redirect: 'form'
+    redirect: 'excel'
   },
-  ...form
+  ...sheet,
 ];
 
 export default routes;
