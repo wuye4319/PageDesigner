@@ -18,8 +18,3 @@ export const getUserInfo = async (page: 0, size: number = 100) => {
     });
   })
 }
-
-export const api = (p1: string) => {
-  console.log(`param:${p1}`);
-  return baseUrl
-}

@@ -1,11 +1,13 @@
-import sheet from '@/designer/router';
+import website from '@/website/router';
+import designer from '@/designer/router';
 
 const routes = [
   {
     path: '',
-    redirect: 'excel'
+    redirect: 'website'
   },
-  ...sheet,
+  ...website,
+  ...designer
 ];
 
 export default routes;

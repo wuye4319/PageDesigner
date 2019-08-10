@@ -1,8 +1,10 @@
-export default [{
-  path: '/sheet',
-  name: 'sheet',
+const routes = [{
+  path: '/designer/:page',
+  name: 'designer',
   meta: {
     title: '工作表'
   },
-  component: () => import('@/sheet/pages/index.vue')
+  component: () => import('@/designer/pages/index.vue')
 }];
+
+export default routes;

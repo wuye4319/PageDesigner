@@ -1,21 +1,23 @@
 <template>
-  <div>
-    header component
-  </div>
+  <div>header control</div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
+
+const webSite = namespace('webSite');
 
 @Component({
-  name: 'component-header',
+  name: 'header-component',
   components: {}
 })
-export default class Componentheader extends Vue {
-  created() {}
+export default class headerComponent extends Vue {
+  created() { }
+
+  mounted() {
+  }
 }
 </script>
 <style lang='less' scoped>
-@import '../../../common/styles/class.less';
-
 </style>

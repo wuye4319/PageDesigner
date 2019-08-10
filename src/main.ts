@@ -3,16 +3,15 @@ import Router from 'vue-router';
 import Layout from './wrapper/Layout.vue';
 import routes from './wrapper/router';
 import store from './wrapper/store';
+import 'ant-design-vue/dist/antd.css'
 import * as utils from '@/common/utils';
 
 // util.js是通过store来传入,还是window.super.util
 Vue.config.productionTip = false;
+Vue.use(Router);
 
 Vue.prototype.$utils = utils;
-
 window.$utils = utils;
-
-Vue.use(Router);
 
 const router = new Router({
   routes,

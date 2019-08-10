@@ -1,10 +1,14 @@
 import { GlobalState } from '@/wrapper/store';
 import { ActionTree } from 'vuex';
-import { DemoState } from './index';
-import { DemoAction } from './types';
+import { DesignerState } from './index';
+import { Designer } from './types';
 
-const actions: ActionTree<DemoState, GlobalState> = {
-
+const actions: ActionTree<DesignerState, GlobalState> = {
+  [Designer.pageInfor]({ commit }, param) {
+    let appData: any = null;
+    appData = param.data
+    commit(Designer.pageInfor, appData);
+  }
 };
 
 export default actions;

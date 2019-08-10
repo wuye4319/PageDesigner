@@ -1,15 +1,10 @@
 import { GetterTree } from 'vuex';
 import { GlobalState } from '.';
+import { GlobalMutation } from './types';
 
 const getters: GetterTree<GlobalState, GlobalState> = {
-  foo(state) {
-    return state.foo;
-  },
-  data(state) {
-    return state.data
-  },
-  buffer(state) {
-    return state.buffer
+  [GlobalMutation.globalPageInfor](state) {
+    // return state.globalPageInfor;
   }
 };
 

@@ -1,18 +1,17 @@
 <template>
-  <div>bottom component</div>
+  <div>blog details view</div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({
-  name: 'component-toolbar',
+  name: 'toolbar-component',
   components: {}
 })
-export default class Componenttoolbar extends Vue {
-  created() {}
+export default class toolbarComponent extends Vue {
+  created() { }
 }
 </script>
 <style lang='less' scoped>
-@import "../../../common/styles/class.less";
 </style>

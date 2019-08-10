@@ -14,7 +14,7 @@ const envlocalDefault = {
       // 目标 API 地址
       target: 'http://localhost:8067',
       changeOrigin: false,
-      pathRewrite: { '^/apis': '' },
+      // pathRewrite: { '^/apis': '' },
     },
   },
   host: 'localhost'
@@ -27,20 +27,23 @@ try {
 }
 const envLocal = require('./env.local.json');
 
-// const util = require('./demos/build/util');
-// const env = require('./demos/build/config').env;
-
 module.exports = {
   publicPath: '/',
   pages: {
-    app: {
+    designer: {
       entry: 'src/main.ts',
       template: 'public/index.html',
       filename: 'index.html',
-      title: 'Index Page',
-      keywords: 'index page',
-      chunks: ['chunk-vendors', 'chunk-common', 'app']
+      title: 'Page Designer',
+      chunks: ['chunk-vendors', 'chunk-common', 'designer']
     },
+    // website: {
+    //   entry: 'src/website/main.ts',
+    //   template: 'public/index.html',
+    //   filename: 'website/index.html',
+    //   title: 'Page Website',
+    //   chunks: ['chunk-vendors', 'chunk-common', 'website']
+    // }
   },
   css: {
     loaderOptions: {
@@ -64,27 +67,26 @@ module.exports = {
           to: '.',
           ignore: ['.*']
         }
-      ]),);
+      ]));
   },
   chainWebpack: (config) => {
     config.resolve.alias
       .set('@', path.join(__dirname, 'src'));
     config.module.rule('ts').use('ts-loader').tap(options => Object.assign(options, {
       getCustomTransformers: () => ({
-        before: [ tsImportPluginFactory({
+        before: [tsImportPluginFactory({
           libraryName: 'h3-antd-vue',
           libraryDirectory: 'es',
           style: true
         })]
       }),
     }));
-    // .set('types/sheet', path.join(__dirname, 'src/sheet/typings/index.d.ts'));
-    // .set('types/common', path.join(__dirname, 'src/common/typing/index.d.ts'));
   },
   devServer: {
     host: envLocal.host,
     port: envLocal.port,
     open: true,
+    // openPage: 'designer/',
     https: false,
     hotOnly: false,
     disableHostCheck: false,

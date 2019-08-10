@@ -1,10 +1,10 @@
 import { MutationTree } from 'vuex';
-import { DemoState } from '.';
-import { DemoMutation } from './types';
+import { DesignerState } from './index';
+import { Designer } from './types';
 
-const mutations: MutationTree<DemoState> = {
-  [DemoMutation.Example](state, payload) {
-    state.testfoo = payload;
+const mutations: MutationTree<DesignerState> = {
+  [Designer.pageInfor](state, param) {
+    // state.designerPageInfor = param;
   }
 };
 

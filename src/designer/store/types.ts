@@ -1,7 +1,3 @@
-export enum DemoAction {
-  Example = 'example'
-}
-
-export enum DemoMutation {
-  Example = 'testfoo'
+export enum Designer {
+  pageInfor = 'designerPageInfor'
 }
