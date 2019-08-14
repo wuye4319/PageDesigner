@@ -25,7 +25,7 @@ export const guid = () => {
 /**
  * 动态引入
  */
-export const getCompsInfor = (basepath, componet) => {
+export const getCompsInfor = (basepath: string, componet: any, ctrl?: boolean) => {
   // let infor = () => import('../../website/components/header');
   // console.log(infor)
   // return infor
@@ -33,13 +33,15 @@ export const getCompsInfor = (basepath, componet) => {
     let tempComponent = []
     for (let i in componet) {
       let url = basepath + componet[i]
-      let infor = () => import('../../' + url + '/index.ts');
+      let lastFile: string = ctrl ? '/control/index.ts' : '/index.ts'
+      let infor = () => import('../../' + url + lastFile);
       tempComponent.push(infor)
     }
     return tempComponent
   } else {
     let url = basepath + componet
-    let tempComponent: any = () => import('../../' + url + '/index.ts');
+    let lastFile: string = ctrl ? '/control/index.ts' : '/index.ts'
+    let tempComponent: any = () => import('../../' + url + lastFile);
     return tempComponent
   }
 }

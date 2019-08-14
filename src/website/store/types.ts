@@ -1,4 +1,6 @@
 export enum WebSite {
   pageInfor = 'pageInfor',
-  appInfor = 'appInfor'
+  appInfor = 'appInfor',
+  editPageInfor = 'editPageInfor',
+  changePage = 'changePage'
 }

@@ -4,7 +4,6 @@
 
 // import { fetch } from '../util'
 import { baseUrl } from '@/common/config/env'
-import { resolve } from 'path';
 
 /**
  * 获取用户数据

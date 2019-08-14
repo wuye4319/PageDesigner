@@ -2,7 +2,7 @@
   <div>
     <div class="d-product-container">
       <div class="d-product-card-title">
-        <h2>推荐商品</h2>
+        <h2>{{compData.mainTitle}}</h2>
         <span class="line"></span>
         <p>精选热销商品推荐</p>
       </div>
@@ -35,12 +35,14 @@ const webSite = namespace('webSite');
   components: {}
 })
 export default class headerComponent extends Vue {
+  @Prop() compData: object
   productList: object = {}
 
   @webSite.Action('getProductList')
   getProductList: any
 
   async mounted() {
+    console.log(this.compData)
     this.productList = await this.getProductList({ id: '4', size: 4, page: 1 })
   }
 }

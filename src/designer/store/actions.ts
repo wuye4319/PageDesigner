@@ -5,9 +5,8 @@ import { Designer } from './types';
 
 const actions: ActionTree<DesignerState, GlobalState> = {
   [Designer.pageInfor]({ commit }, param) {
-    let appData: any = null;
-    appData = param.data
-    commit(Designer.pageInfor, appData);
+    // let appData: any = param.data
+    // commit(Designer.pageInfor, appData);
   }
 };
 

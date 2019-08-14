@@ -4,7 +4,7 @@ import designer from '@/designer/router';
 const routes = [
   {
     path: '',
-    redirect: 'website'
+    redirect: 'website/product'
   },
   ...website,
   ...designer

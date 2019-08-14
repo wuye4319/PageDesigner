@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="(view,i) in viewCompList" :key="i">
-      <div :is="view"></div>
+      <div :is="view" :compData="compsDate(i)"></div>
     </div>
   </div>
 </template>
@@ -26,6 +26,11 @@ export default class Pageindex extends Vue {
 
   @webSite.Getter('pageInfor')
   pageInfor: Website.pageInfor
+
+  compsDate(i) {
+    let comps = Object.keys(this.pageInfor)
+    return this.pageInfor[comps[i]]
+  }
 
   created() {
     this.currentRoute = this.$router.currentRoute.params.page

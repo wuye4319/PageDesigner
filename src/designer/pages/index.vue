@@ -7,7 +7,7 @@
           <div v-for="(view,i) in ctrlCompList.name" :key="view+i">
             <div class="comps-button" @click="showDrawer(i)">{{view}}</div>
           </div>
-          <div class="design-addcomps">
+          <div class="design-addcomps" @click="showDrawer('all')">
             <a-icon type="plus"/>
           </div>
           <a-drawer
@@ -21,7 +21,7 @@
             getContainer=".design-componet-list"
             :visible="visible"
           >
-            <div :is="currCompView" :pageData="currPageData"></div>
+            <div :is="currCompView" :pageData="currCompsData"></div>
             <a-button style="marginRight: 8px" @click="onClose">Cancel</a-button>
           </a-drawer>
         </template>
@@ -37,14 +37,13 @@
         </div>
         <div class="screen-list">
           <ul>
-            <li>
-              <a-icon type="mobile"/>
+            <li @click="changeScreenType(screen)" v-for="screen in screenList" :key="screen">
+              <a-icon :type="screen"/>
             </li>
             <li>
-              <a-icon type="desktop"/>
-            </li>
-            <li>
-              <a-icon type="fullscreen"/>
+              <a href="/#/website/product" target="_blank">
+                <a-icon type="fullscreen"/>
+              </a>
             </li>
           </ul>
         </div>
@@ -53,7 +52,7 @@
         </div>
       </div>
       <div class="design-iframe">
-        <div class="page-container">
+        <div class="page-container" :class="isMobile">
           <website></website>
         </div>
       </div>
@@ -83,7 +82,9 @@ export default class Pageindex extends Vue {
   $router
   pageSelect: string = ''
   currCompView: any = ''
-  currPageData: object = {}
+  currCompsData: object = {}
+  screenList = ['mobile', 'desktop']
+  isMobile: string = ''
 
   @webSite.Getter('pageInfor')
   pageInfor: Website.pageInfor
@@ -91,8 +92,8 @@ export default class Pageindex extends Vue {
   @webSite.Getter('appInfor')
   appInfor: Website.pageInfor
 
-  @webSite.Action('pageInfor')
-  getPageInfor;
+  @webSite.Action('editPageInfor')
+  editPageInfor;
 
   get pageList() {
     let comps = Object.keys(this.appInfor)
@@ -101,7 +102,7 @@ export default class Pageindex extends Vue {
 
   get ctrlCompList() {
     let compsName = Object.keys(this.pageInfor)
-    let compsInfor = getCompsInfor('designer/components/', compsName)
+    let compsInfor = getCompsInfor('website/components/', compsName, true)
     return { name: compsName, dom: compsInfor }
   }
 
@@ -109,7 +110,7 @@ export default class Pageindex extends Vue {
     this.$router.push({
       path: `/designer/${value}`,
     })
-    this.getPageInfor({ domain: 'default', page: value })
+    this.editPageInfor({ page: value })
     this.pageSelect = value
   }
 
@@ -120,14 +121,27 @@ export default class Pageindex extends Vue {
   visible: boolean = false
 
   showDrawer(i) {
-    this.currCompView = this.ctrlCompList.dom[i]
-    let compsName = Object.keys(this.pageInfor)
-    this.currPageData = this.pageInfor[compsName[i]]
-    this.visible = true
+    if (i === 'all') {
+      this.visible = true
+      console.log('all')
+    } else {
+      this.currCompView = this.ctrlCompList.dom[i]
+      let compsName = Object.keys(this.pageInfor)
+      this.currCompsData = { name: compsName[i], data: this.pageInfor[compsName[i]] }
+      this.visible = true
+    }
   }
 
   onClose() {
     this.visible = false
+  }
+
+  changeScreenType(screen) {
+    if (screen === 'mobile') {
+      this.isMobile = 'mobile-width'
+    } else {
+      this.isMobile = ''
+    }
   }
 }
 </script>
@@ -210,10 +224,15 @@ export default class Pageindex extends Vue {
     flex-grow: 1;
     display: flex;
     box-sizing: border-box;
+    display: flex;
+    justify-content: space-around;
     .page-container {
       width: 100%;
       height: 100%;
       box-shadow: 0 0 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+    .mobile-width {
+      width: 414px;
     }
   }
 }

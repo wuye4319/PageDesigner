@@ -2,7 +2,7 @@
   <div>
     <div>
       <label>主标题：</label>
-      <input type="text" v-model="mainTitle">
+      <input type="text" v-model="mainTitle" @blur="editMainTitle">
     </div>
   </div>
 </template>
@@ -21,11 +21,18 @@ export default class recommonComponent extends Vue {
   @Prop() pageData: any
   mainTitle: string = ''
 
+  @webSite.Action('editPageInfor')
+  editPageInfor
+
+  editMainTitle() {
+    this.pageData.data.mainTitle = this.mainTitle
+    this.editPageInfor({ name: this.pageData.name, data: this.pageData.data })
+  }
+
   created() { }
 
   mounted() {
-    this.mainTitle = this.pageData.mainTitle
-    console.log(this.pageData)
+    this.mainTitle = this.pageData.data.mainTitle
   }
 }
 </script>

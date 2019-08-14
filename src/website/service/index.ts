@@ -26,7 +26,3 @@ export const getPageInfor = (domain: string) => {
 export const getProductList = (id: string, pagesize: number, page: number) => {
   return axios.get(`/topic/${id}/${pagesize}/${page}`);
 }
-
-export const getProductList123 = (id: string, pagesize: number, page: number) => {
-  return axios.get(`/topic/${id}/${pagesize}/${page}`);
-}
