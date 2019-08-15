@@ -123,7 +123,7 @@ export default class Pageindex extends Vue {
   showDrawer(i) {
     if (i === 'all') {
       this.visible = true
-      console.log('all')
+      this.currCompsData = { name: 'compStore', data: this.pageInfor[0] }
     } else {
       this.currCompView = this.ctrlCompList.dom[i]
       let compsName = Object.keys(this.pageInfor)
