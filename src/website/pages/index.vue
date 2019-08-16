@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-container">
     <div v-for="(view,i) in viewCompList" :key="i">
       <div :is="view" :compData="compsDate(i)"></div>
     </div>
@@ -45,4 +45,7 @@ export default class Pageindex extends Vue {
 }
 </script>
 <style lang='less' scoped>
+.page-container {
+  text-align: center;
+}
 </style>

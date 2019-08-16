@@ -92,8 +92,8 @@ export default class Pageindex extends Vue {
   @webSite.Getter('appInfor')
   appInfor: Website.pageInfor
 
-  @webSite.Action('editPageInfor')
-  editPageInfor;
+  @webSite.Action('changePage')
+  changePage;
 
   get pageList() {
     let comps = Object.keys(this.appInfor)
@@ -110,7 +110,7 @@ export default class Pageindex extends Vue {
     this.$router.push({
       path: `/designer/${value}`,
     })
-    this.editPageInfor({ page: value })
+    this.changePage({ page: value })
     this.pageSelect = value
   }
 
@@ -150,6 +150,7 @@ export default class Pageindex extends Vue {
   display: -webkit-box;
   height: 100%;
   width: 100%;
+  text-align: center;
 }
 /deep/ .ant-select-selection-selected-value {
   line-height: 28px;

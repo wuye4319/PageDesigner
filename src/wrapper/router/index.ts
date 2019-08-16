@@ -1,5 +1,6 @@
 import website from '@/website/router';
 import designer from '@/designer/router';
+import app from '@/app/router';
 
 const routes = [
   {
@@ -7,7 +8,8 @@ const routes = [
     redirect: 'website/product'
   },
   ...website,
-  ...designer
+  ...designer,
+  ...app
 ];
 
 export default routes;
