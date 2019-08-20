@@ -20,9 +20,9 @@ export const getUserInfo = async (page: 0, size: number = 100) => {
 }
 
 export const getPageInfor = (domain: string) => {
-  return axios.get(`${baseUrl}/page/pageconfig/${domain}`);
+  return axios.get(`/page/pageconfig/${domain}`);
 }
 
 export const getProductList = (id: string, pagesize: number, page: number) => {
-  return axios.get(`${baseUrl}/topic/${id}/${pagesize}/${page}`);
+  return axios.get(`/topic/${id}/${pagesize}/${page}`);
 }

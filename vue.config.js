@@ -82,6 +82,7 @@ module.exports = {
       }),
     }));
   },
+  productionSourceMap: false,
   devServer: {
     host: envLocal.host,
     port: envLocal.port,

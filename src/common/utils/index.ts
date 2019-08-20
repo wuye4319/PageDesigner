@@ -33,14 +33,14 @@ export const getCompsInfor = (basepath: string, componet: any, ctrl?: boolean) =
     let tempComponent = []
     for (let i in componet) {
       let url = basepath + componet[i]
-      let lastFile: string = ctrl ? '/control/index.ts' : '/index.ts'
+      let lastFile: string = ctrl ? '/control/index.vue' : '/index.vue'
       let infor = () => import(/* webpackChunkName: "[request]" */'../../' + url + lastFile);
       tempComponent.push(infor)
     }
     return tempComponent
   } else {
     let url = basepath + componet
-    let lastFile: string = ctrl ? '/control/index.ts' : '/index.ts'
+    let lastFile: string = ctrl ? '/control/index.vue' : '/index.vue'
     let tempComponent: any = () => import(/* webpackChunkName: "[request]" */'../../' + url + lastFile);
     return tempComponent
   }

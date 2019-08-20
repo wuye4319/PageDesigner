@@ -31,10 +31,10 @@ import { namespace } from 'vuex-class';
 const webSite = namespace('webSite');
 
 @Component({
-  name: 'header-component',
+  name: 'recommon-component',
   components: {}
 })
-export default class headerComponent extends Vue {
+export default class recommonComponent extends Vue {
   @Prop() compData: object
   productList: object = {}
 
