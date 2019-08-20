@@ -32,7 +32,9 @@ module.exports = {
   pages: {
     designer: {
       entry: 'src/main.ts',
+      publicPath: './dist/',
       template: 'public/index.html',
+      chunkFilename: '[name].js',
       filename: 'index.html',
       title: 'Page Designer',
       chunks: ['chunk-vendors', 'chunk-common', 'designer']
@@ -61,13 +63,11 @@ module.exports = {
       'vue-router': 'VueRouter',
     };
     config.plugins.push( // copy custom static assets
-      new CopyWebpackPlugin([
-        {
-          from: path.join(__dirname, 'static'),
-          to: '.',
-          ignore: ['.*']
-        }
-      ]));
+      new CopyWebpackPlugin([{
+        from: path.join(__dirname, 'static'),
+        to: '.',
+        ignore: ['.*']
+      }]));
   },
   chainWebpack: (config) => {
     config.resolve.alias

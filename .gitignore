@@ -28,5 +28,3 @@ yarn-error.log*
 *.sw?
 
 inspect.js
-env.local.json
-
