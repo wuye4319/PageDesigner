@@ -5,7 +5,7 @@ import app from '@/app/router';
 const routes = [
   {
     path: '',
-    redirect: 'website/product'
+    redirect: 'app'
   },
   ...website,
   ...designer,

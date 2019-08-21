@@ -4,7 +4,7 @@
       <div class="d-product-card-title">
         <h2>{{compData.mainTitle}}</h2>
         <span class="line"></span>
-        <p>精选热销商品推荐</p>
+        <p>{{compData.secondTitle}}</p>
       </div>
       <div class="d-product-itemlist">
         <ul v-if="productList.data">

@@ -26,21 +26,18 @@ export const guid = () => {
  * 动态引入
  */
 export const getCompsInfor = (basepath: string, componet: any, ctrl?: boolean) => {
-  // let infor = () => import('../../website/components/header');
-  // console.log(infor)
-  // return infor
   if (Array.isArray(componet)) {
     let tempComponent = []
     for (let i in componet) {
       let url = basepath + componet[i]
-      let lastFile: string = ctrl ? '/control/index.vue' : '/index.vue'
+      let lastFile: string = ctrl ? '/control/index.ts' : '/index.ts'
       let infor = () => import(/* webpackChunkName: "[request]" */'../../' + url + lastFile);
       tempComponent.push(infor)
     }
     return tempComponent
   } else {
     let url = basepath + componet
-    let lastFile: string = ctrl ? '/control/index.vue' : '/index.vue'
+    let lastFile: string = ctrl ? '/control/index.ts' : '/index.ts'
     let tempComponent: any = () => import(/* webpackChunkName: "[request]" */'../../' + url + lastFile);
     return tempComponent
   }

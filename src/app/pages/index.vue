@@ -11,6 +11,10 @@
           <a-icon type="video-camera"/>
           <span>我的应用</span>
         </a-menu-item>
+        <a-menu-item key="3">
+          <a-icon type="video-camera"/>
+          <span>应用市场</span>
+        </a-menu-item>
       </a-menu>
     </a-layout-sider>
     <a-layout>
@@ -25,7 +29,9 @@
         :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '680px' }"
       >
         <div class="app-content">
-          <div class="create-mobile-app">创建移动APP</div>
+          <div class="create-mobile-app">
+            <a href="#/designer/product/">创建移动APP</a>
+          </div>
           <div class="create-web-app">创建web端APP</div>
         </div>
       </a-layout-content>
@@ -36,7 +42,6 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-import { getCompsInfor } from '@/common/utils'
 import { Select, Button, Input } from 'ant-design-vue'
 
 const webSite = namespace('webSite');
