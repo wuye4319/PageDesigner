@@ -3,17 +3,17 @@ import actions from './actions';
 import mutations from './mutations';
 import getters from './getters';
 
-export class DesignerState {
+export class AppState {
   // 页面信息
-  // designerPageInfor: object = {};
+   myapp: object = {};
 }
 
-const designerModule: Module<DesignerState, any> = {
+const appModule: Module<AppState, any> = {
   namespaced: true,
-  state: new DesignerState(),
+  state: new AppState(),
   mutations,
   getters,
   actions,
 };
 
-export default designerModule;
+export default appModule;

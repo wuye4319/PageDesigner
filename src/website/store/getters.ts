@@ -9,6 +9,12 @@ const getters: GetterTree<WebSiteState, GlobalState> = {
   },
   [WebSite.appInfor](state) {
     return state.AppInfor;
+  },
+  [WebSite.compStore](state) {
+    return state.CompStore;
+  },
+  [WebSite.layoutStore](state) {
+    return state.LayoutStore;
   }
 };
 

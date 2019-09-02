@@ -1,11 +1,14 @@
 import { GetterTree } from 'vuex';
-import { DesignerState } from './index';
+import { AppState } from './index';
 import { GlobalState } from '@/wrapper/store';
-import { Designer } from './types';
+import { App } from './types';
 
-const getters: GetterTree<DesignerState, GlobalState> = {
-  [Designer.pageInfor](state) {
+const getters: GetterTree<AppState, GlobalState> = {
+  [App.appInfo](state) {
     // return state.designerPageInfor;
+  },
+  [App.myapp](state) {
+    return state.myapp;
   }
 };
 

@@ -1,10 +1,13 @@
 import { MutationTree } from 'vuex';
-import { DesignerState } from './index';
-import { Designer } from './types';
+import { AppState } from './index';
+import { App } from './types';
 
-const mutations: MutationTree<DesignerState> = {
-  [Designer.pageInfor](state, param) {
+const mutations: MutationTree<AppState> = {
+  [App.appInfo](state, param) {
     // state.designerPageInfor = param;
+  },
+  [App.myapp](state, param) {
+    state.myapp = param
   }
 };
 

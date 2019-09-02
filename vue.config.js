@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const tsImportPluginFactory = require('ts-import-plugin');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 /**
  * 初始化本地开发配置
@@ -67,7 +68,9 @@ module.exports = {
         from: path.join(__dirname, 'static'),
         to: '.',
         ignore: ['.*']
-      }]));
+      }]),
+      new MonacoWebpackPlugin()
+    );
   },
   chainWebpack: (config) => {
     config.resolve.alias

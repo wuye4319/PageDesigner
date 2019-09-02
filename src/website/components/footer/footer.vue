@@ -1,7 +1,6 @@
 <template>
   <div>footer view</div>
 </template>
-
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
@@ -10,7 +9,10 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
   components: {}
 })
 export default class footerComponent extends Vue {
-  created() { }
+  @Prop() compIndex: number
+
+  created() {
+  }
 }
 </script>
 <style lang='less' scoped>

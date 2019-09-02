@@ -1,19 +1,21 @@
 <template>
   <a-layout id="components-layout-demo-custom-trigger">
-    <a-layout-sider :trigger="null" width="230" collapsible v-model="collapsed">
+    <a-layout-sider
+      :trigger="null"
+      width="230"
+      collapsible
+      v-model="collapsed"
+    >
       <div class="logo"/>
-      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="['1']">
-        <a-menu-item key="1">
-          <a-icon type="user"/>
-          <span>引导页</span>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <a-icon type="video-camera"/>
-          <span>我的应用</span>
-        </a-menu-item>
-        <a-menu-item key="3">
-          <a-icon type="video-camera"/>
-          <span>应用市场</span>
+      <a-menu
+        theme="dark"
+        mode="inline"
+        :defaultSelectedKeys="['screen']"
+        @select="selectMenu"
+      >
+        <a-menu-item v-for="item of appMenu" :key="item.key">
+          <a-icon :type="item.icon"/>
+          <span>{{ item.name }}</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -28,11 +30,15 @@
       <a-layout-content
         :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '680px' }"
       >
-        <div class="app-content">
-          <div class="create-mobile-app">
-            <a href="#/designer/product/">创建移动APP</a>
-          </div>
-          <div class="create-web-app">创建web端APP</div>
+        <a-breadcrumb style="margin: 16px 0">
+          <a-breadcrumb-item>User</a-breadcrumb-item>
+          <a-breadcrumb-item>Bill</a-breadcrumb-item>
+        </a-breadcrumb>
+        <div class="app-content" :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
+          <!-- <component :is="appComponents"/> -->
+          <keep-alive>
+            <router-view/>
+          </keep-alive>
         </div>
       </a-layout-content>
     </a-layout>
@@ -44,7 +50,14 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
 import { Select, Button, Input } from 'ant-design-vue'
 
-const webSite = namespace('webSite');
+const app = namespace('app');
+
+// 菜单配置
+const appMenu:Array<object> = [
+  { key: 'screen', name: '引导页', icon: 'tag' },
+  { key: 'myapp', name: '我的应用', icon: 'user' },
+  { key: 'appshop', name: '应用市场', icon: 'star' }
+]
 
 @Component({
   name: 'page-index',
@@ -55,7 +68,19 @@ const webSite = namespace('webSite');
   }
 })
 export default class Pageindex extends Vue {
-  collapsed: boolean = false
+  $router
+  $route
+  collapsed: boolean = false // 当前收起状态
+  appMenu:object = Object.freeze(appMenu) // 菜单数组
+
+  // 菜单被选中时调用 obj = { item, key, selectedKeys }
+  selectMenu(obj):void {
+    console.log(111111111);
+
+    this.$router.push({
+      name: `app-${obj.selectedKeys}`
+    })
+  }
 }
 </script>
 <style lang='less' scoped>
@@ -76,15 +101,5 @@ export default class Pageindex extends Vue {
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
 }
-.app-content {
-  display: flex;
-  justify-content: space-around;
-  > div {
-    border: 1px solid #ddd;
-    width: 30%;
-    height: 260px;
-    text-align: center;
-    line-height: 260px;
-  }
-}
+
 </style>

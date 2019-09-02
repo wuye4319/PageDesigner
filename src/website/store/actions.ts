@@ -7,10 +7,10 @@ import { getPageInfor, getProductList } from '@/website/service';
 const actions: ActionTree<WebSiteState, GlobalState> = {
   async [WebSite.pageInfor]({ commit }, param) {
     let appData: any = await getPageInfor(param.domain);
-    commit(WebSite.appInfor, { data: appData.data.pages, page: param.page });
+    commit(WebSite.appInfor, { data: appData.data, page: param.page });
   },
-  [WebSite.changePage]({ commit }, param) {
-    commit(WebSite.changePage, param.page);
+  [WebSite.selectPage]({ commit }, param) {
+    commit(WebSite.selectPage, param.page);
   },
   [WebSite.editPageInfor]({ commit }, param) {
     commit(WebSite.editPageInfor, param);

@@ -1,7 +1,13 @@
 <template>
   <div class="page-container">
-    <div v-for="(view,i) in viewCompList" :key="i">
-      <div :is="view" :compData="compsDate(i)"></div>
+    <div v-for="(view,i) in viewCompList" :key="'viewComp'+i">
+      <div
+        :is="view"
+        :compData="compsDate(i)"
+        :compIndex="i"
+        @loadCompList="loadCompList"
+        :compList="compList"
+      ></div>
     </div>
   </div>
 </template>
@@ -20,6 +26,7 @@ const webSite = namespace('webSite');
 export default class Pageindex extends Vue {
   $router
   currentRoute: any = ''
+  compList: any = ''
 
   @webSite.Action('pageInfor')
   getPageInfor;
@@ -28,8 +35,7 @@ export default class Pageindex extends Vue {
   pageInfor: Website.pageInfor
 
   compsDate(i) {
-    let comps = Object.keys(this.pageInfor)
-    return this.pageInfor[comps[i]]
+    return this.pageInfor[i]
   }
 
   created() {
@@ -38,9 +44,12 @@ export default class Pageindex extends Vue {
   }
 
   get viewCompList() {
-    let comps = Object.keys(this.pageInfor)
-    let compsInfor = getCompsInfor('website/components/', comps)
+    let compsInfor = getCompsInfor('website/components/', this.pageInfor)
     return compsInfor
+  }
+
+  loadCompList(compInfor) {
+    this.compList = getCompsInfor('website/components/', compInfor)
   }
 }
 </script>

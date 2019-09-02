@@ -11,12 +11,12 @@
           <li v-for="(item,index) in productList.data.product_list" :key="index">
             <a href="#">
               <div :style="{backgroundImage:'url('+item.main_img+')'}" class="d-product-image"></div>
-              <p class="d-pro-title li-el">{{item.name}}</p>
-              <p>券：{{item.coupon}}</p>
+              <p class="d-pro-title li-el">{{ item.name }}</p>
+              <p>券：{{ item.coupon }}</p>
             </a>
             <p class="d-product-price">
-              <span>¥ {{item.sell_price}}</span>
-              <span>月销：{{item.sales_volume}}</span>
+              <span>¥ {{ item.sell_price }}</span>
+              <span>月销：{{ item.sales_volume }}</span>
             </p>
           </li>
         </ul>

@@ -2,5 +2,10 @@ export enum WebSite {
   pageInfor = 'pageInfor',
   appInfor = 'appInfor',
   editPageInfor = 'editPageInfor',
-  changePage = 'changePage'
+  addPageInfor = 'addPageInfor',
+  removePageInfor = 'removePageInfor',
+  selectPage = 'changePage',
+  compStore = 'compStore',
+  layoutStore = 'layoutStore',
+  changePageInfor = 'changePageInfor'
 }

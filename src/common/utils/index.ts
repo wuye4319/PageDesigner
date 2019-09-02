@@ -29,7 +29,7 @@ export const getCompsInfor = (basepath: string, componet: any, ctrl?: boolean) =
   if (Array.isArray(componet)) {
     let tempComponent = []
     for (let i in componet) {
-      let url = basepath + componet[i]
+      let url = basepath + componet[i].compName
       let lastFile: string = ctrl ? '/control/index.ts' : '/index.ts'
       let infor = () => import(/* webpackChunkName: "[request]" */'../../' + url + lastFile);
       tempComponent.push(infor)

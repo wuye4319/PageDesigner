@@ -2,15 +2,27 @@
   <div>
     <div>
       <label>主标题：</label>
-      <input type="text" v-model="mainTitle" @blur="editMainTitle">
+      <input
+        type="text"
+        v-model="mainTitle"
+        @blur="editMainTitle"
+      >
     </div>
     <div>
       <label>副标题：</label>
-      <input type="text" v-model="secondTitle" @blur="editSecondTitle">
+      <input
+        type="text"
+        v-model="secondTitle"
+        @blur="editSecondTitle"
+      >
     </div>
     <div>
       <label>设置一行橱窗个数：</label>
-      <input type="text" v-model="numberItem" @blur="numberItem">
+      <input
+        type="text"
+        v-model="numberItem"
+        @blur="numberItem"
+      >
     </div>
   </div>
 </template>
@@ -44,17 +56,11 @@ export default class recommonComponent extends Vue {
     this.editPageInfor({ name: this.pageData.name, data: this.pageData.data })
   }
 
-  editNumberItem() {
-    this.pageData.data.numberItem = this.numberItem
-    this.editPageInfor({ name: this.pageData.name, data: this.pageData.data })
-  }
-
   created() { }
 
   mounted() {
     this.mainTitle = this.pageData.data.mainTitle
     this.secondTitle = this.pageData.data.secondTitle
-    this.numberItem = this.pageData.data.numberItem
   }
 }
 </script>

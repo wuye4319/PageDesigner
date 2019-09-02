@@ -3,4 +3,8 @@ declare namespace Website {
     header: object;
     footer: object;
   }
+
+  interface testInterface {
+    test1: string
+  }
 }

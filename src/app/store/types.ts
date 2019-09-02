@@ -1,3 +1,5 @@
-export enum Designer {
-  pageInfor = 'designerPageInfor'
+export enum App {
+  appInfo = 'appInfo',
+  myapp = 'myapp',
+  appshop = 'appshop'
 }

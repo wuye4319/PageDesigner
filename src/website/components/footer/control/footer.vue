@@ -10,6 +10,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
   components: {}
 })
 export default class footerComponent extends Vue {
+  @Prop() compIndex: number
+
   created() { }
 }
 </script>
