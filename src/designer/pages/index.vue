@@ -19,8 +19,14 @@
               <span class="comps-close fr" @click.stop="removeComp(i)">
                 <a-icon type="close"/>
               </span>
-              <span v-if="view.compName==='layout'" class="fr" @click.stop="showLayout">
+              <span class="fr" v-if="view.compName==='layout'" @click.stop="showLayout">
                 <a-icon type="caret-down"/>
+                <indexlayout
+                  :compData="currCompsData"
+                  :compIndex="i"
+                  @loadCompList="loadCompList"
+                  :compList="compList"
+                ></indexlayout>
               </span>
             </div>
           </transition-group>
@@ -55,17 +61,8 @@
           </a-select>
         </div>
         <div class="handle">
-          <a-button
-            @click="openCreate"
-            type="primary"
-            icon="plus"
-          >新增</a-button>
-          <a-button
-            type="dashed"
-            icon="minus"
-            class="delete"
-            @click="openDelete"
-          >删除</a-button>
+          <a-button @click="openCreate" type="primary" icon="plus">新增</a-button>
+          <a-button type="dashed" icon="minus" class="delete" @click="openDelete">删除</a-button>
         </div>
         <div class="screen-list">
           <ul>
@@ -104,10 +101,7 @@
           <div class="model-cont">
             <div class="name">请输入需要添加的标题:</div>
             <div class="desc">
-              <a-input
-                placeholder="请输入需要添加的标题"
-                v-model="createPage.title"
-              />
+              <a-input placeholder="请输入需要添加的标题" v-model="createPage.title"/>
             </div>
           </div>
         </a-list-item>
@@ -115,43 +109,25 @@
           <div class="model-cont">
             <div class="name">请输入需要添加的名称:</div>
             <div class="desc">
-              <a-input
-                placeholder="请输入需要添加的名称"
-                v-model="createPage.name"
-              />
+              <a-input placeholder="请输入需要添加的名称" v-model="createPage.name"/>
             </div>
           </div>
         </a-list-item>
       </a-list>
     </a-modal>
     <!-- 删除对话框 -->
-    <a-modal
-      title="删除子页面"
-      v-model="deletePage.visible"
-      okText="删除"
-      cancelText="取消"
-      centered
-    >
-
+    <a-modal title="删除子页面" v-model="deletePage.visible" okText="删除" cancelText="取消" centered>
       <div :style="{ borderBottom: '1px solid #E9E9E9' }">
         <a-checkbox
           :indeterminate="deletePage.indeterminate"
           @change="deleteCheckAll"
           :checked="deletePage.checkAll"
-        >
-          全选
-        </a-checkbox>
+        >全选</a-checkbox>
       </div>
-      <br/>
+      <br>
       <a-checkbox-group v-model="deletePage.checkedList" @change="deleteChange">
-        <div
-          class="model-checkbox"
-          v-for="(item,i) of deletePage.options"
-          :key="i"
-        >
-          <a-checkbox :value="item">
-            {{ item }}
-          </a-checkbox>
+        <div class="model-checkbox" v-for="(item,i) of deletePage.options" :key="i">
+          <a-checkbox :value="item">{{ item }}</a-checkbox>
         </div>
       </a-checkbox-group>
       <div slot="footer">
@@ -163,11 +139,7 @@
           okText="确定"
           cancelText="取消"
         >
-          <a-icon
-            slot="icon"
-            type="question-circle-o"
-            style="color: red"
-          />
+          <a-icon slot="icon" type="question-circle-o" style="color: red"/>
           <a-button type="danger" :loading="deletePage.confirmLoading">删除</a-button>
         </a-popconfirm>
       </div>
@@ -181,6 +153,7 @@ import { State, Action, Mutation, namespace } from 'vuex-class';
 import { getCompsInfor } from '@/common/utils'
 import { Select, Button, Input } from 'ant-design-vue'
 import website from '@/website/pages/index.vue'
+import indexlayout from '@/designer/components/index'
 
 const webSite = namespace('webSite');
 
@@ -196,7 +169,8 @@ interface Model {
     ASelete: Select,
     AButton: Button,
     AInput: Input,
-    website
+    website,
+    indexlayout
   }
 })
 export default class Pageindex extends Vue {
@@ -211,13 +185,15 @@ export default class Pageindex extends Vue {
   compIndex: number = null
   oldNum: number = 0
   newNum: number = 0
-  createPage:Model = { // 新增页面弹框
+  compList: any = ''
+
+  createPage: Model = { // 新增页面弹框
     visible: false, // 弹框开关
     confirmLoading: false, // loading开关
     title: '', // 标题
     name: '' // 标题名称
   }
-  deletePage:Model = { // 删除页面弹框
+  deletePage: Model = { // 删除页面弹框
     visible: false, // 弹框开关
     confirmLoading: false, // loading开关
     options: ['Apple', 'Pear', 'Orange'], // 选项
@@ -266,6 +242,15 @@ export default class Pageindex extends Vue {
     this.pageSelect = this.$router.currentRoute.params.page
     let screen = this.$route.query.screen;
     this.changeScreenType(screen);
+  }
+
+  get viewCompList() {
+    let compsInfor = getCompsInfor('website/components/', this.pageInfor)
+    return compsInfor
+  }
+
+  loadCompList(compInfor) {
+    this.compList = getCompsInfor('website/components/', compInfor)
   }
 
   visible: boolean = false
@@ -368,11 +353,11 @@ export default class Pageindex extends Vue {
     this.deletePage.visible = false;
   }
 
-  deleteChange (checkedList) {
+  deleteChange(checkedList) {
     this.deletePage.indeterminate = !!checkedList.length && (checkedList.length < this.deletePage.options.length)
     this.deletePage.checkAll = checkedList.length === this.deletePage.options.length
   }
-  deleteCheckAll (e) {
+  deleteCheckAll(e) {
     Object.assign(this.deletePage, {
       checkedList: e.target.checked ? this.deletePage.options : [],
       indeterminate: false,
@@ -497,21 +482,21 @@ export default class Pageindex extends Vue {
 }
 .handle {
   .delete {
-    margin-left:20px;
+    margin-left: 20px;
   }
 }
 .model-cont {
-  display:flex;
+  display: flex;
   .name {
     width: 200px;
     text-align: right;
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: flex-end;
     margin-right: 20px;
   }
   .desc {
-    flex:1
+    flex: 1;
   }
 }
 .model-checkbox {
