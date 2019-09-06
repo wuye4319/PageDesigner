@@ -1,13 +1,11 @@
 <template>
   <div class="layout">
-    <div class="design-comp-sort">
-      <div class="row" v-for="row in compAttr.row" :key="row">
-        <div class="cols" v-for="col in compAttr.column" :key="col+'-'+row">
-          <p>{{ col }}</p>
-          <p class="design-addcomps" @click="showDrawer">
-            <a-icon type="plus"/>
-          </p>
-        </div>
+    <div class="row" v-for="(array,i) in compArray" :key="'array'+i">
+      <div class="column" v-for="(view,j) in array" :key="'viewComp'+j">
+        <div>{{view}}</div>
+        <p class="design-addcomps" @click="showDrawer">
+          <a-icon type="plus"/>
+        </p>
       </div>
     </div>
     <template>
@@ -45,14 +43,13 @@ const webSite = namespace('webSite');
 export default class layoutComponent extends Vue {
   @Prop() compData: any
   @Prop() compIndex: number
-  @Prop() compList: any
+
   compAttr: any = this.compData.compAttr
+  compList: any = this.compAttr.childList
+
   compCount: number = this.compAttr.column * this.compAttr.row
   visible: boolean = false
   currCompsData: object = {}
-
-  @webSite.Getter('pageInfor')
-  pageInfor: Website.pageInfor
 
   @webSite.Getter('layoutStore')
   layoutStore: Website.pageInfor
@@ -61,7 +58,6 @@ export default class layoutComponent extends Vue {
   }
 
   mounted() {
-    this.$emit('loadCompList', this.compAttr.childList)
   }
 
   // 将1维数组改变为多维数据进行渲染
@@ -73,7 +69,7 @@ export default class layoutComponent extends Vue {
         for (let j = 0; j < this.compAttr.column; j++) {
           let index = i * (this.compAttr.column) + j
           if (this.compList[index]) {
-            temp.push(this.compList[index])
+            temp.push(this.compList[index].compName)
           } else {
             temp.push(index)
           }
@@ -84,10 +80,6 @@ export default class layoutComponent extends Vue {
     }
   }
 
-  getCurrCompsData(i) {
-    return this.compAttr.childList[i]
-  }
-
   showDrawer() {
     this.visible = true
     this.currCompsData = this.layoutStore
@@ -96,25 +88,20 @@ export default class layoutComponent extends Vue {
   onClose() {
     this.visible = false
   }
-
-  // state改变的时候，更新视图
-  @Watch('compData')
-  viewCompList(val) {
-    this.$emit('loadCompList', this.compAttr.childList)
-  }
 }
 </script>
 <style lang='less' scoped>
-.design-comp-sort {
-  position: relative;
-  .cols {
-    flex-grow: 1;
-    border: 1px solid #ddd;
-    min-height: 40px;
-  }
+.layout {
   .row {
     display: flex;
     justify-content: space-between;
+  }
+  .column {
+    flex-grow: 1;
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    min-height: 60px;
+    width: 100%;
   }
 }
 </style>

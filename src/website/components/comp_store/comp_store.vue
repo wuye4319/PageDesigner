@@ -3,11 +3,13 @@
     <div class="list" v-if="classifyComp.base.length">
       <div class="description">基础</div>
       <div class="details">
-        <a-popover placement="topLeft"
+        <a-popover placement="topRight"
             v-for="(base,i) of classifyComp.base"
             :key="i">
-          <template slot="content">
-            <p>{{base.description}}</p>
+          <template slot="content" width="200px">
+            <div style="width: 200px;height: 60px;over-flow: hidden;">
+            <img :src="require('../../../../static/images/' + base.compName + '.png')" v-on:error="imgError" width="100%"/>
+            </div>
           </template>
           <span slot="title">{{base.title}}</span>
           <a-button
@@ -23,12 +25,14 @@
     <div class="list" v-if="classifyComp.effect.length">
       <div class="description">功能</div>
       <div class="details">
-        <a-popover placement="topLeft"
+        <a-popover placement="topRight"
           v-for="(effect,i) of classifyComp.effect"
           :key="i"
         >
-          <template slot="content">
-            <p>{{effect.description}}</p>
+          <template slot="content" width="200px">
+            <div style="width: 200px;height: 180px;over-flow: hidden;">
+              <img :src="require('../../../../static/images/' + effect.compName + '.png')" v-on:error="imgError" width="100%" />
+            </div>
           </template>
           <span slot="title">{{effect.title}}</span>
           <a-button
@@ -44,12 +48,14 @@
     <div class="list" v-if="classifyComp.business.length">
       <div class="description">业务</div>
       <div class="details">
-        <a-popover placement="topLeft"
+        <a-popover placement="topRight"
           v-for="(business,i) of classifyComp.business"
           :key="i"
         >
           <template slot="content">
-            <p>{{business.description}}</p>
+            <div style="width: 200px;height: 180px;over-flow: hidden;">
+              <img :src="require('../../../../static/images/' + business.compName + '.png')" v-on:load="imgError" width="100%" alt=""/>
+            </div>
           </template>
           <span slot="title">{{business.title}}</span>
           <a-button
@@ -109,6 +115,12 @@ export default class compStoreComponent extends Vue {
 
   addComp(comp: object) {
     this.addPageInfor(comp)
+  }
+
+  imgError(e){
+    let target = e.target || {};
+    target.src = require('../../../../static/images/default.png');
+    target.onerror = null;
   }
 }
 

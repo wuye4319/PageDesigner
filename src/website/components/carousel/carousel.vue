@@ -2,7 +2,7 @@
   <div class="swiper-view">
     <a-carousel
       v-bind="pageData"
-      :style="{height:pageData.height, width:pageData.width}"
+      :style="{ width:pageData.width}"
       class="my-carousel"
     >
       <div
@@ -19,9 +19,7 @@
       >
         <a-icon type="right-circle"/>
       </div>
-      <div v-for="item in piclist" :key="item">
-        <img :src="item" :style="{height:pageData.height}"/>
-      </div>
+      <img v-for="item in piclist" :key="item" :src="item" :style="{height:pageData.height}"/>
     </a-carousel>
   </div>
 </template>

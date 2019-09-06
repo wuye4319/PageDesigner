@@ -1,14 +1,16 @@
 <template>
   <div class="page-container">
-    <div v-for="(view,i) in viewCompList" :key="'viewComp'+i">
-      <div
-        :is="view"
-        :compData="compsDate(i)"
-        :compIndex="i"
-        @loadCompList="loadCompList"
-        :compList="compList"
-      ></div>
-    </div>
+    <transition-group name="flip-list" class="flip-list" tag="div">
+      <div v-for="(view,i) in viewCompList" :key="'viewComp'+i">
+        <div
+          :is="view"
+          :compData="compsDate(i)"
+          :compIndex="i"
+          @loadCompList="loadCompList"
+          :compList="compList"
+        ></div>
+      </div>
+    </transition-group>
   </div>
 </template>
 
@@ -56,5 +58,8 @@ export default class Pageindex extends Vue {
 <style lang='less' scoped>
 .page-container {
   text-align: center;
+}
+.flip-list-move {
+  transition: transform 0.3s;
 }
 </style>

@@ -18,7 +18,7 @@ window.$utils = utils;
 const router = new Router({
   routes,
 });
-router.beforeEach((from: any, to: any, next: any) => {
+router.beforeEach((to: any, from: any, next: any) => {
   if (to.meta && to.meta.title) {
     document.title = to.meta.title;
   }

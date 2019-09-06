@@ -6,9 +6,9 @@
         <template>
           <transition-group name="flip-list" class="flip-list">
             <div
-              v-for="(view,i) in pageInfor"
-              :key="view.compName+i"
-              class="comps-button items"
+              v-for="(view,i) in animationList"
+              :key="view.animation"
+              class="comps-items"
               @click="showDrawer(i)"
               draggable="true"
               @dragstart="dragstart(i)"
@@ -19,15 +19,20 @@
               <span class="comps-close fr" @click.stop="removeComp(i)">
                 <a-icon type="close"/>
               </span>
-              <span class="fr" v-if="view.compName==='layout'" @click.stop="showLayout">
-                <a-icon type="caret-down"/>
-                <indexlayout
-                  :compData="currCompsData"
-                  :compIndex="i"
-                  @loadCompList="loadCompList"
-                  :compList="compList"
-                ></indexlayout>
+              <span
+                class="fr"
+                v-if="view.compName==='layout'"
+                @click.stop="showLayout(view.animation)"
+              >
+                <a-icon v-if="!isShowLayout[view.animation]" type="caret-down"/>
+                <a-icon v-else type="caret-up"/>
               </span>
+              <layoutList
+                :class="isShowLayout[view.animation]?'':'none'"
+                v-if="view.compName==='layout'"
+                :compData="view"
+                :compIndex="i"
+              ></layoutList>
             </div>
           </transition-group>
           <div class="design-addcomps" @click="showDrawer('all')">
@@ -153,7 +158,7 @@ import { State, Action, Mutation, namespace } from 'vuex-class';
 import { getCompsInfor } from '@/common/utils'
 import { Select, Button, Input } from 'ant-design-vue'
 import website from '@/website/pages/index.vue'
-import indexlayout from '@/designer/components/index'
+import layoutList from '@/designer/components/layout'
 
 const webSite = namespace('webSite');
 
@@ -170,7 +175,7 @@ interface Model {
     AButton: Button,
     AInput: Input,
     website,
-    indexlayout
+    layoutList
   }
 })
 export default class Pageindex extends Vue {
@@ -186,7 +191,8 @@ export default class Pageindex extends Vue {
   oldNum: number = 0
   newNum: number = 0
   compList: any = ''
-
+  isShowLayout: object = {}
+  animationList: object[] = [] // 动画组件列表
   createPage: Model = { // 新增页面弹框
     visible: false, // 弹框开关
     confirmLoading: false, // loading开关
@@ -230,12 +236,32 @@ export default class Pageindex extends Vue {
     return compsInfor
   }
 
+  @Watch('pageInfor.length')
+  pageInforLengthChange() {
+    let arr = []
+    arr = this.pageInfor.map((item, i) => {
+      let obj = Object.assign({}, item, {
+        animation: `${item.compName}${i}`
+      })
+      return obj
+    })
+    this.animationList = arr
+  }
+
   handleChange(value) {
     this.$router.push({
       path: `/designer/${value}`,
     })
     this.changePage({ page: value })
-    this.pageSelect = value
+    // 刷新动画列表
+    let arr = []
+    arr = this.pageInfor.map((item, i) => {
+      let obj = Object.assign({}, item, {
+        animation: `${item.compName}${i}`
+      })
+      return obj
+    })
+    this.animationList = arr
   }
 
   created() {
@@ -268,8 +294,9 @@ export default class Pageindex extends Vue {
     }
   }
 
-  showLayout() {
-    console.log('lauyout')
+  showLayout(key) {
+    let val = this.isShowLayout[key] ? false : true
+    Vue.set(this.isShowLayout, key, val)
   }
 
   removeComp(i) {
@@ -307,6 +334,16 @@ export default class Pageindex extends Vue {
       // this.items一改变，transition-group就起了作用
       let res = [...newItems];
       this.changePageInfor(res)
+
+      let newItemsCopy = [...this.animationList];
+      let oldValCopy = JSON.parse(JSON.stringify(newItemsCopy[oldIndex]));
+      // 删除老的节点
+      newItemsCopy.splice(oldIndex, 1);
+      // 在列表中目标位置增加新的节点
+      newItemsCopy.splice(newIndex, 0, oldValCopy);
+      // this.items一改变，transition-group就起了作用
+      let resCopy = [...newItemsCopy];
+      this.animationList = resCopy;
     }
   }
   // 记录移动过程中位置信息
@@ -393,19 +430,15 @@ export default class Pageindex extends Vue {
     height: 100%;
     padding-top: 50px;
     position: relative;
-    .comps-button {
-      height: 50px;
-      line-height: 50px;
-      .comps-close {
-        margin-right: 8px;
-        padding: 0 6px;
-      }
+    .comps-close {
+      margin-right: 8px;
+      padding: 0 6px;
     }
-    .items {
+    .comps-items {
       border-top: 1px solid #ddd;
       border-bottom: 1px solid #ddd;
       margin-top: 5px;
-      height: 50px;
+      min-height: 50px;
       line-height: 50px;
     }
     > div {

@@ -1,17 +1,16 @@
 const appRouterInfo = [
-  { name: 'screen', title: '引导页' },
-  { name: 'myapp', title: '我的应用' },
-  { name: 'appshop', title: '应用市场' }
+  { name: 'screen', meta: { title: '引导页' } },
+  { name: 'appshop', meta: { title: '应用市场' } }
 ];
-const myappRouterInfo = [
-  { name: 'manage', title: '我的应用管理' },
-  { name: 'collect', title: '我的收藏' },
-  { name: 'share', title: '我的分享' }
+const myappRouterInfo = [ // myapp
+  { name: 'manage', meta: { title: '我的应用管理' } },
+  { name: 'collect', meta: { title: '我的收藏' } },
+  { name: 'share', meta: { title: '我的分享' } }
 ];
 
 interface RouteInfo {
   name:string,
-  title:string
+  meta:object
 }
 
 const routes:any = [
@@ -36,15 +35,13 @@ function getRouterList(type:string, nameList:object[]):object[] {
   for (let item of Array.from(nameList.values())) {
     let obj:RouteInfo = {
       name: '',
-      title: ''
+      meta: {}
     }
     Object.assign(obj, item)
     arr.push({
       path: obj.name,
       name: `${type}-${obj.name}`,
-      meta: {
-        title: obj.title
-      },
+      meta: obj.meta,
       component: () => import(/* webpackChunkName: "app" */ `@/app/components/${obj.name}/index.vue`)
     })
   }
@@ -55,15 +52,13 @@ function getRouterChildList(type:string, nameList:object[]):object[] {
   for (let item of Array.from(nameList.values())) {
     let obj:RouteInfo = {
       name: '',
-      title: ''
+      meta: {}
     }
     Object.assign(obj, item)
     arr.push({
       path: `${type}/${obj.name}`,
-      name: `${type}-${obj.name}`,
-      meta: {
-        title: obj.title
-      },
+      name: `app-${type}-${obj.name}`,
+      meta: obj.meta,
       component: () => import(/* webpackChunkName: "app" */ `@/app/components/${type}/${obj.name}.vue`)
     })
   }

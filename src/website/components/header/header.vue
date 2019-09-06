@@ -1,5 +1,8 @@
 <template>
-  <div>header view</div>
+  <div>
+    header view
+    <button @click="testClick">123</button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -13,9 +16,15 @@ const webSite = namespace('webSite');
   components: {}
 })
 export default class headerComponent extends Vue {
+  test: object = {}
   created() { }
 
   mounted() {
+  }
+
+  testClick() {
+    Vue.set(this.test, 'test', '13')
+    console.log(this.test)
   }
 }
 </script>
