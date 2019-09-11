@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { Select } from 'ant-design-vue';
+import { Radio } from 'ant-design-vue';
 import { namespace } from 'vuex-class';
 
 const webSite = namespace('webSite');

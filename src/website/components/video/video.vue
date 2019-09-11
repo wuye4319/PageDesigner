@@ -31,6 +31,7 @@ export default class buttonComponent extends Vue {
     comName = this.compData.compName;
     videoDemo = videoDemo;
     created():void{
+      console.log(this.compData)
     }
 }
 </script>

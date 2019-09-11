@@ -4,6 +4,7 @@ const appRouterInfo = [
 ];
 const myappRouterInfo = [ // myapp
   { name: 'manage', meta: { title: '我的应用管理' } },
+  { name: 'comp', meta: { title: '我的组件管理' } },
   { name: 'collect', meta: { title: '我的收藏' } },
   { name: 'share', meta: { title: '我的分享' } }
 ];
