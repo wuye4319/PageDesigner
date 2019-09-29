@@ -2,8 +2,8 @@
  * @desc service api
  */
 
-// import { fetch } from '../util'
 import { baseUrl } from '@/common/config/env'
+import axios from '@/common/config/axios'
 
 /**
  * 获取用户数据

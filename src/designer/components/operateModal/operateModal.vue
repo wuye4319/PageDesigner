@@ -1,8 +1,17 @@
 <template>
   <div class="operateModal">
     <div class="handle">
-      <a-button @click="openCreate" type="primary" icon="plus">新增</a-button>
-      <a-button type="dashed" icon="minus" class="delete" @click="openDelete">删除</a-button>
+      <a-button
+        @click="openCreate"
+        type="primary"
+        icon="plus"
+      >新增</a-button>
+      <a-button
+        type="dashed"
+        icon="minus"
+        class="delete"
+        @click="openDelete"
+      >删除</a-button>
     </div>
     <!-- 新增对话框 -->
     <a-modal
@@ -19,7 +28,7 @@
           <div class="model-cont">
             <div class="name">请输入需要添加的标题:</div>
             <div class="desc">
-              <a-input placeholder="请输入需要添加的标题" v-model="createPage.title" />
+              <a-input placeholder="请输入需要添加的标题" v-model="createPage.title"/>
             </div>
           </div>
         </a-list-item>
@@ -27,14 +36,20 @@
           <div class="model-cont">
             <div class="name">请输入需要添加的名称:</div>
             <div class="desc">
-              <a-input placeholder="请输入需要添加的名称" v-model="createPage.name" />
+              <a-input placeholder="请输入需要添加的名称" v-model="createPage.name"/>
             </div>
           </div>
         </a-list-item>
       </a-list>
     </a-modal>
     <!-- 删除对话框 -->
-    <a-modal title="删除子页面" v-model="deletePage.visible" okText="删除" cancelText="取消" centered>
+    <a-modal
+      title="删除子页面"
+      v-model="deletePage.visible"
+      okText="删除"
+      cancelText="取消"
+      centered
+    >
       <div :style="{ borderBottom: '1px solid #E9E9E9' }">
         <a-checkbox
           :indeterminate="deletePage.indeterminate"
@@ -42,9 +57,13 @@
           :checked="deletePage.checkAll"
         >全选</a-checkbox>
       </div>
-      <br />
+      <br/>
       <a-checkbox-group v-model="deletePage.checkedList" @change="deleteChange">
-        <div class="model-checkbox" v-for="(item,i) of deletePage.options" :key="i">
+        <div
+          class="model-checkbox"
+          v-for="(item,i) of deletePage.options"
+          :key="i"
+        >
           <a-checkbox :value="item">{{ item }}</a-checkbox>
         </div>
       </a-checkbox-group>
@@ -57,7 +76,11 @@
           okText="确定"
           cancelText="取消"
         >
-          <a-icon slot="icon" type="question-circle-o" style="color: red" />
+          <a-icon
+            slot="icon"
+            type="question-circle-o"
+            style="color: red"
+          />
           <a-button type="danger" :loading="deletePage.confirmLoading">删除</a-button>
         </a-popconfirm>
       </div>
@@ -66,9 +89,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import { State, Action, Mutation, namespace } from "vuex-class";
-import { Select, Button, Input, Modal } from "ant-design-vue";
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { State, Action, Mutation, namespace } from 'vuex-class';
+import { Select, Button, Input, Modal } from 'ant-design-vue';
 
 interface Model {
   visible: boolean;
@@ -86,34 +109,33 @@ export default class OperateModal extends Vue {
     // 新增页面弹框
     visible: false, // 弹框开关
     confirmLoading: false, // loading开关
-    title: "", // 标题
-    name: "" // 标题名称
+    title: '', // 标题
+    name: '' // 标题名称
   };
   deletePage: Model = {
     // 删除页面弹框
     visible: false, // 弹框开关
     confirmLoading: false, // loading开关
-    options: ["Apple", "Pear", "Orange"], // 选项
-    checkedList: ["Apple", "Orange"], // 选中的值
+    options: ['Apple', 'Pear', 'Orange'], // 选项
+    checkedList: ['Apple', 'Orange'], // 选中的值
     checkAll: false, // 全选按钮
     indeterminate: true //
   };
 
   @Prop() appInfor: any
 
-
   get pageList() {
     let comps = Object.keys(this.appInfor);
     return comps;
   }
 
-  mounted(){
+  mounted() {
 
   }
   // 打开新增
   openCreate() {
-    this.createPage.title = "";
-    this.createPage.name = "";
+    this.createPage.title = '';
+    this.createPage.name = '';
     this.createPage.visible = true;
   }
 
@@ -123,7 +145,7 @@ export default class OperateModal extends Vue {
     setTimeout(() => {
       this.createPage.visible = false;
       this.createPage.confirmLoading = false;
-      this.$message.success("新增success");
+      this.$message.success('新增success');
     }, 2000);
   }
 
@@ -140,7 +162,7 @@ export default class OperateModal extends Vue {
     setTimeout(() => {
       this.deletePage.visible = false;
       this.deletePage.confirmLoading = false;
-      this.$message.success("删除success");
+      this.$message.success('删除success');
     }, 2000);
   }
 

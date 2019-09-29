@@ -1,41 +1,60 @@
 <template>
   <div class="container">
-    <div class="design-toolbar">
-      <div class="design-logo">组件库</div>
-      <comp-store :compData="compStore" @moveDragend="moveDragend"></comp-store>
-    </div>
-    <div class="design-screen">
-      <div class="head-bar">
-        <div class="page-nav">
-          <a-select v-model="pageSelect" style="width: 120px" @change="handleChange">
-            <a-select-option v-for="page in pageList" :key="page" :value="page">{{ page }}</a-select-option>
-          </a-select>
-        </div>
+    <div class="head-bar">
+      <div class="page-nav">
+        <a-select v-model="pageSelect" class="page-select" @change="handleChange">
+          <a-select-option v-for="page in pageList" :key="page" :value="page">{{ page }}</a-select-option>
+        </a-select>
         <operate-modal :appInfor="appInfor" :createPage="createPage" :deletePage="deletePage"></operate-modal>
-        <div class="screen-list">
-          <ul>
-            <li @click="changeScreenType(screen)" v-for="screen in screenList" :key="screen">
-              <a-icon :type="screen"/>
-            </li>
-            <li>
-              <a href="/#/website/product" target="_blank">
-                <a-icon type="fullscreen"/>
-              </a>
-            </li>
-          </ul>
+      </div>
+      <div class="handle-button">
+        <a-button class="btn" icon="eye" @click="openfullscreen">预览</a-button>
+        <a-button class="btn" @click="saveInfo" icon="save">保存</a-button>
+        <a-button class="btn" type="primary" icon="file">发布</a-button>
+      </div>
+    </div>
+    <div class="design-cont">
+      <!-- 组件 -->
+      <div class="design-toolbar" :class="leftShow ? 'leftShow': 'leftHidden'">
+        <comp-store :compData="compStore" class="compStore" @moveDragend="moveDragend"></comp-store>
+        <div class="arrow-handle arrow-left handle-left" @click="leftShow = false"><a-icon type="left" /></div>
+      </div>
+      <!-- 内容 -->
+      <div class="design-screen">
+        <div class="screen-list bg-white">
+          <a-radio-group v-model="screen"  @change="changeScreenType">
+            <a-radio-button value="desktop">PC端设计</a-radio-button>
+            <a-radio-button value="mobile">移动端设计</a-radio-button>
+          </a-radio-group>
         </div>
-        <div class="save">
-          <a-button type="primary">Save</a-button>
+        <div class="design-iframe bg-white" :class="isMobile">
+          <website :showDrawer="showDrawer" isDesigner="true" ref="website"></website>
+        </div>
+        <div 
+          class="arrow-handle arrow-right handle-mid-right" 
+          :class="leftShow ? 'mid-left-hidden': 'mid-left-show'"
+          @click="leftShow = true">
+          <a-icon type="right" />
+        </div>
+        <div 
+          class="arrow-handle arrow-left handle-mid-left" 
+          :class="rightShow ? 'mid-right-hidden': 'mid-right-show'"
+          @click="rightShow = true">
+          <a-icon type="left" />
         </div>
       </div>
-      <div class="design-iframe">
-        <div class="page-container" :class="isMobile">
-          <website :showDrawer="showDrawer" ref="website"></website>
-        </div>
-        <div class="design-attribute">
-          <!-- <comp-setting :compData="pageInfor" :compIndex="compIndex"></comp-setting> -->
-          <div :is="currCompView" :compData="currCompsData" :compIndex="compIndex"></div>
-        </div>
+      <!-- 属性 -->
+      <div class="design-attribute" :class="rightShow ? 'rightShow': 'rightHidden'">
+        <!-- <comp-setting :compData="pageInfor" :compIndex="compIndex"></comp-setting> -->
+        <a-tabs defaultActiveKey="1" size="small">
+          <a-tab-pane tab="组件属性" key="1">
+            <div :is="currCompView" :compData="currCompsData" :compIndex="compIndex"></div>
+          </a-tab-pane>
+          <a-tab-pane tab="页面属性" key="2">
+            <page-info :pageInfo="pageInfor" :changePageInfor="changePageInfor"/>
+          </a-tab-pane>
+        </a-tabs>
+        <div class="arrow-handle arrow-right handle-right" @click="rightShow = false"><a-icon type="right" /></div>
       </div>
     </div>
   </div>
@@ -47,12 +66,15 @@ import { State, Action, Mutation, namespace } from 'vuex-class';
 import { getCompsInfor } from '@/common/utils'
 import { Select, Button, Input } from 'ant-design-vue'
 import website from '@/website/pages/index.vue'
-import layoutList from '@/designer/components/layout'
-import compStore from "@/website/components/comp_store";
-import compSetting from "@/website/components/settings";
-import OperateModal from "../components/operateModal";
+import compStore from '@/website/components/comp_store';
+import compSetting from '@/website/components/settings';
+// import { savePageInfo } from '@/designer/service/index';
+import OperateModal from '../components/operateModal';
+import pageInfo from '../components/pageInfo';
+import axios from '@/common/config/axios'
+import qs from 'Qs';
 
-const webSite = namespace("webSite");
+const webSite = namespace('webSite');
 
 interface Model {
   visible: boolean;
@@ -61,7 +83,7 @@ interface Model {
 }
 
 @Component({
-  name: "page-index",
+  name: 'page-index',
   components: {
     ASelete: Select,
     AButton: Button,
@@ -69,55 +91,57 @@ interface Model {
     website,
     compStore,
     compSetting,
-    layoutList,
-    OperateModal
+    OperateModal,
+    pageInfo
   }
 })
 export default class Pageindex extends Vue {
   $router
   $route
   $message
-  $refs: {website: HTMLFormElement}
+  $refs: { website: HTMLFormElement }
   pageSelect: string = ''
   currCompView: any = ''
   currCompsData: object = {}
-  screenList = ['mobile', 'desktop']
+  screen:string = 'desktop' // 当前是pc还是移动
   isMobile: string = ''
-  compIndex: number = null
+  compIndex: any = []
   compList: any = ''
   isShowLayout: object = {}
   createPage: Model = { // 新增页面弹框
     visible: false, // 弹框开关
     confirmLoading: false, // loading开关
-    title: "", // 标题
-    name: "" // 标题名称
+    title: '', // 标题
+    name: '' // 标题名称
   };
   deletePage: Model = {
     // 删除页面弹框
     visible: false, // 弹框开关
     confirmLoading: false, // loading开关
-    options: ["Apple", "Pear", "Orange"], // 选项
-    checkedList: ["Apple", "Orange"], // 选中的值
+    options: ['Apple', 'Pear', 'Orange'], // 选项
+    checkedList: ['Apple', 'Orange'], // 选中的值
     checkAll: false, // 全选按钮
     indeterminate: true //
   };
+  leftShow:boolean = true // 组件显示和隐藏
+  rightShow:boolean = true // 属性显示和隐藏
 
-  @webSite.Getter("pageInfor")
+  @webSite.Getter('pageInfor')
   pageInfor;
 
-  @webSite.Getter("appInfor")
+  @webSite.Getter('appInfor')
   appInfor: Website.pageInfor;
 
-  @webSite.Getter("compStore")
+  @webSite.Getter('compStore')
   compStore: Website.pageInfor;
 
-  @webSite.Action("changePage")
+  @webSite.Action('changePage')
   changePage;
 
-  @webSite.Mutation("removePageInfor")
+  @webSite.Mutation('removePageInfor')
   removePageInfor: any;
 
-  @webSite.Mutation("changePageInfor")
+  @webSite.Mutation('changePageInfor')
   changePageInfor;
 
   get pageList() {
@@ -125,44 +149,63 @@ export default class Pageindex extends Vue {
     return comps;
   }
 
+  // 动态异步加载组件
   get ctrlCompList() {
-    let compsInfor = getCompsInfor("website/components/", this.pageInfor, true);
-    return compsInfor;
+    let compListBox = this.pageInfor.map((item, i) => {
+      let compsInfor;
+      if (item.compName === 'layout') {
+        compsInfor = getCompsInfor(`website/components/`, item.compAttr.childList, true);
+      }else {
+        compsInfor = getCompsInfor(`website/components/`, item, true);
+      }
+      
+      return compsInfor;
+    })
+    return compListBox;
   }
 
   handleChange(value) {
+    this.screen = this.appInfor[value].screen === 'mobile' ? 'mobile' : 'desktop';
     this.$router.push({
-      path: `/designer/${value}`
+      path: `/designer/${value}`,
     });
     this.changePage({ page: value });
+    this.changeScreenType();
   }
 
   created() {
     this.pageSelect = this.$router.currentRoute.params.page;
-    let screen = this.$route.query.screen;
-    this.changeScreenType(screen);
+    this.screen = this.$route.query.screen;
+    this.changeScreenType();
   }
 
-  get viewCompList() {
-    let compsInfor = getCompsInfor("website/components/", this.pageInfor);
-    return compsInfor;
-  }
-
-  loadCompList(compInfor) {
-    this.compList = getCompsInfor("website/components/", compInfor);
+  mounted() {
+    console.log(this.pageInfor)
+    this.$nextTick(() => {
+      
+    })
   }
 
   visible: boolean = false;
 
-  showDrawer(i) {
-    this.currCompView = this.ctrlCompList[i];
-    this.currCompsData = this.pageInfor[i];
-    this.compIndex = i;
+  showDrawer(i, c) {
+    if (this.pageInfor[i].compName === 'layout') {
+      this.currCompView = this.ctrlCompList[i][c];
+      this.currCompsData = this.pageInfor[i].compAttr.childList[c];
+    }else {
+      this.currCompView = this.ctrlCompList[i];
+      this.currCompsData = this.pageInfor[i];
+    }
+    this.compIndex = [i,c];
     this.visible = true;
   }
 
+  savePageInfo(){
+    console.log("77777")
+  }
+
   showLayout(key) {
-    let val = this.isShowLayout[key] ? false : true
+    let val = !this.isShowLayout[key]
     Vue.set(this.isShowLayout, key, val)
   }
 
@@ -170,160 +213,57 @@ export default class Pageindex extends Vue {
     this.removePageInfor(i);
   }
 
-  changeScreenType(screen) {
-    if (screen === "mobile") {
-      this.isMobile = "mobile-width";
+  changeScreenType() {
+    let screen = this.screen;
+    if (screen === 'mobile') {
+      this.isMobile = 'mobile-width';
+      this.$router.push({
+        query: {
+          screen: 'mobile'
+        }
+      })
     } else {
-      this.isMobile = "";
+      this.isMobile = '';
+      this.$router.push({
+        query: {
+          screen: 'desktop'
+        }
+      })
     }
+  }
+
+  openfullscreen() {
+    let screen = this.isMobile === 'mobile-width' ? 'mobile': 'desktop';
+    window.open(`#/website/${this.pageSelect}?screen=${screen}`);
   }
 
   moveDragend() {
     let website = this.$refs.website;
-    // 重置显示节点，新、旧节点
+    // 重置显示节点，新、旧节点 列 空列
+    clearTimeout(website.emptyTimer);
     website.emptyNum = -1;
     website.newNum = -1;
     website.oldNum = -1;
-    
+    website.newColumn = -1;
+    website.emptyColumn = -1;
+  }
+
+  saveInfo() {
+    let appInfor = this.appInfor;
+    appInfor[this.pageSelect].module = this.pageInfor;
+    let params = {
+      page: appInfor
+    }
+    axios.post('/page/pageconfig/default',params).then((res)=> {
+      if (res && res.data === 'success' && res.msg === 'success') {
+        this.$message.success('保存成功！')
+      }else {
+        this.$message.error('保存失败');
+      }
+    })
   }
 }
 </script>
 <style lang='less' scoped>
-.container {
-  display: -webkit-box;
-  height: 100%;
-  width: 100%;
-  text-align: center;
-}
-/deep/ .ant-select-selection-selected-value {
-  line-height: 28px;
-}
-.design-toolbar {
-  width: 300px;
-  height: 100%;
-  border-right: 1px solid #ddd;
-  display: flex;
-  flex-direction: column;
-  .design-logo {
-    @height: 60px;
-    height: @height;
-    line-height: @height;
-    background: #585556;
-    color: #fff;
-  }
-  .design-componet-list {
-    height: 100%;
-    padding-top: 50px;
-    position: relative;
-    .comps-close {
-      margin-right: 8px;
-      padding: 0 6px;
-    }
-    .comps-items {
-      border-top: 1px solid #ddd;
-      border-bottom: 1px solid #ddd;
-      margin-top: 5px;
-      min-height: 50px;
-      line-height: 50px;
-    }
-    > div {
-      border-top: 1px solid #ddd;
-      border-bottom: 1px solid #ddd;
-      margin-top: 5px;
-      height: 50px;
-      line-height: 50px;
-    }
-  }
-  .foot-button {
-    border-top: 1px solid #ddd;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-    height: 60px;
-  }
-}
-.design-screen {
-  height: 100%;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  .head-bar {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.17);
-    height: 60px;
-    .page-nav {
-      margin-left: 10px;
-    }
-    .save {
-      margin-right: 10px;
-    }
-    > div {
-      line-height: 60px;
-    }
-    ul li {
-      line-height: 60px;
-      font-size: 20px;
-    }
-    .screen-list ul {
-      width: 120px;
-      display: flex;
-      justify-content: space-between;
-    }
-  }
-  .design-iframe {
-    // padding: 12px;
-    flex-grow: 1;
-    display: flex;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
-    height: 100%;
-    .page-container {
-      flex: 1;
-      height: 100%;
-      overflow: auto;
-      // box-shadow: 0 0 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(0, 0, 0, 0.1);
-    }
-    .mobile-width {
-      width: 375px;
-    }
-    .design-attribute {
-      width: 300px;
-      height: 100%;
-      border-left: 1px solid #d9d9d9;
-    }
-  }
-}
-.flip-list {
-  display: block;
-}
-.flip-list-move {
-  transition: transform 0.5s;
-}
-.button {
-  padding-bottom: 50px;
-}
-.handle {
-  .delete {
-    margin-left: 20px;
-  }
-}
-.model-cont {
-  display: flex;
-  .name {
-    width: 200px;
-    text-align: right;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-right: 20px;
-  }
-  .desc {
-    flex: 1;
-  }
-}
-.model-checkbox {
-  margin-bottom: 10px;
-}
+  @import url('./index.less');
 </style>

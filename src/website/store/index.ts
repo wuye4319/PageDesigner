@@ -12,6 +12,8 @@ export class WebSiteState {
   CompStore: object = {}
   // 支持Layout的组件库
   LayoutStore: object = {}
+  //接受当前页面所有信息
+  PageStyle: object = {}
 }
 
 const websiteModule: Module<WebSiteState, any> = {

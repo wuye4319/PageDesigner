@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import Layout from './wrapper/Layout.vue';
 import routes from './wrapper/router';
 import store from './wrapper/store';
-import 'ant-design-vue/dist/antd.css'
+import 'ant-design-vue/dist/antd.less'
 import * as utils from '@/common/utils';
 import Antd from 'ant-design-vue';
 

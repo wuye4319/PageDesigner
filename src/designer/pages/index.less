@@ -1,0 +1,337 @@
+.container {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  background: rgba(233,237,242,1);
+}
+/deep/ .ant-select-selection-selected-value {
+  line-height: 28px;
+}
+.design-cont {
+  display: flex;
+  height: calc(100% - 64px);
+  width: 100%;
+  overflow: hidden;
+}
+.design-toolbar {
+  width:220px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 8px 8px 16px 16px;
+  .design-logo {
+    @height: 60px;
+    height: @height;
+    line-height: @height;
+    background: #585556;
+    color: #fff;
+  }
+  .design-componet-list {
+    height: 100%;
+    padding-top: 50px;
+    position: relative;
+    .comps-close {
+      margin-right: 8px;
+      padding: 0 6px;
+    }
+    .comps-items {
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      margin-top: 5px;
+      min-height: 50px;
+      line-height: 50px;
+    }
+    > div {
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      margin-top: 5px;
+      height: 50px;
+      line-height: 50px;
+    }
+  }
+  .foot-button {
+    border-top: 1px solid #ddd;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    height: 60px;
+  }
+}
+.design-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+  // margin: 0 8px;
+  padding-bottom: 16px;
+  position: relative;
+  .screen-list {
+    width: 100%;
+    margin: 8px auto;
+    height: 40px;
+    line-height: 40px;
+  }
+  .design-iframe {
+    flex: 1;
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    border-radius:4px;
+    .page-container {
+      flex: 1;
+      height: calc(100vh - 136px);
+      overflow: auto;
+    }
+  }
+  .mobile-width {
+    width: 375px;
+  }
+}
+.design-attribute {
+  width: 294px;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+  padding: 8px 16px 16px 8px;
+  font-size: 12px;
+  /deep/.ant-tabs-tab{
+    font-size: 12px;
+  }
+  /deep/.ant-tabs-bar {
+    height:40px;
+    background:rgba(255,255,255,1);
+    box-shadow:0px -1px 0px 0px rgba(0,0,0,0.09);
+    border-radius:4px;
+    margin-bottom: 8px;
+  }
+  /deep/.ant-tabs-tabpane{
+    height: calc(100vh - 136px);
+    border-radius: 4px;
+    overflow: auto;
+    background: white;
+    .ant-collapse-content-box{
+      padding: 6px 8px;
+    }
+  }
+  /deep/.ant-list{
+    background: white;
+    border-radius: 4px;
+    font-size: 12px !important;
+    color: #000000 !important;
+  }
+}
+.head-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.17);
+  height: 64px;
+  background:rgba(5,37,53,1);
+  .page-nav {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    .page-select {
+      width: 120px;
+      margin-right: 20px;
+    }
+  }
+  .handle-button {
+    margin-right: 16px;
+    .btn {
+      margin-right: 8px;
+    }
+  }
+  > div {
+    line-height: 64px;
+  }
+}
+.flip-list {
+  display: block;
+}
+.flip-list-move {
+  transition: transform 0.5s;
+}
+.button {
+  padding-bottom: 50px;
+}
+.handle {
+  .delete {
+    margin-left: 20px;
+  }
+}
+.model-cont {
+  display: flex;
+  .name {
+    width: 200px;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 20px;
+  }
+  .desc {
+    flex: 1;
+  }
+}
+.model-checkbox {
+  margin-bottom: 10px;
+}
+.pointer {
+  cursor: pointer;
+}
+
+// 梯形左箭头
+.arrow-left{
+  width:15px;
+  height:20px;
+  text-align:center;
+  color:#fff;
+  background-color:rgb(186,198,218);
+  position:relative;
+}
+.arrow-left:before{
+  content: '';
+  display: block;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  transform: skewY(-30deg);
+  background: #bac6da;
+  border-top-left-radius: 5px;
+  top: -10px;
+  right: 0px;
+}
+.arrow-left:after{
+  content: '';
+  display: block;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  transform: skewY(30deg);
+  background: #bac6da;
+  border-bottom-left-radius: 5px;
+  top: 15px;
+  right: 0px;
+}
+// 梯形右箭头
+.arrow-right{
+  width:15px;
+  height:20px;
+  text-align:center;
+  color:#fff;
+  background-color:rgb(186,198,218);
+  position:relative;
+}
+.arrow-right:before{
+  content: '';
+  display: block;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  transform: skewY(30deg);
+  background: rgb(186,198,218);
+  border-top-right-radius: 5px; 
+  top: -10px;
+  right: 0px;
+}
+.arrow-right:after{
+  content: '';
+  display: block;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  transform: skewY(-30deg);
+  background: rgb(186,198,218);
+  border-bottom-right-radius: 5px; 
+  top: 15px;
+  right: 0px;
+}
+
+.arrow-handle {
+  position: absolute;
+  top: 18px;
+  transform: scale(0.7);
+  &.handle-left {
+    right: 6px;
+  }
+  &.handle-mid-left {
+    right: -2px;
+  }
+  &.handle-mid-right {
+    left: -2px;
+  }
+  &.handle-right {
+    left: 6px;
+  }
+}
+.bg-white {
+  background:rgba(255,255,255,1);
+}
+
+.design-attribute {
+  &.rightShow {
+    animation: rshow .5s;
+    margin-right: 0;
+  }
+  &.rightHidden {
+    animation: rhidden .5s;
+    margin-right: -286px;
+  }
+}
+
+@keyframes rshow {
+  from { margin-right: -286px;}
+  to {margin-right: 0;}
+}
+@keyframes rhidden {
+  from { margin-right: 0;}
+  to {margin-right: -286px;}
+}
+
+.design-toolbar {
+  &.leftShow {
+    animation: lshow .5s;
+    margin-left: 0;
+  }
+  &.leftHidden {
+    animation: lhidden .5s;
+    margin-left: -212px;
+  }
+}
+
+@keyframes lshow {
+  from {margin-left: -212px;}
+  to {margin-left: 0;}
+}
+@keyframes lhidden {
+  from { margin-left: 0;}
+  to {margin-left: -212px;}
+}
+
+.design-screen {
+  .mid-left-show {
+    opacity: 0;
+    animation: midshow .3s ease .5s;
+    animation-fill-mode: forwards;
+  }
+  .mid-left-hidden {
+    opacity: 0;
+  }
+  .mid-right-show {
+    opacity: 0;
+    animation: midshow .3s ease .5s;
+    animation-fill-mode: forwards;
+  }
+  .mid-right-hidden {
+    opacity: 0;
+  }
+}
+
+@keyframes midshow {
+  from { opacity: 0;}
+  to {opacity: 1;}
+}

@@ -2,6 +2,7 @@ import { GetterTree } from 'vuex';
 import { WebSiteState } from './index';
 import { GlobalState } from '@/wrapper/store';
 import { WebSite } from './types';
+import { stat } from 'fs';
 
 const getters: GetterTree<WebSiteState, GlobalState> = {
   [WebSite.pageInfor](state) {
@@ -15,6 +16,9 @@ const getters: GetterTree<WebSiteState, GlobalState> = {
   },
   [WebSite.layoutStore](state) {
     return state.LayoutStore;
+  },
+  [WebSite.pageStyle](state) {
+    return state.PageStyle
   }
 };
 

@@ -1,22 +1,23 @@
 <template>
   <a-tabs defaultActiveKey="1" type="card">
     <a-tab-pane tab="content" key="1">Content of Tab Pane 1</a-tab-pane>
-    <a-tab-pane tab="style" key="2" forceRender>
+    <a-tab-pane
+      tab="style"
+      key="2"
+      forceRender
+    >
       <a-list itemLayout="horizontal">
-      <a-list-item
-        v-for="(base,i) of compData"
-        v-bind:key="i"
-      >
-        <a-list-item-meta>
-          <div slot="description">宽度:</div>
-        </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="width"
-          @blur="changeVal('width')"
-        />
-      </a-list-item>
-    </a-list>
+        <a-list-item v-for="(base,i) of compData" :key="i">
+          <a-list-item-meta>
+            <div slot="description">宽度:</div>
+          </a-list-item-meta>
+          <a-input
+            placeholder="Basic usage"
+            v-model="width"
+            @blur="changeVal('width')"
+          />
+        </a-list-item>
+      </a-list>
     </a-tab-pane>
     <a-tab-pane tab="advanced" key="3">Content of Tab Pane 3</a-tab-pane>
   </a-tabs>
@@ -33,7 +34,7 @@ const webSite = namespace('webSite');
   name: 'active-component'
 })
 export default class activeComponent extends Vue {
-  @Prop() 
+  @Prop()
   compData: any
   compIndex: number
   compArrt: any
@@ -45,8 +46,8 @@ export default class activeComponent extends Vue {
   editPageInfor;
 
   created(): void {
-    console.log("settings",JSON.parse(JSON.stringify(this.compData)))
-    console.log("currentIndex",this.compIndex)
+    console.log('settings', JSON.parse(JSON.stringify(this.compData)))
+    console.log('currentIndex', this.compIndex)
     // for (let key of Object.keys(this.pageData.compAttr)) {
     //   this[key] = this.pageData.compAttr[key];
     // }
@@ -60,10 +61,10 @@ export default class activeComponent extends Vue {
 </script>
 
 <style lang="less" scoped>
-    .input-component{
-        .radio-group{
-            display: flex;
-            flex-direction: row;
-        }
-    }
+.input-component {
+  .radio-group {
+    display: flex;
+    flex-direction: row;
+  }
+}
 </style>

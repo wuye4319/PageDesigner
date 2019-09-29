@@ -1,16 +1,16 @@
 // import { website, designer } from 'authine-page-designer';
 import website from '@/website/router';
 import designer from '@/designer/router';
-import app from '@/app/router';
+import admin from '@/admin/router';
 
 const routes = [
   {
     path: '',
-    redirect: 'app'
+    redirect: 'admin'
   },
   ...website,
   ...designer,
-  ...app
+  ...admin
 ];
 
 export default routes;

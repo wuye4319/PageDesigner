@@ -7,5 +7,7 @@ export enum WebSite {
   selectPage = 'changePage',
   compStore = 'compStore',
   layoutStore = 'layoutStore',
-  changePageInfor = 'changePageInfor'
+  changePageInfor = 'changePageInfor',
+  changePageInforRow = 'changePageInforRow',
+  pageStyle ='pageStyle'
 }
