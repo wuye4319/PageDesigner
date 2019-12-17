@@ -1,2 +1,2 @@
-import imgC from './img.vue'
+import imgC from './img.vue';
 export default imgC;

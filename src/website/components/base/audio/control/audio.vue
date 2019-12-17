@@ -1,47 +1,6 @@
 <template>
-  <div class="button-component">
+  <div class="compAttr button-component">
     <a-list itemLayout="horizontal">
-      <a-list-item>
-        <a-list-item-meta>
-          <div slot="description">宽度:</div>
-        </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="width"
-          @blur="changeVal('width')"
-        />
-      </a-list-item>
-
-      <a-list-item>
-        <a-list-item-meta>
-          <div slot="description">高度:</div>
-        </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="height"
-          @blur="changeVal('height')"
-        />
-      </a-list-item>
-      <a-list-item>
-        <a-list-item-meta>
-          <div slot="description">外边距:</div>
-        </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="margin"
-          @blur="changeVal('margin')"
-        />
-      </a-list-item>
-      <a-list-item>
-        <a-list-item-meta>
-          <div slot="description">内边距:</div>
-        </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="padding"
-          @blur="changeVal('padding')"
-        />
-      </a-list-item>
       <a-list-item>
         <a-list-item-meta>
           <div slot="description">资源路径:</div>
@@ -67,15 +26,15 @@ const webSite = namespace('webSite');
   name: 'active-component'
 })
 export default class activeComponent extends Vue {
-  @Prop() compData: any
+  @Prop() compData: any;
   @Prop()
-  compIndex: number
+  compIndex: number;
 
-  width:string = ''
-  height:string = ''
-  pageData:any = this.compData
-  margin: string = ''
-  padding: string = ''
+  width: string = '';
+  height: string = '';
+  pageData: any = this.compData;
+  margin: string = '';
+  padding: string = '';
 
   @webSite.Getter('pageInfor')
   pageInfor: Website.pageInfor;
@@ -91,16 +50,21 @@ export default class activeComponent extends Vue {
 
   changeVal(name) {
     this.pageData.compAttr[name] = this[name];
-    this.editPageInfor({ index: this.compIndex, data: this.pageData.compAttr });
   }
 }
 </script>
 
 <style lang="less" scoped>
-    .button-component{
-        .radio-group{
-            display: flex;
-            flex-direction: row;
-        }
-    }
+.button-component {
+  .radio-group {
+    display: flex;
+    flex-direction: row;
+  }
+}
+.compAttr {
+  padding: 0 8px;
+  /deep/.ant-list-item-content {
+    flex: 1.5;
+  }
+}
 </style>

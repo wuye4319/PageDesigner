@@ -3,8 +3,14 @@
     <a-layout>
       <a-layout-header v-if="header.show" :style="{'background': header.background}">
         <div class="logo" :style="{'color': logo.color, background: logo.background}">
-          <img v-if="logo.img" width="100px" height="100%" :src="logo.img" alt="">
-          <span v-if="!logo.img">{{logo.text}}</span>
+          <img
+            v-if="logo.img"
+            width="100px"
+            height="100%"
+            :src="logo.img"
+            alt=""
+          >
+          <span v-if="!logo.img">{{ logo.text }}</span>
         </div>
         <a-menu
           class="headerMenu"
@@ -13,10 +19,10 @@
           :style="{'background': header.background}"
         >
           <a-menu-item key="mail">
-            <a-icon type="mail" />Navigation One
+            <a-icon type="mail"/>Navigation One
           </a-menu-item>
           <a-menu-item key="app">
-            <a-icon type="appstore" />Navigation Two
+            <a-icon type="appstore"/>Navigation Two
           </a-menu-item>
         </a-menu>
       </a-layout-header>
@@ -34,22 +40,30 @@
             :style="{'background': sider.background}"
           >
             <a-menu-item key="1">
-              <a-icon type="pie-chart" />
+              <a-icon type="pie-chart"/>
               <span>Option 1</span>
             </a-menu-item>
             <a-menu-item key="2">
-              <a-icon type="desktop" />
+              <a-icon type="desktop"/>
               <span>Option 2</span>
             </a-menu-item>
             <a-menu-item key="3">
-              <a-icon type="inbox" />
+              <a-icon type="inbox"/>
               <span>Option 3</span>
             </a-menu-item>
           </a-menu>
         </a-layout-sider>
         <a-layout-content @drop="handleContent" class="content">
-          <div class="portalList" v-for="(view,i) in compInfor" :key="'array'+i">
-            <div v-if="typeof(view)==='function'" :is="view" :compData="compData"></div>
+          <div
+            class="portalList"
+            v-for="(view,i) in compInfor"
+            :key="'array'+i"
+          >
+            <div
+              v-if="typeof(view)==='function'"
+              :is="view"
+              :compData="compData"
+            ></div>
           </div>
         </a-layout-content>
       </a-layout>
@@ -58,14 +72,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import { State, Getter, Action, Mutation, namespace } from "vuex-class";
-import { compilation } from "webpack";
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
+import { compilation } from 'webpack';
 
-const webSite = namespace("webSite");
+const webSite = namespace('webSite');
 
 @Component({
-  name: "table-component",
+  name: 'table-component',
   components: {}
 })
 export default class tableComponent extends Vue {
@@ -85,14 +99,14 @@ export default class tableComponent extends Vue {
   }
 
   @Watch('compAttr')
-  update(){
+  update() {
     this.$forceUpdate();
   }
 
   handleContent(e) {
     e.stopPropagation();
     console.log(e.target);
-    let compInfo = e.dataTransfer.getData("compInfo");
+    let compInfo = e.dataTransfer.getData('compInfo');
     this.currCompsData = compInfo;
     this.compAttr.childlist.push(JSON.parse(compInfo));
     this.compInfor = this.compList(this.compAttr.childlist);

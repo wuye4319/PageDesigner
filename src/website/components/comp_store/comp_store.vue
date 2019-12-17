@@ -1,6 +1,6 @@
 <template>
   <div class="complist">
-    <a-collapse>
+    <a-collapse v-model="activeKey">
       <a-collapse-panel
         v-for="(item,c) in classifyComp"
         :key="c"
@@ -8,7 +8,12 @@
         :disabled="!item.data.length"
       >
         <div class="details">
-          <a-popover placement="topRight" v-for="(base,i) of item.data" :key="i">
+          <a-popover
+            placement="bottomRight"
+            :mouseEnterDelay="1"
+            v-for="(base,i) of item.data"
+            :key="i"
+          >
             <template slot="content" width="200px">
               <div
                 class="imgBox"
@@ -24,11 +29,14 @@
             <span slot="title">{{ base.title }}</span>
             <a-button
               class="compItem"
+              :class="{customer: item.title === '自定义组件'}"
+              type="dashed"
+              :icon="base.icon ? base.icon : 'user'"
               draggable
               @dragstart="dragstart($event,base)"
               @dragend="dragend"
               @click="addComp(base)"
-            >{{ base.compName }}</a-button>
+            >{{ base.title }}</a-button>
           </a-popover>
         </div>
       </a-collapse-panel>
@@ -37,13 +45,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { State, Getter, Action, Mutation, namespace } from "vuex-class";
-import { Collapse } from "ant-design-vue";
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
+import { Collapse } from 'ant-design-vue';
 // import defaultImg from "/static/images/default.png";
 
-const webSite = namespace("webSite");
-const defaultImg = require("../../../../static/images/img.png");
+const webSite = namespace('webSite');
+const defaultImg = require('../../../../static/images/img.png');
 
 interface ComponentVal {
   type?: string;
@@ -53,27 +61,31 @@ interface ComponentVal {
 }
 
 @Component({
-  name: "comp-store-component",
+  name: 'comp-store-component',
   components: {}
 })
 export default class compStoreComponent extends Vue {
   @Prop() compData: Array<object>;
 
-  @webSite.Mutation("addPageInfor")
+  @webSite.Mutation('addPageInfor')
   addPageInfor: any;
+
   defaultImg = defaultImg;
+  activeKey: string[] = ['base', 'layout']
 
   get classifyComp() {
     let obj = {
-      base: { title: "基础组件", data: [] },
-      layout: { title: "功能组件", data: [] },
-      business: { title: "扩展组件", data: [] },
-      custom: { title: "自定义组件", data: [] }
+      base: { title: '基础组件', data: [] },
+      layout: { title: '功能组件', data: [] },
+      business: { title: '扩展组件', data: [] },
+      custom: { title: '自定义组件', data: [] }
     };
 
     let compData = this.compData;
-    compData &&compData.length &&compData.forEach((item: ComponentVal) => {
-      obj[item.type].data.push(item);
+    compData && compData.length && compData.forEach((item: ComponentVal) => {
+      if (item.compAttr['display'] !== 'hide') {
+        obj[item.type].data.push(item);
+      }
     });
     return obj;
   }
@@ -82,24 +94,29 @@ export default class compStoreComponent extends Vue {
 
   mounted() {}
 
-  addComp(comp: object) {
-    this.addPageInfor(comp);
+  addComp(comp: any) {
+    let copyComp = JSON.parse(JSON.stringify(comp))
+    this.addPageInfor(copyComp);
+    this.$emit('addPageComp')
+    if (comp.compName === 'bottomNav') {
+      document.querySelector('.flip-list').setAttribute('class', 'flip-list bottomPadding')
+    }
   }
 
   imgError(e) {
     let target = e.target || {};
-    target.src = require("../../../../static/images/img.png");
+    target.src = require('../../../../static/images/img.png');
     target.onerror = null;
   }
 
   dragstart(e, info) {
     let compInfo = JSON.stringify(info);
-    e.dataTransfer.setData("compInfo", compInfo);
-    e.dataTransfer.setData("animation", "move");
+    e.dataTransfer.setData('compInfo', compInfo);
+    e.dataTransfer.setData('animation', 'move');
   }
   dragend(event) {
     event.dataTransfer.clearData();
-    this.$emit("moveDragend");
+    this.$emit('moveDragend');
   }
 }
 </script>
@@ -109,21 +126,24 @@ export default class compStoreComponent extends Vue {
   flex-wrap: wrap;
   justify-content: space-between;
   .compItem {
-    width: 86px;
-    height: 30px;
-    background: rgba(0, 0, 0, 0.02);
-    border: 1px dashed rgba(209, 209, 209, 1);
     padding: 0;
-    margin-bottom: 8px;
+    padding-left: 8px;
+    width:98px;
+    height:30px;
+    margin-top: 8px;
+    text-align: left;
+    background:rgba(0,0,0,0.02);
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    padding: 0 2px;
-    &:hover {
-      border-color: #17bc94;
+    &:nth-child(-n+2) {
+      margin-top: 0;
     }
-    &:nth-child(even) {
-      margin-bottom: 0;
+    &.customer {
+      width: 100%;
+      &:nth-child(2) {
+        margin-top: 8px;
+      }
     }
   }
 }
@@ -141,6 +161,7 @@ export default class compStoreComponent extends Vue {
   background: rgba(255, 255, 255, 1);
   border-radius: 4px;
   flex: 1;
+  overflow: auto;
   .imgBox {
     width: 154px;
     height: 128px;

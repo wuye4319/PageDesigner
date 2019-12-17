@@ -2,14 +2,14 @@
   <div class="grid-control">
     <p>栅格样式</p>
     <div class="gridStyle">
-          <a-button style="width: 25%;padding: 0;" @click="changeVal([12,12])">12:12</a-button>
-          <a-button style="width: 25%;padding: 0;" @click="changeVal([8,16])">8:16</a-button>
-          <a-button style="width: 25%;padding: 0;" @click="changeVal([16,8])">16:8</a-button>
-          <a-button style="width: 25%;padding: 0;" @click="changeVal([6,6,6,6])">6:6:6:6</a-button>
-          <a-button style="width: 25%;padding: 0;" @click="changeVal([8,8,8])">8:8:8</a-button>
-          <a-button style="width: 25%;padding: 0;" @click="changeVal([4,8,4,8])">4:8:4:8</a-button>
-          <a-button style="width: 25%;padding: 0;" @click="changeVal([6,12,6])">6:12:6</a-button>
-          <a-button style="width: 25%;padding: 0;" @click="changeVal([4,4,4,4,4,4])">4:4:4:4:4:4</a-button>
+      <a-button style="width: 25%;padding: 0;" @click="changeVal([12,12])">12:12</a-button>
+      <a-button style="width: 25%;padding: 0;" @click="changeVal([8,16])">8:16</a-button>
+      <a-button style="width: 25%;padding: 0;" @click="changeVal([16,8])">16:8</a-button>
+      <a-button style="width: 25%;padding: 0;" @click="changeVal([6,6,6,6])">6:6:6:6</a-button>
+      <a-button style="width: 25%;padding: 0;" @click="changeVal([8,8,8])">8:8:8</a-button>
+      <a-button style="width: 25%;padding: 0;" @click="changeVal([4,8,4,8])">4:8:4:8</a-button>
+      <a-button style="width: 25%;padding: 0;" @click="changeVal([6,12,6])">6:12:6</a-button>
+      <a-button style="width: 25%;padding: 0;" @click="changeVal([4,4,4,4,4,4])">4:4:4:4:4:4</a-button>
       <!-- <a-collapse accordion>
         <a-collapse-panel header="分栏样式" style="padding: 0;">
         </a-collapse-panel>

@@ -1,6 +1,10 @@
 <template>
   <div class="mymap">
-    <img :src="require('../../../../../static/images/map.png')" width="100%" alt="">
+    <img
+      :src="require('../../../../../static/images/map.png')"
+      :style="comAttr"
+      alt=""
+    >
   </div>
 </template>
 
@@ -18,8 +22,6 @@ export default class mapComponent extends Vue {
   @Prop() compData: any;
 
   comAttr: any = this.compData.compAttr;
-  comName = this.compData.compName;
-  content: any = this.comAttr.content
 
   created(): void {
   }

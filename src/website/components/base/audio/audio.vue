@@ -3,14 +3,6 @@
     class="myaudio"
     :src="comAttr.src || audioDemo"
     controls="controls"
-    :style="{
-      'width':comAttr.width,
-      'height':comAttr.height,
-      'margin':comAttr.margin,
-      'padding':comAttr.padding,
-      'border-color':comAttr.borderColor,
-      'border-radius':comAttr.height/2
-    }"
   >
     您的浏览器版本过低，推荐下载最新版谷歌浏览器体验
   </audio>

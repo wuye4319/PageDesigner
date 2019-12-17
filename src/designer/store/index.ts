@@ -13,7 +13,7 @@ const designerModule: Module<DesignerState, any> = {
   state: new DesignerState(),
   mutations,
   getters,
-  actions,
+  actions
 };
 
 export default designerModule;

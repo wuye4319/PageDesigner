@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { baseUrl } from './env';
-import { jsonParse } from '@/common/utils';
+// import { jsonParse } from '@/common/utils';
 
 const instance = axios.create();
 
@@ -14,7 +14,7 @@ instance.interceptors.request.use((config) => {
 instance.interceptors.response.use((response) => {
   let responseData = response.data;
   if (typeof responseData !== 'object') {
-    responseData = jsonParse(responseData);
+    // responseData = jsonParse(responseData);
     response.data = responseData;
   }
   return responseData;

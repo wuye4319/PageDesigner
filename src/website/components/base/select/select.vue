@@ -3,18 +3,8 @@
     class="myselect"
     :size="comAttr.size"
     placeholder="请选择"
-    :style="{
-      'width':comAttr.width,
-      'height':comAttr.height,
-      'line-height': comAttr.height,
-      //'border-radius':comAttr.borderRadius,
-      //'border-style':comAttr.borderStyle,
-      //'border-color':comAttr.borderColor,
-      //'border-width':comAttr.borderWidth,
-      'font-size':comAttr.fontSize,
-      'color':comAttr.fontColor,
-      'size':comAttr.size
-    }"
+    :style="comAttr"
+    :mode="comAttr.mode"
   >
     <a-select-option v-for="i in 10" :key="(i + 9).toString(36) + i">{{ (i + 9).toString(36) + i }}</a-select-option>
   </a-select>
@@ -34,8 +24,6 @@ export default class selectComponent extends Vue {
   @Prop() compData: any;
 
   comAttr: any = this.compData.compAttr;
-  comName = this.compData.compName;
-  content: any = this.comAttr.content
 
   created(): void {
   }
@@ -43,8 +31,5 @@ export default class selectComponent extends Vue {
 </script>
 
 <style lang="less" scoped>
-.myselect {
-  transition: 0.5s all;
-  margin-top: 5px;
-}
+
 </style>

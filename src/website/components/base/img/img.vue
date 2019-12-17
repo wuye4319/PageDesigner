@@ -4,7 +4,7 @@
     :height="comAttr.height"
     :src="comAttr.src || examImg"
     :alt="comAttr.alt"
-    :style="{'margin':comAttr.margin,'padding':comAttr.padding}"
+    :style="{'margin':comAttr.margin,'padding':comAttr.padding,'border-radius':comAttr.borderRadius}"
   />
 </template>
 

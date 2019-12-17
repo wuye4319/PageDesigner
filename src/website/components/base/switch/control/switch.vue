@@ -15,10 +15,8 @@ const webSite = namespace('webSite');
 })
 export default class activeComponent extends Vue {
   @Prop() compData: any
-  @Prop()
-  compIndex: number
+
   pageData: any = this.compData
-  choosen: number = 3
 
   @webSite.Getter('pageInfor')
   pageInfor: Website.pageInfor;
@@ -34,7 +32,6 @@ export default class activeComponent extends Vue {
 
   changeVal(name) {
     this.pageData.compAttr[name] = this[name];
-    this.editPageInfor({ index: this.compIndex, data: this.pageData.compAttr });
   }
 }
 </script>

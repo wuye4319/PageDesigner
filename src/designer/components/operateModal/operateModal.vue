@@ -19,6 +19,7 @@
       v-model="createPage.visible"
       @ok="createOk"
       okText="新增"
+      :okButtonProps="{ props: {disabled: createPageButton} }"
       cancelText="取消"
       centered
       :confirmLoading="createPage.confirmLoading"
@@ -26,17 +27,29 @@
       <a-list itemLayout="horizontal">
         <a-list-item>
           <div class="model-cont">
-            <div class="name">请输入需要添加的标题:</div>
+            <div class="name"><span class="required">*</span>路由名称(英文):</div>
             <div class="desc">
-              <a-input placeholder="请输入需要添加的标题" v-model="createPage.title"/>
+              <a-input placeholder="请输入需要添加的标题" v-model.trim="createPage.title" @change="titleChange"/>
             </div>
           </div>
         </a-list-item>
         <a-list-item>
           <div class="model-cont">
-            <div class="name">请输入需要添加的名称:</div>
+            <div class="name"><span class="required">*</span>页面名称:</div>
             <div class="desc">
-              <a-input placeholder="请输入需要添加的名称" v-model="createPage.name"/>
+              <a-input placeholder="请输入需要添加的页面名称" v-model.trim="createPage.name" @change="nameChange" />
+            </div>
+          </div>
+        </a-list-item>
+        <a-list-item>
+          <div class="model-cont">
+            <div class="name">描述:</div>
+            <div class="desc">
+              <a-textarea
+                placeholder="请输入需要添加的描述"
+                :rows="2"
+                v-model="createPage.desc"
+              />
             </div>
           </div>
         </a-list-item>
@@ -46,8 +59,6 @@
     <a-modal
       title="删除子页面"
       v-model="deletePage.visible"
-      okText="删除"
-      cancelText="取消"
       centered
     >
       <div :style="{ borderBottom: '1px solid #E9E9E9' }">
@@ -68,21 +79,29 @@
         </div>
       </a-checkbox-group>
       <div slot="footer">
-        <a-button>取消</a-button>
-        <a-popconfirm
-          title="你确定要删除这些页面吗?"
-          @confirm="deleteOk"
-          @cancel="deleteCancel"
-          okText="确定"
-          cancelText="取消"
-        >
-          <a-icon
-            slot="icon"
-            type="question-circle-o"
-            style="color: red"
-          />
-          <a-button type="danger" :loading="deletePage.confirmLoading">删除</a-button>
-        </a-popconfirm>
+        <a-button @click="deleteCancel">取消</a-button>
+        <template v-if="deletePageButton">
+          <a-popconfirm
+            title="你确定要删除这些页面吗?"
+            @confirm="deleteOk"
+            okText="确定"
+            cancelText="取消"
+          >
+            <a-icon
+              slot="icon"
+              type="question-circle-o"
+              style="color: red"
+            />
+            <a-button type="danger" :loading="deletePage.confirmLoading">删除</a-button>
+          </a-popconfirm>
+        </template>
+        <template v-else>
+          <a-button
+            type="danger"
+            :loading="deletePage.confirmLoading"
+            disabled
+          >删除</a-button>
+        </template>
       </div>
     </a-modal>
   </div>
@@ -90,14 +109,15 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { State, Action, Mutation, namespace } from 'vuex-class';
-import { Select, Button, Input, Modal } from 'ant-design-vue';
+import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
+import axios from '@/common/config/axios';
 
 interface Model {
   visible: boolean;
   confirmLoading?: boolean;
   [propName: string]: any;
 }
+const webSite = namespace('webSite');
 
 @Component({
   name: 'operate-modal',
@@ -105,48 +125,89 @@ interface Model {
 })
 export default class OperateModal extends Vue {
   $message
+  $router
   createPage: Model = {
     // 新增页面弹框
     visible: false, // 弹框开关
     confirmLoading: false, // loading开关
     title: '', // 标题
-    name: '' // 标题名称
+    name: '', // 页面名称
+    desc: '' // 描述
   };
   deletePage: Model = {
     // 删除页面弹框
     visible: false, // 弹框开关
     confirmLoading: false, // loading开关
-    options: ['Apple', 'Pear', 'Orange'], // 选项
-    checkedList: ['Apple', 'Orange'], // 选中的值
+    options: [], // 选项
+    checkedList: [], // 选中的值
     checkAll: false, // 全选按钮
-    indeterminate: true //
+    indeterminate: false // 全选样式
   };
 
-  @Prop() appInfor: any
+  @webSite.Getter('appInfor')
+  appInfor;
+
+  @webSite.Action('handleAppInfo')
+  handleAppInfo;
+
+  get createPageButton():boolean {
+    let status = this.createPage.title && this.createPage.name;
+    return !status;
+  }
+
+  get deletePageButton():boolean {
+    let status = this.deletePage.checkedList.length > 0;
+    return status;
+  }
 
   get pageList() {
     let comps = Object.keys(this.appInfor);
     return comps;
   }
 
-  mounted() {
-
-  }
   // 打开新增
   openCreate() {
     this.createPage.title = '';
     this.createPage.name = '';
+    this.createPage.desc = ''; // 描述
     this.createPage.visible = true;
+  }
+
+  // 只能输入英文和数字
+  titleChange(e) {
+    this.createPage.title = this.createPage.title.replace(/[\W]/g, '');
+  }
+
+  // 只能输入中文、英文和数字
+  nameChange(e) {
+    this.createPage.name = this.createPage.name.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g, '');
   }
 
   // 新增页面弹框[确定]
   createOk() {
     this.createPage.confirmLoading = true;
-    setTimeout(() => {
+    let appInfor = this.appInfor;
+    appInfor[this.createPage.title] = {
+      title: this.createPage.name,
+      module: []
+    };
+    let params = {
+      page: appInfor
+    };
+    let appID = this.$router.currentRoute.params.appID;
+    this.handleAppInfo({
+      url: '/page/pageconfig/' + appID,
+      params
+    }).then(() => {
       this.createPage.visible = false;
       this.createPage.confirmLoading = false;
-      this.$message.success('新增success');
-    }, 2000);
+      this.$message.success('新增成功！');
+      this.$emit('creatOk');
+    }).catch(() => {
+      this.createPage.visible = false;
+      this.createPage.confirmLoading = false;
+      this.$message.error('新增失败，请重新尝试');
+    });
   }
 
   // 打开删除
@@ -154,22 +215,46 @@ export default class OperateModal extends Vue {
     this.deletePage.options = this.pageList;
     this.deletePage.checkedList = [];
     this.deletePage.visible = true;
+    this.deletePage.indeterminate = false;
+    this.deletePage.checkAll = false, // 全选按钮
+    this.deletePage.indeterminate = false // 全选样式
   }
 
   // 删除页面弹框[确定]
   deleteOk() {
     this.deletePage.confirmLoading = true;
-    setTimeout(() => {
+    let appInfor = this.appInfor;
+    this.deletePage.checkedList.forEach((item) => {
+      delete appInfor[item];
+    });
+    let params = {
+      page: appInfor
+    };
+    let appID = this.$router.currentRoute.params.appID;
+    this.handleAppInfo({
+      url: '/page/pageconfig/' + appID,
+      params
+    }).then(() => {
       this.deletePage.visible = false;
       this.deletePage.confirmLoading = false;
-      this.$message.success('删除success');
-    }, 2000);
+      this.$message.success('删除成功！');
+      if (Object.keys(params.page).length === 0) {
+        let replaceUrl = `${window.location.origin}/#/designer/${appID}/default?screen=desktop`
+        window.location.replace(replaceUrl)
+        window.location.reload(true)
+      }
+    }).catch(() => {
+      this.deletePage.visible = false;
+      this.deletePage.confirmLoading = false;
+      this.$message.error('删除失败，请重新尝试');
+    });
   }
 
   // 删除页面弹框[取消]
   deleteCancel() {
     this.deletePage.visible = false;
   }
+  // 删除框内数据改变
   deleteChange(checkedList) {
     this.deletePage.indeterminate =
       !!checkedList.length &&
@@ -177,6 +262,7 @@ export default class OperateModal extends Vue {
     this.deletePage.checkAll =
       checkedList.length === this.deletePage.options.length;
   }
+  // 删除框内[全选]
   deleteCheckAll(e) {
     Object.assign(this.deletePage, {
       checkedList: e.target.checked ? this.deletePage.options : [],
@@ -194,6 +280,23 @@ export default class OperateModal extends Vue {
   align-items: center;
   .delete {
     margin-left: 20px;
+  }
+}
+.model-cont {
+  width: 80%;
+  display: flex;
+  .name {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    flex: 1;
+    justify-content: flex-end;
+  }
+  .desc {
+    flex: 1.5;
+  }
+  .required {
+    color: #f5222d;
   }
 }
 </style>

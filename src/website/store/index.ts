@@ -12,8 +12,16 @@ export class WebSiteState {
   CompStore: object = {}
   // 支持Layout的组件库
   LayoutStore: object = {}
-  //接受当前页面所有信息
-  PageStyle: object = {}
+  // 接受当前应用全局信息
+  Global: object = {}
+  // 整个App后台传来的数据信息
+  CurrentApps: object = {}
+  // 当前页面表信息
+  Tables: object[] =[]
+  // 暴露给用户的页面对象
+  UserData: object = {}
+  // 当前应用所有可选动作
+  Actions: object[] =[]
 }
 
 const websiteModule: Module<WebSiteState, any> = {
@@ -21,7 +29,7 @@ const websiteModule: Module<WebSiteState, any> = {
   state: new WebSiteState(),
   mutations,
   getters,
-  actions,
+  actions
 };
 
 export default websiteModule;

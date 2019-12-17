@@ -14,17 +14,6 @@
 
       <a-list-item>
         <a-list-item-meta>
-          <div slot="description">高度:</div>
-        </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="initData.height"
-          @blur="changeVal('height')"
-        />
-      </a-list-item>
-
-      <a-list-item>
-        <a-list-item-meta>
           <div slot="description">字体大小:</div>
         </a-list-item-meta>
         <a-input
@@ -62,8 +51,8 @@
           <div slot="description">对齐方式:</div>
         </a-list-item-meta>
         <a-radio-group
-          @change="changeVal('align')"
-          v-model="initData.align"
+          @change="changeVal('textAlign')"
+          v-model="initData.textAlign"
           class="type-radio"
         >
           <a-radio value="left">左边</a-radio>
@@ -82,11 +71,10 @@ const webSite = namespace('webSite');
 
 interface ProgressData {
   cont:string,
-  height:string,
   fontSize:string,
   color:string,
   showMore:boolean,
-  align:string
+  textAlign:string
 }
 
 @Component({
@@ -98,11 +86,10 @@ export default class TitleComponent extends Vue {
 
   initData:ProgressData = {
     cont: '', // 内容
-    height: '', // 高度
     fontSize: '', // 字体大小
     color: '', // 颜色
     showMore: false, // 显示更多
-    align: '' // 对齐
+    textAlign: '' // 对齐
   }
   pageData: any = this.compData
 
@@ -120,7 +107,6 @@ export default class TitleComponent extends Vue {
 
   changeVal(name) {
     this.pageData.compAttr[name] = this.initData[name];
-    this.editPageInfor({ index: this.compIndex, data: this.pageData.compAttr });
   }
 }
 </script>

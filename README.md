@@ -1,39 +1,16 @@
-# hackernews-async-ts
+# components-ts
 
-[Hacker News](https://news.ycombinator.com/) showcase using typescript && egg
+# 设计器项目
 
-## QuickStart
+# 目标结构说明
 
-### Development
-
-```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:8001/
-```
-
-Don't tsc compile at development mode, if you had run `tsc` then you need to `npm run clean` before `npm run dev`.
-
-### Deploy
-
-```bash
-$ npm run build
-$ npm start
-```
-
-### Npm Scripts
-
-- Use `npm run lint` to check code style
-- Use `npm test` to run unit test
-- se `npm run clean` to clean compiled js at development mode once
-
-### Requirement
-
-- Node.js 8.x
-- Typescript 2.8+
-
-### 部署方案
-- Nginx
-- 80:PHP frontend
-- 443:Vue frontend
-- 7001:nodejs middle server
+src     源码资源
+  designer   设计器外壳
+  website    可视区域
+  wrapper    容器
+  admin      源码管理平台
+static  静态资源
+server  服务部署
+public  HTML模板
+npm     包化管理
+dist    编译后资源

@@ -10,6 +10,7 @@ class staticFiles {
     let rpath = ctx.request.path
     // file path
     let fp = path.join(path.resolve(), dir, rpath)
+    console.log(fp)
     if (fs.existsSync(fp)) {
       let stats = await fs.statSync(fp)
       if (stats.isDirectory()) {

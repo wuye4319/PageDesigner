@@ -2,18 +2,7 @@
   <a-input
     class="myinput"
     :placeholder="comAttr.placeHolder"
-    :style="{
-      'width':comAttr.width,
-      'height':comAttr.height,
-      'margin':comAttr.margin,
-      'padding':comAttr.padding,
-      'border-radius':comAttr.borderRadius,
-      'border-style':comAttr.borderStyle,
-      'border-color':comAttr.borderColor,
-      'border-width':comAttr.borderWidth,
-      'font-size':comAttr.fontSize,
-      'color':comAttr.fontColor
-    }"
+    :style="comAttr"
   />
 </template>
 
@@ -31,7 +20,6 @@ export default class inputComponent extends Vue {
     @Prop() compData: any;
 
     comAttr:any = this.compData.compAttr;
-    comName = this.compData.compName;
 
     created():void{
     }

@@ -1,6 +1,29 @@
 <template>
   <div class="input-component">
-    地图
+    <a-list itemLayout="horizontal">
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">地图宽度:</div>
+        </a-list-item-meta>
+        <a-input
+          placeholder="Basic usage"
+          v-model="width"
+          @blur="changeVal('width')"
+        />
+      </a-list-item>
+
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">地图高度:</div>
+        </a-list-item-meta>
+        <a-input
+          placeholder="Basic usage"
+          v-model="height"
+          @blur="changeVal('height')"
+        />
+      </a-list-item>
+
+    </a-list>
   </div>
 </template>
 
@@ -15,22 +38,10 @@ const webSite = namespace('webSite');
 })
 export default class activeComponent extends Vue {
   @Prop() compData: any
-  @Prop()
-  compIndex: number
+
   pageData: any = this.compData
-  width: string = ''
-  height: string = ''
-  imgHeight: string = ''
-  borderRadius: string = ''
-  borderColor: string = ''
-  borderStyle: string = ''
-  borderWidth: string = ''
-  lineClamp: number = 2
-  fontSize: string = '14px'
-  fontColor: string = '#000'
-  titleChecked: boolean = true
-  content: any = []
-  size: string = ''
+  width:string = ''
+  height:string = ''
 
   @webSite.Getter('pageInfor')
   pageInfor: Website.pageInfor;
@@ -46,7 +57,6 @@ export default class activeComponent extends Vue {
 
   changeVal(name) {
     this.pageData.compAttr[name] = this[name];
-    this.editPageInfor({ index: this.compIndex, data: this.pageData.compAttr });
   }
 }
 </script>

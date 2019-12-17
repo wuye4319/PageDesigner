@@ -1,17 +1,27 @@
 <template>
-  <div class="nav-mobile" :style="{width:pageData.width}" :class="{'show-border':pageData.showBorder}">
+  <div
+    class="nav-mobile"
+    :class="{'show-border':pageData.showBorder}"
+  >
     <a-list
       :grid="pageData"
       :dataSource="navData"
       :bordered="false"
     >
       <a-list-item slot="renderItem" slot-scope="item,i">
-        <div class="list-item" :style="{height:pageData.rowHeight}" :class="{'line-row':pageData.lineRow}">
+        <div
+          class="list-item"
+          :class="{'line-row':pageData.lineRow}"
+        >
           <div class="pic">
-            <img class="img" :src="require(`./nav${i}.png`)" alt="">
+            <img
+              class="img"
+              :src="require(`./nav${i}.png`)"
+              alt=""
+            >
           </div>
           <div class="text">
-            {{item.text}}
+            {{ item.text }}
           </div>
         </div>
       </a-list-item>
@@ -22,16 +32,15 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-import { guid } from '@/common/utils';
 
 const webSite = namespace('webSite');
 
 const numberData = [
-  {text: '理论宣讲'},
-  {text: '教育服务'},
-  {text: '科技服务'},
-  {text: '公益平台'}
-]
+  { text: '理论宣讲' },
+  { text: '教育服务' },
+  { text: '科技服务' },
+  { text: '公益平台' }
+];
 
 @Component({
   name: 'nav-mobile'
@@ -51,11 +60,11 @@ export default class Navmobile extends Vue {
     let maxLen = row * column;
     let arr = [];
     if (maxLen > numberData.length) {
-      arr = numberData
+      arr = numberData;
     } else {
-      arr = numberData.slice(0, maxLen)
+      arr = numberData.slice(0, maxLen);
     }
-    return arr
+    return arr;
   }
 
   created():void {

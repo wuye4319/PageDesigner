@@ -16,7 +16,6 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-import { guid } from '@/common/utils';
 
 const webSite = namespace('webSite');
 
@@ -35,7 +34,7 @@ export default class PaginationView extends Vue {
   }
 
   onShowSizeChange(current, pageSize) {
-    this.pageSize = pageSize
+    this.pageSize = pageSize;
   }
 }
 </script>

@@ -9,5 +9,11 @@ export enum WebSite {
   layoutStore = 'layoutStore',
   changePageInfor = 'changePageInfor',
   changePageInforRow = 'changePageInforRow',
-  pageStyle ='pageStyle'
+  global ='global',
+  handleAppInfo = 'handleAppInfo',
+  currentApps = 'currentApps',
+  tables = 'tables',
+  userData = 'userData',
+  handleUserData = 'handleUserData',
+  actions = 'actions'
 }

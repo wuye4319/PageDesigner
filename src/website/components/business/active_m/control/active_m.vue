@@ -1,16 +1,6 @@
 <template>
   <div class="active-component">
     <a-list itemLayout="horizontal">
-      <a-list-item>
-        <a-list-item-meta>
-          <div slot="description">宽度:</div>
-        </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="width"
-          @blur="changeVal('width')"
-        />
-      </a-list-item>
 
       <a-list-item>
         <a-list-item-meta>
@@ -123,7 +113,6 @@ export default class activeComponent extends Vue {
   @Prop()
   compIndex: number
 
-  width: string = ''
   imgHeight: string = ''
   borderRadius: string = ''
   lineClamp: number = 2
@@ -137,9 +126,6 @@ export default class activeComponent extends Vue {
   @webSite.Getter('pageInfor')
   pageInfor: Website.pageInfor;
 
-  @webSite.Mutation('editPageInfor')
-  editPageInfor;
-
   created(): void {
     for (let key of Object.keys(this.pageData.compAttr)) {
       this[key] = this.pageData.compAttr[key];
@@ -148,7 +134,10 @@ export default class activeComponent extends Vue {
 
   changeVal(name) {
     this.pageData.compAttr[name] = this[name];
-    this.editPageInfor({ index: this.compIndex, data: this.pageData.compAttr });
+    if (name === 'direction') {
+      let val = this[name] === 'row' ? '100%' : '';
+      this.pageData.compAttr.itemWidth = this.itemWidth = val;
+    }
   }
 }
 </script>

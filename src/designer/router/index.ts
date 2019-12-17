@@ -1,5 +1,5 @@
 const routes = [{
-  path: '/designer/:page',
+  path: '/designer/:appID/:page',
   name: 'designer',
   meta: {
     title: '页面设计器'

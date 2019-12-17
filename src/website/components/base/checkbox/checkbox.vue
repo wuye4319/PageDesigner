@@ -1,16 +1,5 @@
 <template>
-  <a-checkbox-group>
-    <a-row>
-      <a-col
-        :value="i"
-        v-for="i in Number(comAttr.choosen)"
-        :key="(i + 9).toString(36) + i"
-        :span="8"
-      >
-        <a-checkbox :value="i">option{{ i }}</a-checkbox>
-      </a-col>
-    </a-row>
-  </a-checkbox-group>
+  <a-checkbox-group :options="checkOptions"/>
 </template>
 
 <script lang="ts">
@@ -19,6 +8,7 @@ import { Checkbox } from 'ant-design-vue';
 import { namespace } from 'vuex-class';
 
 const webSite = namespace('webSite');
+const checkOptions = ['apple', 'pear', 'orange'];
 @Component({
   name: 'select-component'
 })
@@ -27,6 +17,7 @@ export default class selectComponent extends Vue {
     @Prop() compData: any;
 
     comAttr:any = this.compData.compAttr;
+    checkOptions = checkOptions
 
     created():void{
     }

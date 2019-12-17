@@ -55,7 +55,7 @@
     </a-list-item>
     <a-list-item>
       <a-list-item-meta>
-        <div slot="description">高度:</div>
+        <div slot="description">图片高度:</div>
       </a-list-item-meta>
       <a-input
         placeholder="Basic usage"
@@ -65,7 +65,7 @@
     </a-list-item>
     <a-list-item>
       <a-list-item-meta>
-        <div slot="description">宽度:</div>
+        <div slot="description">图片宽度:</div>
       </a-list-item-meta>
       <a-input
         placeholder="Basic usage"
@@ -116,9 +116,6 @@ export default class headerComponent extends Vue {
 
   changeVal(name) {
     this.pageData.compAttr[name] = this[name];
-    this.editPageInfor({
-      data: this.pageData.compAttr,
-      index: this.compIndex });
   }
 }
 </script>

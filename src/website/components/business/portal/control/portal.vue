@@ -4,8 +4,12 @@
       <a-collapse-panel header="header" key="1">
         <ul>
           <li>
-            <h4>mode</h4>   
-            <a-select defaultValue="horizontal" @change="changeVal('header','mode')" v-model="header.mode">
+            <h4>mode</h4>
+            <a-select
+              defaultValue="horizontal"
+              @change="changeVal('header','mode')"
+              v-model="header.mode"
+            >
               <a-select-option value="vertical">vertical</a-select-option>
               <a-select-option value="vertical-right">vertical-right</a-select-option>
               <a-select-option value="horizontal">horizontal</a-select-option>
@@ -13,23 +17,35 @@
             </a-select>
           </li>
           <li>
-            <h4>theme</h4>   
-            <a-select defaultValue="light" @change="changeVal('header','theme')" v-model="header.theme">
+            <h4>theme</h4>
+            <a-select
+              defaultValue="light"
+              @change="changeVal('header','theme')"
+              v-model="header.theme"
+            >
               <a-select-option value="light">light</a-select-option>
               <a-select-option value="dark">dark</a-select-option>
             </a-select>
           </li>
           <li>
-            <h4>show</h4>   
+            <h4>show</h4>
             <a-switch v-model="header.show" @change="changeVal('header','show')"/>
           </li>
         </ul>
       </a-collapse-panel>
-      <a-collapse-panel header="sider" key="2" :disabled="false">
+      <a-collapse-panel
+        header="sider"
+        key="2"
+        :disabled="false"
+      >
         <ul>
           <li>
-            <h4>mode</h4>   
-            <a-select defaultValue="horizontal" @change="changeVal('sider','mode')" v-model="sider.mode">
+            <h4>mode</h4>
+            <a-select
+              defaultValue="horizontal"
+              @change="changeVal('sider','mode')"
+              v-model="sider.mode"
+            >
               <a-select-option value="vertical">vertical</a-select-option>
               <a-select-option value="vertical-right">vertical-right</a-select-option>
               <a-select-option value="horizontal">horizontal</a-select-option>
@@ -37,30 +53,38 @@
             </a-select>
           </li>
           <li>
-            <h4>theme</h4>   
-            <a-select defaultValue="light" @change="changeVal('sider','theme')" v-model="sider.theme">
+            <h4>theme</h4>
+            <a-select
+              defaultValue="light"
+              @change="changeVal('sider','theme')"
+              v-model="sider.theme"
+            >
               <a-select-option value="light">light</a-select-option>
               <a-select-option value="dark">dark</a-select-option>
             </a-select>
           </li>
           <li>
-            <h4>collapsible</h4>   
+            <h4>collapsible</h4>
             <a-switch v-model="sider.collapsible" @change="changeVal('sider','collapsible')"/>
           </li>
           <li>
-            <h4>show</h4>   
+            <h4>show</h4>
             <a-switch v-model="sider.show" @change="changeVal('sider','show')"/>
           </li>
         </ul>
       </a-collapse-panel>
-      <a-collapse-panel header="logo" key="3" :disabled="false">
+      <a-collapse-panel
+        header="logo"
+        key="3"
+        :disabled="false"
+      >
         <ul>
           <li>
-            <h4>image</h4>   
-            <a-input v-model="logo.img" @change="changeVal('logo','img')" />
+            <h4>image</h4>
+            <a-input v-model="logo.img" @change="changeVal('logo','img')"/>
           </li>
           <li>
-            <h4>text</h4>   
+            <h4>text</h4>
             <a-input v-model="logo.text" @change="changeVal('logo','text')"/>
           </li>
         </ul>
@@ -70,13 +94,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { State, Getter, Action, Mutation, namespace } from "vuex-class";
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
 
-const webSite = namespace("webSite");
+const webSite = namespace('webSite');
 
 @Component({
-  name: "table-component",
+  name: 'table-component',
   components: {}
 })
 export default class tableComponent extends Vue {
@@ -85,7 +109,7 @@ export default class tableComponent extends Vue {
 
   initData = {
     mode: true, // 是否使用动画切换 Tabs，在 tabPosition=top|bottom 时有效
-    theme: 'line', // 页签的基本样式，可选 line、card editable-card 类型
+    theme: 'line' // 页签的基本样式，可选 line、card editable-card 类型
   }
   pageData: any = this.compData;
   header: any = this.pageData.compAttr.header;
@@ -94,18 +118,18 @@ export default class tableComponent extends Vue {
 
   columns = [
     {
-      title: "Name",
-      dataIndex: "name",
+      title: 'Name',
+      dataIndex: 'name',
       width: 150
     },
     {
-      title: "Age",
-      dataIndex: "age",
+      title: 'Age',
+      dataIndex: 'age',
       width: 150
     },
     {
-      title: "Address",
-      dataIndex: "address"
+      title: 'Address',
+      dataIndex: 'address'
     }
   ];
   data = [
@@ -142,21 +166,18 @@ export default class tableComponent extends Vue {
 
   mounted() {}
 
-  handleChange(){
+  handleChange() {
 
   }
 
-  changeVal(type,name) {
-    if(type == 'header'){
-      if(name == 'theme'){
-        this.pageData.compAttr.logo.background = this[type][name] == 'dark'? '#001529':'#fff';
-        this.pageData.compAttr.logo.color = this[type][name] == 'dark'?'#fff' :'#001529';
+  changeVal(type, name) {
+    if (type === 'header') {
+      if (name === 'theme') {
+        this.pageData.compAttr.logo.background = this[type][name] === 'dark' ? '#001529' : '#fff';
+        this.pageData.compAttr.logo.color = this[type][name] === 'dark' ? '#fff' : '#001529';
       }
     }
-    console.log(this[type][name])
     this.pageData.compAttr[type][name] = this[type][name];
-    console.log(this.pageData)
-    this.editPageInfor({ index: this.compIndex, data: this.pageData.compAttr });
   }
 }
 </script>

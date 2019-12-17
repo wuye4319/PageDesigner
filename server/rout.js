@@ -7,7 +7,8 @@ let staticFiles = new StaticFiles()
 
 // static
 launcher.addrouter(/^\/(\w*)(?:\/|$)/, async (ctx) => {
-  await staticFiles.getfile(ctx, '../dist')
+  console.log('123')
+  await staticFiles.getfile(ctx, './package')
 })
 
 launcher.listen()

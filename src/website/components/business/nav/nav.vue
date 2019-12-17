@@ -1,6 +1,6 @@
 <template>
   <div class="myHeader">
-    <div class="logo" />
+    <div class="logo"/>
     <ul class="mymenue">
       <li>首页</li>
       <li>关于</li>
@@ -11,13 +11,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { State, Getter, Action, Mutation, namespace } from "vuex-class";
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
 
-const webSite = namespace("webSite");
+const webSite = namespace('webSite');
 
 @Component({
-  name: "nav-component",
+  name: 'nav-component',
   components: {}
 })
 export default class navComponent extends Vue {

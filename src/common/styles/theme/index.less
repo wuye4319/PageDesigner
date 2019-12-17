@@ -1,0 +1,28 @@
+@primary-color: #17BC94; // 全局主色
+@warning-color: #faad14; // 警告色
+
+.ant-desigener-border-color {
+  border-color: @primary-color;
+}
+
+.ant-desigener-font-color {
+  color: @primary-color;
+}
+
+.ant-desigener-font-warning-color {
+  color: @warning-color;
+}
+
+.ant-desigener-before-border-color {
+  &::before {
+    border-color: @primary-color;
+  }
+}
+
+.ant-desigener-after-border-color {
+  &::after {
+    border-color: @primary-color;
+  }
+}
+
+

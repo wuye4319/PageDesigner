@@ -1,15 +1,21 @@
 <template>
   <div class="tabs">
     <a-tabs
-      v-bind="pageData"
+      :animated="pageData.animated"
+      :type="pageData.type"
+      :hideAdd="pageData.hideAdd"
+      :size="pageData.size"
+      :tabPosition="pageData.tabPosition"
+      :tabBarGutter="0"
+      :defaultActiveKey="'tab'+(pageData.activeKey || '0')"
     >
       <a-tab-pane
-        v-for="pane in panes"
+        v-for="(pane,i) in paneData"
         :tab="pane.title"
-        :key="pane.key"
+        :key="'tab'+i"
         :closable="pane.closable"
       >
-        {{ pane.content }}
+        <layout v-if="pane.content" :compData="pane.content"/>
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -18,33 +24,95 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-import { guid } from '@/common/utils';
+import layout from '../../layout/layout/index';
+import page from '../../base/text_area/control/index';
 
 const webSite = namespace('webSite');
 
-const panes = [
-  { title: 'Tab 1', content: 'Content of Tab 1', key: '1' },
-  { title: 'Tab 2', content: 'Content of Tab 2', key: '2' },
-  { title: 'Tab 3', content: 'Content of Tab 3', key: '3' },
-  { title: 'Tab 4', content: 'Content of Tab 4', key: '4' }
-]
-
 @Component({
-  name: 'tabs'
+  name: 'tabs',
+  components: {
+    layout
+  }
 })
-
 export default class TabsView extends Vue {
-  @Prop() compData: any
+  @Prop() compData: any;
+  @Prop() compIndex: any;
 
-  panes:object[]=panes
-  pageData:any = this.compData.compAttr
+  @webSite.Getter('tables')
+  tables: [];
 
-  created():void {
+  pageData: any = this.compData.compAttr;
 
+  get paneData() {
+    let tabs: any = this.compData.compAttr.tabs;
+    return tabs;
+  }
+  created() {
+    console.log()
   }
 }
 </script>
 
 <style lang="less" scoped>
-
+/deep/.ant-tabs-line{
+  .ant-tabs-nav{
+  width: 100%;
+  &>div{
+    display: flex;
+    justify-content: space-around;
+  }
+  .ant-tabs-ink-bar{
+    display: none !important;
+  }
+  .ant-tabs-tab-active{
+    border-bottom: 3px solid #17BC94;
+  }
+}
+}
+/deep/.ant-tabs-tabpane{
+/deep/&>.layout{
+  padding-bottom: 16px;
+}
+}
+/deep/.ant-tabs-card-bar{
+  .ant-tabs-nav-container{
+    height: 25px !important;
+    margin: 6px;
+  }
+  .ant-tabs-nav-scroll{
+    text-align: left;
+  }
+  .ant-tabs-nav{
+  background: rgba(23, 188, 148, 0.3);
+  border-radius: 13px;
+  &>div{
+    display: flex;
+    justify-content: flex-start;
+  }
+  .ant-tabs-ink-bar{
+    display: none !important;
+  }
+  .ant-tabs-tab{
+    height: 25px;
+    line-height: 25px;
+    background: transparent !important;
+    border: none !important;
+  }
+  .ant-tabs-tab-active{
+    background: #17BC94 !important;
+    color: white !important;
+    border-radius: 13px !important;
+  }
+}
+}
+/deep/.ant-tabs-bar {
+  margin: 0;
+}
+/deep/.ant-tabs-content {
+  padding: 0;
+}
+.flesh{
+  display: none;
+}
 </style>

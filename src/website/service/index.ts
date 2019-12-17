@@ -3,9 +3,8 @@
  */
 
 // import { fetch } from '../util'
-import { baseUrl } from '@/common/config/env'
-import axios from '@/common/config/axios'
-
+import { baseUrl } from '@/common/config/env';
+import axios from '@/common/config/axios';
 /**
  * 获取用户数据
  */
@@ -14,15 +13,23 @@ export const getUserInfo = async (page: 0, size: number = 100) => {
     fetch(`${baseUrl}/sheets/AAA7f25B-8435-E39f-285f-dEf2cc0fAC19?pageIndex=${page}&pageSize=${size}`).then((res) => {
       return res.json();
     }).then((myJson) => {
-      resolve(myJson)
+      resolve(myJson);
     });
-  })
-}
+  });
+};
 
-export const getPageInfor = (domain: string) => {
-  return axios.get(`/page/pageconfig/${domain}`);
-}
+export const getPageInfor = (appID: string) => {
+  return axios.get(`/page/pageconfig/${appID}`);
+};
 
 export const getProductList = (id: string, pagesize: number, page: number) => {
   return axios.get(`/topic/${id}/${pagesize}/${page}`);
-}
+};
+
+export const handlePageInfo = (url, params) => {
+  return axios.post(url, params);
+};
+
+export const getTableContent = (tableName: string, params?) => {
+  return axios.get(`tables/tableContent/${tableName}`, { params });
+};

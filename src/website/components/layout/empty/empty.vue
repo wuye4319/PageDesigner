@@ -1,6 +1,6 @@
 <template>
   <div class="empty-view">
-
+    <span v-if="$route.name === 'designer'">拖动组件到此空白区域</span>
   </div>
 </template>
 
@@ -21,6 +21,8 @@ export default class EmptyView extends Vue {
   .empty-view {
     width: 100%;
     height: 50px;
-    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>

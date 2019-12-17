@@ -10,13 +10,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { State, Getter, Action, Mutation, namespace } from "vuex-class";
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
 
-const webSite = namespace("webSite");
+const webSite = namespace('webSite');
 
 @Component({
-  name: "footer-component",
+  name: 'footer-component',
   components: {}
 })
 export default class footerComponent extends Vue {
@@ -26,7 +26,7 @@ export default class footerComponent extends Vue {
   mounted() {}
 
   testClick() {
-    Vue.set(this.test, "test", "13");
+    Vue.set(this.test, 'test', '13');
     console.log(this.test);
   }
 }

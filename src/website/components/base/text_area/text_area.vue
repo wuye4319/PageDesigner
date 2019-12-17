@@ -1,17 +1,14 @@
 <template>
-  <div class="text-area" :style="{width:pageData.width}">
-    <a-textarea
-      v-bind="pageData"
-      v-model="pageData.value"
-      :style="{fontSize:pageData.fontSize,color:pageData.color}"
-    />
-  </div>
+  <a-textarea
+    v-bind="pageData"
+    v-model="pageData.value"
+    :style="pageData"
+  />
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-import { guid } from '@/common/utils'
 
 const webSite = namespace('webSite');
 

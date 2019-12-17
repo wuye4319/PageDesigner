@@ -1,7 +1,7 @@
 <template>
   <div class="grid-component">
     <grid-layout
-      :layout.sync="layout"
+      :layout.sync="compInfo"
       :col-num="12"
       :row-height="30"
       :is-draggable="true"
@@ -12,31 +12,35 @@
       :use-css-transforms="true"
     >
       <grid-item
-        v-for="(item) in layout"
+        v-for="(item) in compInfo"
         :x="item.x"
         :y="item.y"
         :w="item.w"
         :h="item.h"
         :i="item.i"
         :key="item.i"
-         @drop="handleContent"
+        @drop.stop="handleContent"
       >
-        <div v-if="typeof(compInfor)==='function'" :is="compInfor" :compData="compData"></div>
+        <!-- <div
+          :is="item.compInfo"
+          :compData="item.child"
+        ></div> -->
       </grid-item>
     </grid-layout>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import { State, Action, Mutation, namespace } from "vuex-class";
-import VueGridLayout from "vue-grid-layout";
-import { getCompsInfor, clone } from "@/common/utils";
+import { Component, Prop, Vue, Watch, Inject } from 'vue-property-decorator';
+import { State, Action, Mutation, namespace } from 'vuex-class';
+import VueGridLayout from 'vue-grid-layout';
+import { getCompsInfor } from '@/common/utils';
+import { compilation } from 'webpack';
 
-const webSite = namespace("webSite");
+const webSite = namespace('webSite');
 
 @Component({
-  name: "grid-component",
+  name: 'grid-component',
   components: {
     GridLayout: VueGridLayout.GridLayout,
     GridItem: VueGridLayout.GridItem
@@ -45,7 +49,7 @@ const webSite = namespace("webSite");
 export default class gridComponent extends Vue {
   @Prop() compData: any;
   @Prop() compIndex: number;
-  @Prop() compList: any;
+  @Inject('compList') compList
   compInfor: any = {};
   compAttr: any = this.compData.compAttr;
   currCompsData: any = {};
@@ -55,12 +59,22 @@ export default class gridComponent extends Vue {
   newViewList: any = [];
 
   mounted() {
-    console.log(this.compData);
+  }
+
+  get compInfo() {
+    let layout = this.layout || [];
+    let layEle = layout.map(item => {
+      let tempItem = item;
+      let compInfo = this.compList(item.children);
+      tempItem.compInfo = compInfo;
+      return tempItem;
+    });
+    return layEle || [];
   }
 
   handleContent(e) {
     e.stopPropagation();
-    let compInfo = e.dataTransfer.getData("compInfo");
+    let compInfo = e.dataTransfer.getData('compInfo');
     this.currCompsData = compInfo;
     this.compAttr.childList = [JSON.parse(compInfo)];
     this.compInfor = this.compList(this.compAttr.childList)[0];

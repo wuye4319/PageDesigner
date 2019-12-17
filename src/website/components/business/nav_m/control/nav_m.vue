@@ -28,7 +28,7 @@
           :min="1"
         />
       </a-list-item>
-      <a-list-item>
+      <!-- <a-list-item>
         <a-list-item-meta>
           <div slot="description">间隔(px):</div>
         </a-list-item-meta>
@@ -39,17 +39,7 @@
           :max="50"
           :min="0"
         />
-      </a-list-item>
-      <a-list-item>
-        <a-list-item-meta>
-          <div slot="description">宽度:</div>
-        </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="width"
-          @blur="changeVal('width')"
-        />
-      </a-list-item>
+      </a-list-item> -->
 
       <a-list-item>
         <a-list-item-meta>
@@ -100,7 +90,7 @@ const columnMarks = {
   3: '3',
   4: '4',
   6: '6'
-}
+};
 const rowMarks = {
   1: '1',
   2: '2',
@@ -108,7 +98,7 @@ const rowMarks = {
   4: '4',
   5: '5',
   6: '6'
-}
+};
 
 @Component({
   name: 'nav-component'
@@ -120,9 +110,8 @@ export default class navComponent extends Vue {
   compIndex: number
 
   column:number = 1
-  gutter:number = 1
+  // gutter:number = 1
   row:number = 1
-  width:string = ''
   rowHeight:string = ''
   showBorder:boolean = false
   lineRow:boolean = false

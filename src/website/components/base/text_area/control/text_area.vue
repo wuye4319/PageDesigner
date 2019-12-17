@@ -1,70 +1,46 @@
 <template>
-  <div class="active-component">
+  <div class="compAttr active-component">
     <a-list itemLayout="horizontal">
       <a-list-item>
         <a-list-item-meta>
-          <div slot="description">宽度:</div>
-        </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="width"
-          @blur="changeVal('width')"
-        />
-      </a-list-item>
-
-      <a-list-item>
-        <a-list-item-meta>
-          <div slot="description">高度(行):</div>
+          <div slot="description">行数:</div>
         </a-list-item-meta>
         <a-slider
           style="width:100%"
-          v-model="rows"
+          v-model="pageData.rows"
           @change="changeVal('rows')"
           :max="8"
           :min="1"
         />
       </a-list-item>
-
       <a-list-item>
         <a-list-item-meta>
-          <div slot="description">默认为空展示:</div>
+          <div slot="description">显示内容:</div>
         </a-list-item-meta>
         <a-input
-          placeholder="Basic usage"
-          v-model="placeholder"
-          @blur="changeVal('placeholder')"
-        />
-      </a-list-item>
-
-      <a-list-item>
-        <a-list-item-meta>
-          <div slot="description">默认内容:</div>
-        </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="value"
+          placeholder="请输入内容"
+          v-model="pageData.value"
           @blur="changeVal('value')"
         />
       </a-list-item>
-
       <a-list-item>
         <a-list-item-meta>
           <div slot="description">字体大小:</div>
         </a-list-item-meta>
         <a-input
           placeholder="Basic usage"
-          v-model="fontSize"
+          v-model="pageData.fontSize"
           @blur="changeVal('fontSize')"
         />
       </a-list-item>
-
       <a-list-item>
         <a-list-item-meta>
           <div slot="description">字体颜色:</div>
         </a-list-item-meta>
         <a-input
+          type="color"
           placeholder="Basic usage"
-          v-model="color"
+          v-model="pageData.color"
           @blur="changeVal('color')"
         />
       </a-list-item>
@@ -86,13 +62,12 @@ export default class activeComponent extends Vue {
   @Prop()
   compIndex: number
 
-  width: string = '100%'
   rows: number = 1
   placeholder: string = ''
   value: string = ''
   fontSize: string = '18px'
   color: string = '#000'
-  pageData: any = this.compData
+  pageData: any = this.compData.compAttr
 
   @webSite.Getter('pageInfor')
   pageInfor: Website.pageInfor;
@@ -101,17 +76,20 @@ export default class activeComponent extends Vue {
   editPageInfor;
 
   created(): void {
-    for (let key of Object.keys(this.pageData.compAttr)) {
-      this[key] = this.pageData.compAttr[key];
-    }
+
   }
 
   changeVal(name) {
-    this.pageData.compAttr[name] = this[name];
-    this.editPageInfor({ index: this.compIndex, data: this.pageData.compAttr });
+
   }
 }
 </script>
 
 <style lang="less" scoped>
+.compAttr{
+  padding: 0 8px;
+  /deep/.ant-list-item-content{
+    flex: 1.5;
+  }
+}
 </style>

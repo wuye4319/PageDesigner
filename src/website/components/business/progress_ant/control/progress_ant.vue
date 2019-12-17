@@ -195,7 +195,6 @@ export default class progressAntComponent extends Vue {
 
   changeVal(name) {
     this.pageData.compAttr[name] = this.initData[name];
-    this.editPageInfor({ index: this.compIndex, data: this.pageData.compAttr });
   }
 }
 </script>

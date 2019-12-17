@@ -1,45 +1,14 @@
 <template>
-  <div class="button-component">
+  <div class="compAttr button-component">
     <a-list itemLayout="horizontal">
       <a-list-item>
         <a-list-item-meta>
-          <div slot="description">宽度:</div>
+          <div slot="description">文字:</div>
         </a-list-item-meta>
         <a-input
           placeholder="Basic usage"
-          v-model="width"
-          @blur="changeVal('width')"
-        />
-      </a-list-item>
-
-      <a-list-item>
-        <a-list-item-meta>
-          <div slot="description">高度:</div>
-        </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="height"
-          @blur="changeVal('height')"
-        />
-      </a-list-item>
-      <a-list-item>
-        <a-list-item-meta>
-          <div slot="description">外边距:</div>
-        </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="margin"
-          @blur="changeVal('margin')"
-        />
-      </a-list-item>
-      <a-list-item>
-        <a-list-item-meta>
-          <div slot="description">内边距:</div>
-        </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="padding"
-          @blur="changeVal('padding')"
+          v-model="value"
+          @blur="changeVal('value')"
         />
       </a-list-item>
       <a-list-item>
@@ -65,30 +34,24 @@
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
-          <div slot="description">边框宽度:</div>
+          <div slot="description">线形:</div>
         </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="borderWidth"
-          @blur="changeVal('borderWidth')"
-        />
-      </a-list-item>
-      <a-list-item>
-        <a-list-item-meta>
-          <div slot="description">样式:</div>
-        </a-list-item-meta>
-        <div>
-          <a-radio-group
-            class="radio-group"
-            name="radioGroup"
-            v-model="borderStyle"
-            @change="changeVal('borderStyle')"
-          >
-            <a-radio value="solid">实线</a-radio>
-            <a-radio value="dashed">虚线</a-radio>
-            <a-radio value="dotted">点线</a-radio>
-          </a-radio-group>
-        </div>
+        <a-select
+          class="borderSelect"
+          v-model="borderStyle"
+          @change="changeVal('borderStyle')"
+        >
+          <a-select-option value="none">无</a-select-option>
+          <a-select-option value="solid">
+            <a-icon type="minus"/>
+          </a-select-option>
+          <a-select-option value="dashed">
+            <a-icon type="dash"/>
+          </a-select-option>
+          <a-select-option value="dotted">
+            <a-icon type="small-dash"/>
+          </a-select-option>
+        </a-select>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
@@ -126,25 +89,18 @@ const webSite = namespace('webSite');
   name: 'active-component'
 })
 export default class activeComponent extends Vue {
-  @Prop() compData: any
+  @Prop() compData: any;
   @Prop()
-  compIndex: number
+  compIndex: number;
 
-  width:string = ''
-  height:string = ''
-  imgHeight:string = ''
-  borderRadius:string = ''
-  borderColor:string = ''
-  borderStyle:string = ''
-  borderWidth:string = ''
-  lineClamp: number = 2
-  fontSize:string = '14px'
-  fontColor:string = '#000'
-  titleChecked:boolean = true
-  pageData:any = this.compData
-  size: string = ''
-  margin: string = ''
-  padding: string = ''
+  value: string = '';
+  borderRadius: string = '';
+  borderColor: string = '';
+  borderStyle: string = '';
+  borderWidth: string = '';
+  fontSize: string = '14px';
+  fontColor: string = '#000';
+  pageData: any = this.compData;
 
   @webSite.Getter('pageInfor')
   pageInfor: Website.pageInfor;
@@ -160,16 +116,25 @@ export default class activeComponent extends Vue {
 
   changeVal(name) {
     this.pageData.compAttr[name] = this[name];
-    this.editPageInfor({ index: this.compIndex, data: this.pageData.compAttr });
   }
 }
 </script>
 
 <style lang="less" scoped>
-    .button-component{
-        .radio-group{
-            display: flex;
-            flex-direction: row;
-        }
-    }
+.button-component {
+  .radio-group {
+    display: flex;
+    flex-direction: row;
+  }
+}
+.compAttr {
+  font-size: 12px;
+  padding: 0 8px;
+  /deep/.ant-list-item-content {
+    flex: 1.5;
+  }
+}
+.borderSelect {
+  width: 100%;
+}
 </style>

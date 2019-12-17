@@ -1,0 +1,135 @@
+.page-container {
+  text-align: center;
+}
+.flip-list-move {
+  transition: transform 0.3s;
+}
+.bottomPadding{
+  padding-bottom: 36px;
+}
+.preview-box {
+  @previewbox-top: 30px;
+  padding-top: @previewbox-top;
+  &::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    top: 0px;
+    background: skyblue;
+    height: @previewbox-top;
+    border: 1px solid skyblue;
+  }
+}
+.preview-box-after {
+  @previewbox-top: 30px;
+  padding-top: @previewbox-top;
+  &::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    bottom: 0px;
+    background: skyblue;
+    height: @previewbox-top;
+    border: 1px solid skyblue;
+  }
+}
+.component-view {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  flex-grow: 1;
+  width: 100%;
+  &.design {
+    &::after {
+      border-width: 1px;
+      border-style: dashed;
+      content: '';
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    &:hover {
+      &::after {
+        visibility: visible;
+      }
+      .handle {
+        animation: myAnimation 0.3s;
+        animation-fill-mode: forwards;
+      }
+      .hidden {
+        visibility: visible;
+      }
+    }
+    &.clickshow {
+      &::after {
+        visibility: visible;
+      }
+    }
+  }
+  .handle {
+    position: absolute;
+  }
+  .hidden {
+    visibility: hidden;
+  }
+  // .component-details {
+  //   overflow: auto;
+  // }
+}
+@keyframes myAnimation {
+  from {
+    right: -100px;
+  }
+  to {
+    right: 10px;
+  }
+}
+.list-item {
+  // display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to
+/* .list-leave-active for below version 2.1.8 */ {
+  display: none;
+  // transform: translateY(1px);
+}
+.empty-cont {
+  min-height: 300px;
+  width: 100%;
+}
+.void-cont {
+  width: 100%;
+  height: 300px;
+}
+.tips {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  .tips-img {
+    width: 118px;
+    height: 118px;
+    background: rgba(216, 216, 216, 1);
+    border-radius: 2px;
+    border: 1px solid rgba(151, 151, 151, 1);
+  }
+  .text {
+    margin-top: 10px;
+    font-size: 14px;
+    font-family: PingFangSC;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.65);
+  }
+}
+

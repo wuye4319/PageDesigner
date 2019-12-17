@@ -1,12 +1,20 @@
 <template>
   <div class="view-handle">
-    <a-tooltip class="handle-item" :mouseEnterDelay="1" v-if="isShowArrow">
+    <a-tooltip
+      class="handle-item"
+      :mouseEnterDelay="1"
+      v-if="isShowArrow"
+    >
       <template slot="title">
         上移
       </template>
       <a-icon type="arrow-up" @click.stop="arrowUp"/>
     </a-tooltip>
-    <a-tooltip class="handle-item" :mouseEnterDelay="1" v-if="isShowArrow">
+    <a-tooltip
+      class="handle-item"
+      :mouseEnterDelay="1"
+      v-if="isShowArrow"
+    >
       <template slot="title">
         下移
       </template>
@@ -52,7 +60,6 @@ export default class ViewHandle extends Vue {
 
   $message
 
-
   @webSite.Getter('pageInfor')
   pageInfor: Website.pageInfor
 
@@ -93,6 +100,7 @@ export default class ViewHandle extends Vue {
     display: flex;
     justify-content: space-between;
     font-size: 18px;
+    z-index: 99;
     .handle-item {
       width: 20px;
     }

@@ -1,19 +1,41 @@
 <template>
-  <div class="page-container" @drop="drop" @dragover.prevent>
+  <div
+    class="page-container scroll-style"
+    @drop="drop"
+    @dragover.prevent
+    :style="styleDetails"
+    ref="scrollArea"
+    @click.capture ="showAttr('empty')"
+  >
     <template v-if="handlePageInfo.length > 0">
-      <transition-group :name="animationName" class="flip-list" tag="div">
+      <transition-group
+        :name="animationName"
+        :class="global.paddingBottom?'flip-list':'flip-list bottomPadding'"
+        tag="div"
+      >
         <div
           v-for="(comp,i) in handlePageInfo"
-          class="component-view"
-          :class="[i === emptyNum ? 'preview-box' : '',isDesigner?'design':'']"
+          class="component-view ant-desigener-after-border-color"
+          :class="[i === emptyNum ? 'preview-box' : '',isDesigner?'design':'',clickNum===i?'ant-desigener-after-border-color clickshow':'']"
           :key="comp.animation"
           :draggable="draggable"
-          @dragstart="dragstart(i)"
+          @dragstart="dragstart(i,$event)"
           @dragenter="dragenter(i)"
           @dragend="dragend(i)"
-          @click="showAttr(i)"
+          @click.capture="showAttr(i)"
+          :style="comp.compInfo.compAttr.isFixed?{
+            'position': 'fixed',
+            'bottom': '0',
+            'z-index': '99'
+          }:{'top':'0'}"
         >
-          <div :is="comp.compFn" :compData="comp.compInfo" :compIndex="[i,column]" :compList="loadCompList" @layoutColumn="layoutColumn"></div>
+          <component
+            :style="comp.compInfo.boxOptions"
+            class="scroll-style component-details"
+            :is="comp.compFn"
+            :compData="comp.compInfo"
+            :compIndex="i"
+          />
           <handle
             class="handle hidden"
             v-if="isDesigner"
@@ -22,18 +44,23 @@
             @deleteComponent="deleteComponent(i)"
             @mousedown="draggable=true"
             @mouseup="draggable=false"
-          ></handle>
+          />
         </div>
         <div
           class="component-view empty-cont"
           :class="newViewList.length === emptyNum ? 'preview-box' : ''"
           key="empty"
-          v-show="emptyNum !== -1"
-          draggable
-          @dragstart="dragstart(newViewList.length)"
+          v-show="isDesigner && emptyNum !== -1"
+          :draggable="draggable"
+          @dragstart="dragstart(newViewList.length,$event)"
           @dragenter="dragenter(newViewList.length)"
           @dragend="dragend(newViewList.length)"
-        ></div>
+        />
+        <div
+          key="void"
+          v-show="isDesigner && emptyNum === -1"
+          class="void-cont"
+        />
       </transition-group>
     </template>
     <template v-else>
@@ -46,11 +73,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch, Inject, Emit } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch, Inject, Emit, Provide } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
-import { getCompsInfor, clone } from '@/common/utils'
-import { emit } from 'cluster';
-import handle from '@/website/components/view_handle/index.vue'
+import { getCompsInfor } from '@/common/utils';
+import handle from '@/website/components/view_handle/index.vue'; // 操作
 
 const webSite = namespace('webSite');
 
@@ -64,22 +90,22 @@ export default class Pageindex extends Vue {
   $route
   $router
   $message
-  currentRoute: any = ''
-  compList: any = ''
-  compIndex: number
-  routePageName:string = '' // 当前page的名称
+  $refs: {
+    scrollArea: HTMLFormElement
+  }
+  currentRoute: any = '' // 当前路由
+  routePageName: string = '' // 当前page的名称
   newViewList: any[] = [] // view层组件列表
-  oldNum: number = 0 // 记录原始位置
-  newNum: number = 0 // 记录最后位置
+  oldNum: number = -1 // 记录原始位置
+  newNum: number = -1 // 记录最后位置
   animationName: string = '' // 动画列表名称
   status: string = 'move' // 动画状态 sort move
   draggable: boolean = false // 是否允许拖拽
-  emptyNum: number = -1 // 空行显示
+  emptyNum: number = -1 // 空行显示emptyNum: number = -1 // 空行显示
   emptyTimer: any = null // 空行显示定时器
-  column:number = null 
+  scrollTop: number = 0 // 滚动条位置
+  clickNum: number = -1 // 点击选中
 
-  @Prop()
-  showDrawer: any
   @Prop()
   isDesigner: boolean
 
@@ -89,31 +115,50 @@ export default class Pageindex extends Vue {
   @webSite.Getter('pageInfor')
   pageInfor: Website.pageInfor
 
+  @webSite.Getter('global')
+  global;
+
+  @webSite.Getter('appInfor')
+  appInfor
+
   @webSite.Mutation('changePageInfor')
   changePageInfor;
 
-  @Emit()
-  showSettings(index: number) {
-    this.compIndex = index;
+  @Provide()
+  compList:any = this.loadCompList
+
+  @Inject('showControl') showControl
+
+  get styleDetails():object { // app样式对象
+    let obj = this.initStyle();
+    return obj;
   }
 
-  showAttr(i) {
-    this.showDrawer(i, this.column)
+  created() {
+    this.currentRoute = this.$router.currentRoute.params.page;
+    let appID = this.$router.currentRoute.params.appID;
+    this.getPageInfor({ appID: appID, page: this.currentRoute });
   }
 
-  layoutColumn(c) {
-    this.column = c;
+  beforeDestroy() {
+    clearTimeout(this.emptyTimer)
   }
 
   // 动态异步加载组件
   loadCompList(comps) {
-    let compsInfor = getCompsInfor('website/components/', comps)
-    return compsInfor
+    let compsInfor = getCompsInfor('website/components/', comps);
+    return compsInfor;
   }
 
-  created() {
-    this.currentRoute = this.$router.currentRoute.params.page
-    this.getPageInfor({ domain: 'default', page: this.currentRoute })
+  // 显示属性
+  showAttr(i) {
+    this.showControl(i);
+    this.showClickNum(i);
+  }
+
+  // 展示点击按钮
+  showClickNum(i) {
+    this.clickNum = i;
   }
 
   // 从组件拖动到view层结束
@@ -128,12 +173,24 @@ export default class Pageindex extends Vue {
       } else {
         pageInfo.splice(this.newNum, 0, info);
       }
+      // 拖动过去展示
+      let index = this.newNum === -1 ? pageInfo.length - 1 : this.newNum;
+      this.showAttr(index);
+      // 记录当时滚动条
+      this.scrollTop = this.$refs.scrollArea.scrollTop;
       this.changePageInfor(pageInfo);
+      if (JSON.parse(compInfo).compName === 'bottomNav') {
+        this.global.paddingBottom = true;
+        document.querySelector('.flip-list').setAttribute('class', 'flip-list bottomPadding')
+      }
     }
   }
 
   // 记录初始位置信息
-  dragstart(value) {
+  dragstart(value, e) {
+    if (!this.draggable) {
+      e.preventDefault();
+    }
     this.oldNum = value;
     this.status = 'sort';
   }
@@ -163,7 +220,7 @@ export default class Pageindex extends Vue {
       clearTimeout(this.emptyTimer);
       this.emptyTimer = setTimeout(() => {
         this.emptyNum = value;
-      }, 300);
+      }, 50);
     }
     if (this.status === 'sort') {
       this.emptyNum = value;
@@ -176,22 +233,26 @@ export default class Pageindex extends Vue {
     let pageInfo: any = this.pageInfor;
     let compList = this.loadCompList(pageInfo);
     this.animationName = 'flip-list';
+    if (this.$route.name === 'website' && this.appInfor[routePageName]) {
+      document.title = this.appInfor[routePageName].title;
+    }
     if (pageInfo.length !== this.newViewList.length || routePageName !== this.routePageName) {
       this.newViewList = pageInfo.map((comp, i) => {
         let tempobj: object = {
           compInfo: comp, // 组件信息
           compFn: compList[i], // 组件view
           animation: `${comp.compName}${i}` // 组件的动画string
-        }
-        return tempobj
-      })
+        };
+        return tempobj;
+      });
       this.routePageName = routePageName;
       this.animationName = 'list';
     }
-    
-    return this.newViewList
+
+    return this.newViewList;
   }
 
+  // 交换数组位置
   exchangePosition<T>(oldIndex: number, newIndex: number, oldArr: Array<T>): Array<T> {
     let newItems = [...oldArr];
     let oldVal = newItems[oldIndex];
@@ -201,18 +262,18 @@ export default class Pageindex extends Vue {
     newItems.splice(newIndex, 0, oldVal);
     // this.items一改变，transition-group就起了作用
     let res = [...newItems];
-    return res
+    return res;
   }
 
   // 箭头
   arrowClick(direction, i) {
     if (i === 0 && direction === 'up') {
       this.$message.warning('已经是最顶层啦');
-      return
+      return;
     }
     if (i === (this.newViewList.length - 1) && direction === 'down') {
       this.$message.warning('已经是最底层啦');
-      return
+      return;
     }
     let newIndex = direction === 'up' ? i - 1 : i + 1;
     this.newViewList = this.exchangePosition(newIndex, i, this.newViewList);
@@ -225,116 +286,130 @@ export default class Pageindex extends Vue {
   // 删除组件
   deleteComponent(i) {
     let pageInfo: any = this.pageInfor;
+    if (pageInfo[i].compName === 'bottomNav') {
+      this.global.paddingBottom = false;
+      document.querySelector('.flip-list').setAttribute('class', 'flip-list')
+    }
+    // 删除是列表分类和列表排序时
+    if (pageInfo[i].compName === 'list-classify' || pageInfo[i].compName === 'list-sort') {
+      this.deleteListSon(i);
+    }
+    // 删除列表
+    if (pageInfo[i].compName === 'list') {
+      this.deleteList(i)
+      return
+    }
     pageInfo.splice(i, 1);
     this.changePageInfor(pageInfo);
+    // 记录当时滚动条
+    this.scrollTop = this.$refs.scrollArea.scrollTop;
+    this.resetAll();
+    // 显示状态
+    this.showAttr('empty')
+  }
+
+  // 删除列表 
+  deleteList(i) {
+    let pageInfo: any = this.pageInfor;
+    let uid = pageInfo[i].compAttr.uid;
+    this.$store['$emit'](`${pageInfo[i].compAttr.uid}-clear`);
+    let index = pageInfo.findIndex(item => {
+      let status1 = item.compName === 'list';
+      let status2 = uid === item.compAttr.uid;
+      let status = status1 && status2;
+      return status;
+    });
+    pageInfo.splice(index, 1);
+    this.changePageInfor(pageInfo);
+    // 记录当时滚动条
+    this.scrollTop = this.$refs.scrollArea.scrollTop;
+    this.resetAll();
+    // 显示状态
+    this.showAttr('empty')
+  }
+
+  // 删除列表子项
+  deleteListSon(i) {
+    let pageInfo: any = this.pageInfor;
+    if (pageInfo[i].compAttr.bindName && pageInfo[i].compAttr.bindUid) {
+      let index = pageInfo.findIndex(item => {
+        let status1 = item.compName === pageInfo[i].compAttr.bindName;
+        let status2 = pageInfo[i].compAttr.bindUid === item.compAttr.uid;
+        let status = status1 && status2;
+        return status;
+      });
+      pageInfo[index].compAttr[pageInfo[i].compName] = false;
+    }
+  }
+
+  // 初始化样式
+  initStyle() {
+    if (Object.keys(this.global).length > 0) {
+      let background = this.global.appStyle.background;
+      let border = this.global.appStyle.border;
+      let font = this.global.appStyle.font;
+      return {
+        width: background.width,
+        height: background.height,
+        background: `rgba(${this.getRGBColor(background.backgroundColor)},${background.backgroundOpacity}%)`,
+        ...border,
+        ...font
+      };
+    } else {
+      return {};
+    }
+  }
+
+  // 获取当前滚动区位置
+  getScrollHeight() {
+    let scrollHeight = this.$refs.scrollArea.scrollHeight;
+    return scrollHeight
+  }
+
+  // 重置scrollTop
+  resetScrollTop(val?:number) {
+    this.$nextTick(() => {
+      setTimeout(() => {
+        let num:number = val || this.scrollTop;
+        this.$refs.scrollArea.scrollTop = num;
+      }, 0);
+    });
+  }
+
+  // 重置所有
+  resetAll(val?:number) {
+    this.resetScrollTop(val);
+    clearTimeout(this.emptyTimer);
+    this.emptyNum = -1;
+    this.newNum = -1;
+    this.oldNum = -1;
+  }
+
+  // 十六进制转换成RGB颜色
+  getRGBColor(color) {
+    let sColor = String(color).toLowerCase();
+    // 十六进制颜色值的正则表达式
+    let reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+    // 如果是16进制颜色
+    if (sColor && reg.test(sColor)) {
+      if (sColor.length === 4) {
+        let sColorNew = '#';
+        for (let i = 1; i < 4; i += 1) {
+          sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
+        }
+        sColor = sColorNew;
+      }
+      // 处理六位的颜色值
+      let sColorChange = [];
+      for (let i = 1; i < 7; i += 2) {
+        sColorChange.push(parseInt('0x' + sColor.slice(i, i + 2)));
+      }
+      return sColorChange.join(',');
+    }
+    return sColor;
   }
 }
 </script>
 <style lang='less' scoped>
-.page-container {
-  text-align: center;
-}
-.flip-list-move {
-  transition: transform 0.3s;
-}
-.preview-box {
-  @previewbox-top: 30px;
-  padding-top: @previewbox-top;
-  &::before {
-    position: absolute;
-    content: "";
-    width: 100%;
-    top: 0px;
-    background: skyblue;
-    height: @previewbox-top;
-    border: 1px solid skyblue;
-  }
-}
-.preview-box-after {
-  @previewbox-top: 30px;
-  padding-top: @previewbox-top;
-  &::after {
-    position: absolute;
-    content: "";
-    width: 100%;
-    bottom: 0px;
-    background: skyblue;
-    height: @previewbox-top;
-    border: 1px solid skyblue;
-  }
-}
-.component-view {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: space-around;
-  position: relative;
-  flex-grow: 1;
-  width: 100%;
-  &.design {
-    &:hover {
-    border: 1px dashed #17BC94;
-    box-sizing: border-box;
-    .handle {
-      animation: myAnimation 0.3s;
-      animation-fill-mode: forwards;
-    }
-    .hidden {
-      visibility: visible;
-    }
-  }
-  }
-  .handle {
-    position: absolute;
-  }
-  .hidden {
-    visibility: hidden;
-  }
-}
-@keyframes myAnimation {
-  from {
-    right: -100px;
-  }
-  to {
-    right: 10px;
-  }
-}
-.list-item {
-  // display: inline-block;
-  margin-right: 10px;
-}
-.list-enter-active,
-.list-leave-active {
-  transition: all 1s;
-}
-.list-enter, .list-leave-to
-/* .list-leave-active for below version 2.1.8 */ {
-  display: none;
-  // transform: translateY(1px);
-}
-.empty-cont {
-  min-height: 30px;
-  width: 100%;
-}
-.tips {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  .tips-img {
-    width:118px;
-    height:118px;
-    background:rgba(216,216,216,1);
-    border-radius:2px;
-    border:1px solid rgba(151,151,151,1);
-  }
-  .text {
-    margin-top: 10px;
-    font-size:14px;
-    font-family:PingFangSC;
-    font-weight:400;
-    color:rgba(0,0,0,0.65);
-  }
-}
+@import url('./index.less');
 </style>
