@@ -47,9 +47,7 @@ export default class Editor extends Vue {
   pageInfor;
 
   javascriptCodes = `console.log("This is javascript");
-console.log("456");
-const ab: string = "123";
-function test() { console.log(ab); };
+function test(ctx) { console.log(ctx); };
 function add(a, b) {return a + b}`
   jsEditor = null;
 
@@ -66,40 +64,59 @@ function add(a, b) {return a + b}`
     this.visible = true;
   }
 
-  handleOk(e) {
-    this.closeModal();
-    // console.log(this.javascriptCodes);
-    const ast = recast.parse(this.javascriptCodes);
-    const add = ast.program.body;
-    // console.log(add);
-
+  getFunctionName(ast) {
+    let funcBox = []
     recast.visit(ast, {
       visitFunctionDeclaration: function (path) {
         const node = path.node
         const funcName = node.id.name
         const params = node.params
         const body = node.body
-        console.log(node, funcName, params, body)
+        funcBox.push(funcName)
         return false
       }
     });
+    return funcBox
+  }
 
+  handleOk(e) {
+    this.closeModal();
+    const ast = recast.parse(this.javascriptCodes);
+    // 获取所有的方法名，必须先执行
+    let funcList = this.getFunctionName(ast)
+    // 获取转换后的代码
+    this.getCodeText(ast)
+    console.log(funcList)
+
+    let ctx = `const ctx='123456';`
+    eval(ctx + this.javascriptCodes)
+  }
+
+  getCodeText(ast) {
+    const add = ast.program.body;
+    for (let i in add) {
+      if (add[i].type === "FunctionDeclaration") {
+        ast.program.body[i] = this.getFunctionBody(add[i])
+      }
+    }
+
+    //将AST对象重新转回可以阅读的代码
+    var output = recast.prettyPrint(ast, { tabWidth: 2 }).code;
+    console.log(output)
+  }
+
+  getFunctionBody(add) {
     const { variableDeclaration, variableDeclarator, functionExpression } = recast.types.builders
 
-    ast.program.body[0] = variableDeclaration("const", [
+    return variableDeclaration("const", [
       variableDeclarator(add.id, functionExpression(
         null, // Anonymize the function expression.
         add.params,
         add.body
       ))
     ]);
-
-    //将AST对象重新转回可以阅读的代码
-    var output = recast.prettyPrint(ast, { tabWidth: 2 }).code;
-    console.log(output)
-
-    // eval(this.javascriptCodes)
   }
+
   handleCancle() {
     this.closeModal();
   }
