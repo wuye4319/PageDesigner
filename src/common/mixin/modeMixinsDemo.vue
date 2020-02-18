@@ -1,7 +1,12 @@
 <template>
   <div>
     <h4>我是 {{ title }}</h4>
-    <span class="button" :class="{act:obj.selecd}" v-for="obj in defaultData" :key="obj.title" @click="bClick(obj)">{{ obj.title }}</span>
+    <span
+      class="button"
+      :class="{act:obj.selecd}"
+      v-for="obj in defaultData"
+      :key="obj.title"
+      @click="bClick(obj)">{{ obj.title }}</span>
   </div>
 </template>
 

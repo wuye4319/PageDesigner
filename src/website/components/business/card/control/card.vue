@@ -75,12 +75,18 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
-
+import { List, Switch, InputNumber } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'card-component',
-  components: {}
+  components: {
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    ASwitch: Switch,
+    AInputNumber: InputNumber
+  }
 })
 export default class cardComponent extends Vue {
   @Prop() compData: any;

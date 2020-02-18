@@ -1,40 +1,58 @@
 <template>
   <div>
-    <a-icon :type="comAttr.iconInfo.type" :theme="comAttr.iconInfo.theme" :twoToneColor="comAttr.color" :style="comAttr" />
+    <span :style="comAttr">
+      <a-icon
+        @click="handleClick"
+        :type="comAttr.iconInfo.type"
+        :theme="comAttr.iconInfo.theme"
+        :twoToneColor="comAttr.iconInfo.color"
+        :style="comAttr.iconInfo" />
+    </span>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { namespace } from 'vuex-class';
-import { Button } from 'ant-design-vue';
-import iconData from './control/iconType';
-
-const webSite = namespace('webSite');
-
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Icon } from 'ant-design-vue';
 @Component({
-  name: 'icon-component'
+  name: 'icon-component',
+  components: {
+    AIcon: Icon
+  }
 })
 export default class iconComponent extends Vue {
   @Prop() compData: any;
-
+  @Prop() trigFunc: any;
   comAttr: any = this.compData.compAttr;
-  iconData: any[] = iconData;
-
   created() {
     if (!this.comAttr.iconInfo) {
       this.$set(this.comAttr, 'iconInfo', {
         theme: 'outlined',
-        type: 'step-backward'
+        type: 'step-backward',
+        color: '#000',
+        fontSize: '32px'
       });
     }
   }
+  handleClick(d:any) {
+    this.trigFunc('click', this.compData.actionModel, d);
+  }
+  getIconOption() {
+    return this.comAttr.iconInfo
+  }
+  setIconOption(option:{
+        theme?:string,
+        type?:string,
+        color?:string,
+        fontSize?:string,
+        borderWidth?:string,
+        borderStyle?:string,
+        borderColor?:string,
+        borderRadius?:string}) {
+    Object.assign(this.comAttr.iconInfo, option)
+  }
 }
 </script>
-
 <style lang="less" scoped>
-.mybutton {
-  transition: 0.5s all;
-  margin-top: 5px;
-}
+
 </style>

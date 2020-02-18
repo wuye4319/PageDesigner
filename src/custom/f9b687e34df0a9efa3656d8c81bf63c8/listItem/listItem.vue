@@ -1,7 +1,10 @@
 <template>
   <div class="listItem">
     <div class="leftImg">
-      <img width="100px" src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1800972588,3781195765&fm=26&gp=0.jpg" alt="">
+      <img
+        width="100px"
+        src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1800972588,3781195765&fm=26&gp=0.jpg"
+        alt="">
     </div>
     <div class="rightContent">
       <div class="lineT">
@@ -32,12 +35,12 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
-
+import { Icon } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'listItem-component',
-  components: {}
+  components: { AIcon: Icon }
 })
 export default class listItemComponent extends Vue {
   created() { }

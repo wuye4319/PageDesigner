@@ -21,7 +21,13 @@ export class WebSiteState {
   // 暴露给用户的页面对象
   UserData: object = {}
   // 当前应用所有可选动作
-  Actions: object[] =[]
+  pageActions: string = ''
+  // 系统默认动作
+  defaultActions: string = ''
+  // 临时应用数据(数据不会存入数据库)
+  TempAppData: object = {}
+  // 组件列表
+  CompList: object[] = []
 }
 
 const websiteModule: Module<WebSiteState, any> = {

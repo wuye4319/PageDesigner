@@ -9,28 +9,54 @@
       </a-list-item> -->
       <a-list-item>
         联动：
-        <a-button type="primary" :size="size" @click="showMode('userModel',true)">数据传入</a-button>
-        <a-button type="primary" :size="size" class="button" @click="showMode('userModel2',true)">数据接收</a-button>
+        <a-button
+          type="primary"
+          :size="size"
+          @click="showMode('userModel',true)">数据传入</a-button>
+        <a-button
+          type="primary"
+          :size="size"
+          class="button"
+          @click="showMode('userModel2',true)">数据接收</a-button>
       </a-list-item>
     </a-list>
-    <a-modal :title="modeTitle" v-model="userModel" @ok="checkData" :centered="true">
+    <a-modal
+      :title="modeTitle"
+      v-model="userModel"
+      @ok="checkData"
+      :centered="true">
       <div class="modal-warp">
         <p class="model-title">响应数据</p>
-        <a-textarea placeholder="{  }" :rows="4" v-model="propData" />
+        <a-textarea
+          placeholder="{  }"
+          :rows="4"
+          v-model="propData" />
         <p class="model-title">数据过滤器</p>
-        <a-textarea placeholder="function(data){
+        <a-textarea
+          placeholder="function(data){
           return data.aa;//把接收到的数据处理成适合自身组件的数据格式
-        }" :rows="4" v-model="dataFilter" />
+        }"
+          :rows="4"
+          v-model="dataFilter" />
         <p class="model-title">响应数据示例</p>
         <div>{{ userData.tempData }}</div>
       </div>
     </a-modal>
-    <a-modal :title="modeTitle2" v-model="userModel2" @ok="showMode('userModel2')" :centered="true">
+    <a-modal
+      :title="modeTitle2"
+      v-model="userModel2"
+      @ok="showMode('userModel2')"
+      :centered="true">
       <div class="modal-warp">
         <ul class="list-warp">
           <li v-for="i of userData.canlisten__" :key="i.id+i.listen">
             <span>{{ i.id }}</span>
-            <a-switch class="switch-position" checkedChildren="开" unCheckedChildren="关" @change="onSwitch(i)" :checked="i.listen" />
+            <a-switch
+              class="switch-position"
+              checkedChildren="开"
+              unCheckedChildren="关"
+              @change="onSwitch(i)"
+              :checked="i.listen" />
           </li>
         </ul>
       </div>
@@ -40,6 +66,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'; // Component Prop Watch Emit Model Provide Inject Mixins
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
+import { List, Button, Modal, Input, Switch } from 'ant-design-vue';
 // 精准判断数据类型
 function type(obj: any): string {
   return Object.prototype.toString
@@ -49,7 +76,15 @@ function type(obj: any): string {
     .slice(0, -1);
 }
 @Component({
-  components: {}
+  components: {
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    AButton: Button,
+    AInput: Input.TextArea,
+    ASwitch: Switch
+
+  }
 })
 export default class AppForm extends Vue {
   userData: any = {};

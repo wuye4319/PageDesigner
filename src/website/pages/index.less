@@ -1,11 +1,12 @@
 .page-container {
   text-align: center;
+  overflow: auto;
 }
 .flip-list-move {
   transition: transform 0.3s;
 }
 .bottomPadding{
-  padding-bottom: 36px;
+  padding-bottom: 41px;
 }
 .preview-box {
   @previewbox-top: 30px;
@@ -54,7 +55,7 @@
       visibility: hidden;
       pointer-events: none;
     }
-    &:hover {
+    &.designer-hover {
       &::after {
         visibility: visible;
       }
@@ -87,7 +88,7 @@
     right: -100px;
   }
   to {
-    right: 10px;
+    right: 2px;
   }
 }
 .list-item {
@@ -132,4 +133,6 @@
     color: rgba(0, 0, 0, 0.65);
   }
 }
-
+.pointer-event {
+  pointer-events: none;
+}

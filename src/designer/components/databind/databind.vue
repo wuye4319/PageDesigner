@@ -20,7 +20,11 @@
         key="datacomp"
         v-if="compData.dataModel.dataCompSwitch === 1"
       >
-        <datacomp :key="new Date().getTime()+'datacomp'" :compData="compData" :compIndex="compIndex" :compsDataParent="compsDataParent" />
+        <datacomp
+          :key="new Date().getTime()+'datacomp'"
+          :compData="compData"
+          :compIndex="compIndex"
+          :compsDataParent="compsDataParent" />
       </a-collapse-panel>
     </a-collapse>
   </div>
@@ -31,12 +35,16 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
 import datamap from './datamap.vue';
 import datacomp from './datacomp.vue';
-
+import { Collapse, Button } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'databind',
-  components: { datamap, datacomp }
+  components: { datamap,
+    datacomp,
+    ACollapse: Collapse,
+    ACollapsePanel: Collapse.Panel,
+    AButton: Button }
 })
 export default class DataBind extends Vue {
   @Prop() compData
@@ -64,7 +72,7 @@ export default class DataBind extends Vue {
 .databind {
   font-size: 12px;
   text-align: left;
-  /deep/ .arrow {
+  /deep/ .ant-collapse-arrow {
     right: 16px;
     left: auto !important;
   }

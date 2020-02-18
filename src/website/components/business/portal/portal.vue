@@ -75,12 +75,20 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
 import { compilation } from 'webpack';
-
+import { Layout, Menu, Icon } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'table-component',
-  components: {}
+  components: {
+    ALayout: Layout,
+    ALayoutHeader: Layout.Header,
+    ALayoutContent: Layout.Content,
+    ALayoutSider: Layout.Sider,
+    AMenu: Menu,
+    AMenuItem: Menu.Item,
+    AIcon: Icon
+  }
 })
 export default class tableComponent extends Vue {
   @Prop() compData: any;

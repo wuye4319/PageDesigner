@@ -1,6 +1,11 @@
 <template>
-  <div class="pageBox">
-    <p :style="pageData">{{ pageData.cont }}</p>
+  <div class="pageBox" @click="handleClick">
+    <p :style="setStyle()" v-if="compAttr.textType === 'text' || !compAttr.textType">{{ compAttr.cont }}</p>
+    <h4 :style="setStyle()" v-if="compAttr.textType === 'title'">{{ compAttr.cont }}</h4>
+    <a
+      :style="setStyle()"
+      :href="compAttr.href"
+      v-if="compAttr.textType === 'href'">{{ compAttr.cont }}</a>
   </div>
 </template>
 
@@ -15,12 +20,34 @@ const webSite = namespace('webSite');
 })
 
 export default class PageComponent extends Vue {
-  @Prop() compData: any
+  @Prop() compData: any;
+  @Prop() trigFunc: any;
 
-  pageData:any = this.compData.compAttr
+  compAttr:any = this.compData.compAttr
 
-  created():void {
+  created() {
+    console.log(this.compAttr)
+  }
 
+  setStyle() {
+    return {
+      'white-space': this.compAttr.whiteSpace ? 'normal' : 'nowrap',
+      'color': this.compAttr.color,
+      'line-height': this.compAttr.lineHeight,
+      'font-size': this.compAttr.fontSize,
+      'font-family': this.compAttr.fontFamily,
+      'text-align': this.compAttr.textAlign
+    }
+  }
+
+  getText() {
+    return this.compAttr.cont;
+  }
+  setText(text) {
+    this.compAttr.cont = text;
+  }
+  handleClick() {
+    this.trigFunc('click', this.compData.actionModel);
   }
 }
 </script>

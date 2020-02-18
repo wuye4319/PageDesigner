@@ -19,7 +19,10 @@
           <p>本周最佳攻略推荐</p>
         </div>
       </div>
-      <div class="tag" v-for="(item,i) in 5" :key="i">
+      <div
+        class="tag"
+        v-for="(item,i) in 5"
+        :key="i">
         <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1111603952,1083408135&fm=26&gp=0.jpg" alt="">
         <div class="right">
           <div class="time">2019/12/06</div>
@@ -34,12 +37,15 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
-
+import { Icon, Input } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'findPage-component',
-  components: {}
+  components: {
+    AIcon: Icon,
+    AInput: Input
+  }
 })
 export default class findPageComponent extends Vue {
   created() { }

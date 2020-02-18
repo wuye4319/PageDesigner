@@ -1,5 +1,9 @@
 <template>
-  <a-divider class="divider-color" ref="divider" :dashed="pageData.dashed === 'dashed'" v-bind="orientation">
+  <a-divider
+    class="divider-color"
+    ref="divider"
+    :dashed="pageData.dashed === 'dashed'"
+    v-bind="orientation">
     {{ pageData.cont }}
   </a-divider>
 </template>
@@ -7,11 +11,14 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { Divider } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
-  name: 'divider-view'
+  name: 'divider-view',
+  components: {
+    ADivider: Divider
+  }
 })
 
 export default class DividerView extends Vue {

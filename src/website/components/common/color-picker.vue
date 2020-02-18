@@ -33,11 +33,15 @@
 import { Component, Prop, Vue, Watch, Model } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
 import { Photoshop } from 'vue-color';
+import { Icon, Popover } from 'ant-design-vue';
 
 @Component({
   name: 'color-picker',
   components: {
-    'photoshop-picker': Photoshop
+    'photoshop-picker': Photoshop,
+    AIcon: Icon,
+    APopover: Popover
+
   }
 })
 

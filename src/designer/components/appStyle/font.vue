@@ -104,7 +104,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { Icon, Select, Radio, Input } from 'ant-design-vue';
 interface fontInfo {
   fontFamily:string, // 字体
   fontSize:string, // 大小
@@ -116,7 +116,16 @@ interface fontInfo {
 }
 
 @Component({
-  name: 'page-font'
+  name: 'page-font',
+  components: {
+    AIcon: Icon,
+    ASelect: Select,
+    ASelectOption: Select.Option,
+    ARadio: Radio,
+    ARadioGroup: Radio.Group,
+    ARadioButton: Radio.Button,
+    AInput: Input
+  }
 })
 
 export default class PageFont extends Vue {

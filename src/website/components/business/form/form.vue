@@ -7,7 +7,11 @@
     }"
   >
     <ul class="navList">
-      <li v-for="(item,i) in tableData" :key="'tableData'+item.id" :class="item.select?'active':''" @click="addRoute(item.rout,i)">
+      <li
+        v-for="(item,i) in tableData"
+        :key="'tableData'+item.id"
+        :class="item.select?'active':''"
+        @click="addRoute(item.rout,i)">
         <a-icon :type="item.icon"/>
         <p>{{ item.name }}</p>
       </li>
@@ -19,12 +23,12 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
 import commonMixin from '@/common/mixin'
-
+import { Icon } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'form-component',
-  components: {},
+  components: { AIcon: Icon },
   mixins: [commonMixin]
 })
 export default class formComponent extends Vue {

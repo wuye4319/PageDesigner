@@ -1,90 +1,123 @@
 <template>
-  <div class="input-component">
+  <div>
     <a-list itemLayout="horizontal">
       <a-list-item>
         <a-list-item-meta>
-          <div slot="description">大小:</div>
+          <div slot="description">最大宽度:</div>
         </a-list-item-meta>
-        <div>
-          <a-radio-group
-            class="radio-group"
-            name="radioGroup"
-            v-model="size"
-            @change="changeVal('size')"
-          >
-            <a-radio value="large">large</a-radio><br />
-            <a-radio value="default">default</a-radio><br />
-            <a-radio value="small">small</a-radio>
-          </a-radio-group>
-        </div>
+        <a-input v-model="compAttr.width"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
-          <div slot="description">字体大小:</div>
+          <div slot="description">默认值:</div>
         </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="fontSize"
-          @blur="changeVal('fontSize')"
-        />
+        <a-input v-model="compAttr.value" />
       </a-list-item>
-
       <a-list-item>
         <a-list-item-meta>
-          <div slot="description">字体颜色:</div>
+          <div slot="description">选项(数组):</div>
         </a-list-item-meta>
-        <a-input
-          type="color"
-          placeholder="Basic usage"
-          v-model="color"
-          @change="changeVal('color')"
-        />
+        <a-textarea v-model="option" @blur="optinChange" />
+      </a-list-item>
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">显示标题:</div>
+        </a-list-item-meta>
+        <a-switch v-model="showTitle" @change="titleChange"></a-switch>
+      </a-list-item>
+      <a-list-item v-if="showTitle">
+        <a-list-item-meta>
+          <div slot="description">标题:</div>
+        </a-list-item-meta>
+        <a-input v-model="compAttr.label" />
+      </a-list-item>
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">标题排列:</div>
+        </a-list-item-meta>
+        <a-select class="borderSelect" v-model="compAttr.formLayout">
+          <a-select-option value="inline">横向排列</a-select-option>
+          <a-select-option value="vertical">纵向排列</a-select-option>
+        </a-select>
+      </a-list-item>
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">描述信息:</div>
+        </a-list-item-meta>
+        <a-input v-model="compAttr.help"/>
+      </a-list-item>
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">错误提示:</div>
+        </a-list-item-meta>
+        <a-input v-model="compAttr.errorTip"/>
+      </a-list-item>
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">是否必填:</div>
+        </a-list-item-meta>
+        <a-switch v-model="compAttr.required"></a-switch>
+      </a-list-item>
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">只读:</div>
+        </a-list-item-meta>
+        <a-switch v-model="compAttr.disabled"></a-switch>
       </a-list-item>
     </a-list>
+    <api-user-tip :apiList="apiList"></api-user-tip>
   </div>
+
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { State, Action, Mutation, namespace } from 'vuex-class';
-
-const webSite = namespace('webSite');
-
+import { apiUserTip } from '@/website/components/common'; // 线设置
+import { List, Input, Select, Switch } from 'ant-design-vue';
 @Component({
-  name: 'active-component'
+  name: 'active-component',
+  components: {
+    apiUserTip,
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    AInput: Input,
+    ATextarea: Input.TextArea,
+    ASelect: Select,
+    ASelectOption: Select.Option,
+    ASwitch: Switch
+  }
 })
 export default class activeComponent extends Vue {
-  @Prop() compData: any
-
-  pageData: any = this.compData
-
-  fontSize: string = '14px'
-  fontColor: string = '#000000'
-  size: string = ''
-
-  @webSite.Getter('pageInfor')
-  pageInfor: Website.pageInfor;
-
-  @webSite.Mutation('editPageInfor')
-  editPageInfor;
-
-  created(): void {
-    for (let key of Object.keys(this.pageData.compAttr)) {
-      this[key] = this.pageData.compAttr[key];
+  @Prop({ type: Object, default: { compAttr: {} } })
+  compData;
+  compAttr: any = this.compData.compAttr;
+  showTitle: boolean = this.compAttr.label !== '';
+  created() {
+    this.option = JSON.stringify(this.compAttr.option);
+  }
+  optinChange() {
+    try {
+      this.compAttr.option = JSON.parse(this.option);
+    } catch (error) {
+      this.$message.error('请输入合法JSON数组');
+      this.option = JSON.stringify(this.compAttr.option);
     }
   }
-
-  changeVal(name) {
-    this.pageData.compAttr[name] = this[name];
+  titleChange(v) {
+    this.compAttr.label = this.showTitle ? '标题' : '';
   }
+  option:string='';
+  apiList:any[]=[
+    { dsc: '//获取选择框的值', api: 'getValue():string' },
+    { dsc: '//设置选择框的值', api: 'setValue(str:string)' },
+    { dsc: '//检查用户选择（必填时有效）', api: 'check():boolean' },
+  ]
 }
 </script>
 
 <style lang="less" scoped>
-.input-component {
-  .radio-group {
-    display: flex;
-    flex-direction: row;
-  }
+.borderSelect {
+  width: 100%;
 }
 </style>

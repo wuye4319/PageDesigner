@@ -49,7 +49,7 @@ const webSite = namespace('webSite');
 export default class gridComponent extends Vue {
   @Prop() compData: any;
   @Prop() compIndex: number;
-  @Inject('compList') compList
+  @Inject('getCompsInfor') getCompsInfor // 获取异步组件方法
   compInfor: any = {};
   compAttr: any = this.compData.compAttr;
   currCompsData: any = {};
@@ -65,11 +65,17 @@ export default class gridComponent extends Vue {
     let layout = this.layout || [];
     let layEle = layout.map(item => {
       let tempItem = item;
-      let compInfo = this.compList(item.children);
+      let compInfo = this.loadCompList(item.children);
       tempItem.compInfo = compInfo;
       return tempItem;
     });
     return layEle || [];
+  }
+
+  // 动态异步加载组件
+  loadCompList(comps) {
+    let compsInfor = this.getCompsInfor('website/components/', comps);
+    return compsInfor;
   }
 
   handleContent(e) {
@@ -77,7 +83,7 @@ export default class gridComponent extends Vue {
     let compInfo = e.dataTransfer.getData('compInfo');
     this.currCompsData = compInfo;
     this.compAttr.childList = [JSON.parse(compInfo)];
-    this.compInfor = this.compList(this.compAttr.childList)[0];
+    this.compInfor = this.loadCompList(this.compAttr.childList)[0];
   }
 }
 </script>

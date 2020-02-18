@@ -7,15 +7,13 @@
       :size="pageData.size"
       :tabPosition="pageData.tabPosition"
       :tabBarGutter="0"
-      :defaultActiveKey="'tab'+(pageData.activeKey || '0')"
-    >
+      :defaultActiveKey="'tab'+(pageData.activeKey || '0')">
       <a-tab-pane
         v-for="(pane,i) in paneData"
         :tab="pane.title"
         :key="'tab'+i"
-        :closable="pane.closable"
-      >
-        <layout v-if="pane.content" :compData="pane.content"/>
+        :closable="pane.closable">
+        <layout v-if="pane.content" :compData="pane.content" />
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -26,13 +24,15 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
 import layout from '../../layout/layout/index';
 import page from '../../base/text_area/control/index';
-
+import { Tabs } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'tabs',
   components: {
-    layout
+    layout,
+    ATabs: Tabs,
+    ATabPane: Tabs.TabPane
   }
 })
 export default class TabsView extends Vue {
@@ -49,62 +49,62 @@ export default class TabsView extends Vue {
     return tabs;
   }
   created() {
-    console.log()
+    console.log();
   }
 }
 </script>
 
 <style lang="less" scoped>
-/deep/.ant-tabs-line{
-  .ant-tabs-nav{
-  width: 100%;
-  &>div{
-    display: flex;
-    justify-content: space-around;
+/deep/.ant-tabs-line {
+  .ant-tabs-nav {
+    width: 100%;
+    & > div {
+      display: flex;
+      justify-content: space-around;
+    }
+    .ant-tabs-ink-bar {
+      display: none !important;
+    }
+    .ant-tabs-tab-active {
+      border-bottom: 3px solid #17bc94;
+    }
   }
-  .ant-tabs-ink-bar{
-    display: none !important;
+}
+/deep/.ant-tabs-tabpane {
+  /deep/& > .layout {
+    padding-bottom: 0px;
   }
-  .ant-tabs-tab-active{
-    border-bottom: 3px solid #17BC94;
-  }
 }
-}
-/deep/.ant-tabs-tabpane{
-/deep/&>.layout{
-  padding-bottom: 16px;
-}
-}
-/deep/.ant-tabs-card-bar{
-  .ant-tabs-nav-container{
+/deep/.ant-tabs-card-bar {
+  .ant-tabs-nav-container {
     height: 25px !important;
     margin: 6px;
   }
-  .ant-tabs-nav-scroll{
+  .ant-tabs-nav-scroll {
     text-align: left;
   }
-  .ant-tabs-nav{
-  background: rgba(23, 188, 148, 0.3);
-  border-radius: 13px;
-  &>div{
-    display: flex;
-    justify-content: flex-start;
+  .ant-tabs-nav {
+    background: rgba(23, 188, 148, 0.3);
+    border-radius: 13px;
+    & > div {
+      display: flex;
+      justify-content: flex-start;
+    }
+    .ant-tabs-ink-bar {
+      display: none !important;
+    }
+    .ant-tabs-tab {
+      height: 25px;
+      line-height: 25px;
+      background: transparent !important;
+      border: none !important;
+    }
+    .ant-tabs-tab-active {
+      background: #17bc94 !important;
+      color: white !important;
+      border-radius: 13px !important;
+    }
   }
-  .ant-tabs-ink-bar{
-    display: none !important;
-  }
-  .ant-tabs-tab{
-    height: 25px;
-    line-height: 25px;
-    background: transparent !important;
-    border: none !important;
-  }
-  .ant-tabs-tab-active{
-    background: #17BC94 !important;
-    color: white !important;
-    border-radius: 13px !important;
-  }
-}
 }
 /deep/.ant-tabs-bar {
   margin: 0;
@@ -112,7 +112,7 @@ export default class TabsView extends Vue {
 /deep/.ant-tabs-content {
   padding: 0;
 }
-.flesh{
+.flesh {
   display: none;
 }
 </style>

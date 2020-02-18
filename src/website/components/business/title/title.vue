@@ -11,11 +11,14 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { Icon } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
-  name: 'title-view'
+  name: 'title-view',
+  components: {
+    AIcon: Icon
+  }
 })
 
 export default class TitleView extends Vue {

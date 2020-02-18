@@ -31,5 +31,45 @@ export const handlePageInfo = (url, params) => {
 };
 
 export const getTableContent = (tableName: string, params?) => {
-  return axios.get(`tables/tableContent/${tableName}`, { params });
+  return axios.get(`tables/tablecontent/${tableName}`, { params });
+};
+
+/**
+ * 存储页面代码
+ */
+export const savePageActions = (params) => {
+  return new Promise(async(resolve) => {
+    let res: any = await axios.post('/page/pageaction', params);
+    resolve(res);
+  });
+};
+
+/**
+ * 获取页面代码
+ */
+export const getPageActions = async (query) => {
+  return new Promise(resolve => {
+    let res: any = axios.get('/page/pageaction', { params: query });
+    resolve(res);
+  });
+};
+/**
+ * 获取页面代码
+ */
+export const dataTop = async (query) => {
+  return new Promise(resolve => {
+    let res: any = axios.get('/tables/settop', { params: query });
+    resolve(res);
+  });
+};
+
+// getCompList
+/**
+ * 获取组件列表
+ */
+export const getCompList = async (query) => {
+  return new Promise(resolve => {
+    let res: any = axios.get('/comps/complist', { params: query });
+    resolve(res);
+  });
 };

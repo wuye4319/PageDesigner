@@ -20,11 +20,11 @@ export const getUserInfo = async (page: 0, size: number = 100) => {
 };
 
 /**
- * 获取用户数据
+ * 存储页面代码
  */
-export const savePageActions = async (params) => {
-  return new Promise(resolve => {
-    let res: any = axios.post(baseUrl + '/pageAction',params);
+export const savePageActions = (params) => {
+  return new Promise(async(resolve) => {
+    let res: any = await axios.post(baseUrl + '/page/pageaction', params);
     resolve(res);
   });
 };

@@ -102,11 +102,21 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { List, Input, Slider, Switch, Radio } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
-  name: 'active-component'
+  name: 'active-component',
+  components: {
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    AInput: Input,
+    ASlider: Slider,
+    ARadio: Radio,
+    ARadioGroup: Radio.Group,
+    ASwitch: Switch
+  }
 })
 export default class activeComponent extends Vue {
   @Prop() compData: any

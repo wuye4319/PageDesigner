@@ -1,17 +1,41 @@
 <template>
   <div class="tabs-component">
     <h4>标签页配置项</h4>
-    <a-table :columns="column" :rowKey="(record,i) => i" :dataSource="tabData" bordered :pagination="false">
+    <a-table
+      :columns="column"
+      :rowKey="(record,i) => i"
+      :dataSource="tabData"
+      bordered
+      :pagination="false"
+    >
       <template slot="actions" slot-scope="text,record,i">
-        <a-icon type="edit" @click="editTabM(i)" title="编辑内容" style="margin-right: 8px" />
-        <a-popconfirm title="删除该标签?" @confirm="confirm(i)" okText="是" cancelText="否">
-          <a-icon type="delete" title="删除标签" style="color: red;margin-right: 8px" />
+        <a-icon
+          type="edit"
+          @click="editTabM(i)"
+          title="编辑内容"
+          style="margin-right: 8px" />
+        <a-popconfirm
+          title="删除该标签?"
+          @confirm="confirm(i)"
+          okText="是"
+          cancelText="否">
+          <a-icon
+            type="delete"
+            title="删除标签"
+            style="color: red;margin-right: 8px" />
         </a-popconfirm>
-        <a-radio :checked="Number(initData.activeKey) === i" @click="setActiveKey(i)" style="font-size: 12px">设为默认</a-radio>
+        <a-radio
+          :checked="Number(initData.activeKey) === i"
+          @click="setActiveKey(i)"
+          style="font-size: 12px"
+        >设为默认</a-radio>
       </template>
       <template slot="title">
         <h5>选项配置</h5>
-        <a-button class="addBtn" type="primary" @click="showTabModal">
+        <a-button
+          class="addBtn"
+          type="primary"
+          @click="showTabModal">
           <a-icon type="plus" />
         </a-button>
       </template>
@@ -22,7 +46,10 @@
         <a-list-item-meta>
           <div slot="description">标签风格:</div>
         </a-list-item-meta>
-        <a-radio-group @change="changeVal('type')" v-model="initData.type" class="type-radio">
+        <a-radio-group
+          @change="changeVal('type')"
+          v-model="initData.type"
+          class="type-radio">
           <a-radio value="line">线型</a-radio>
           <a-radio value="card">卡片</a-radio>
         </a-radio-group>
@@ -31,7 +58,10 @@
         <a-list-item-meta>
           <div slot="description">页签大小:</div>
         </a-list-item-meta>
-        <a-radio-group @change="changeVal('size')" v-model="initData.size" class="type-radio">
+        <a-radio-group
+          @change="changeVal('size')"
+          v-model="initData.size"
+          class="type-radio">
           <a-radio value="large">大</a-radio>
           <a-radio value="default">中</a-radio>
           <a-radio value="small">小</a-radio>
@@ -62,13 +92,21 @@
         />
       </a-list-item>
     </a-list>
-    <a-modal title="添加选项" :visible="visible" @ok="operateTab('add')" @cancel="handleCancel">
+    <a-modal
+      title="添加选项"
+      :visible="visible"
+      @ok="operateTab('add')"
+      @cancel="handleCancel">
       <label>
         标签名：
         <a-input v-model="tabName" placeholder="请输入标签名" />
       </label>
     </a-modal>
-    <a-modal title="编辑选项" :visible="visibleE" @ok="operateTab('edit')" @cancel="handleCancel">
+    <a-modal
+      title="编辑选项"
+      :visible="visibleE"
+      @ok="operateTab('edit')"
+      @cancel="handleCancel">
       <label>
         标签名：
         <a-input v-model="tabName" placeholder="请输入标签名" />
@@ -80,7 +118,8 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { compilation } from 'webpack';
+import { List, Button, Input, Radio, Icon, Table, Popconfirm, Switch, Modal } from 'ant-design-vue';
 interface InitData {
   animated: boolean;
   type: string;
@@ -94,7 +133,21 @@ interface InitData {
 }
 
 @Component({
-  name: 'tabsCtl-component'
+  name: 'tabsCtl-component',
+  components: {
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    AButton: Button,
+    AInput: Input,
+    ARadio: Radio,
+    ARadioGroup: Radio.Group,
+    AIcon: Icon,
+    ATable: Table,
+    APopconfirm: Popconfirm,
+    ASwitch: Switch,
+    AModal: Modal
+  }
 })
 export default class TabsComponent extends Vue {
   @Prop() compData: any;
@@ -157,6 +210,10 @@ export default class TabsComponent extends Vue {
   }
 
   confirm(index) {
+    if (this.compData.compAttr.tabs.length <= 1) {
+      this.$message.warning('已是最后一个标签');
+      return;
+    }
     this.compData.compAttr.tabs.splice(index, 1);
   }
 
@@ -169,7 +226,7 @@ export default class TabsComponent extends Vue {
 
   operateTab(type) {
     if (!this.tabName) {
-      this.$message.warning('标签名称不能为空')
+      this.$message.warning('标签名称不能为空');
       return;
     }
     let newTab = {
@@ -177,7 +234,38 @@ export default class TabsComponent extends Vue {
       content: {
         compName: 'layout',
         compImg: 'layout',
-        compAttr: { typeVal: '1', childList: [[]] },
+        compAttr: {
+          minHeight: '60px',
+          minHeightSwitch: true,
+          typeVal: '1',
+          childList: [[]],
+          childListAttr: [
+            {
+              boxOptions: {
+                width: 'auto',
+                height: 'auto',
+                paddingTop: '0',
+                paddingLeft: '0',
+                paddingRight: '0',
+                paddingBottom: '0',
+                borderTopWidth: '0',
+                borderLeftWidth: '0',
+                borderRightWidth: '0',
+                borderBottomWidth: '0',
+                marginTop: '0',
+                marginLeft: '0',
+                marginRight: '0',
+                marginBottom: '0'
+              },
+              flexOptions: {
+                'flex-direction': 'column',
+                'justify-content': 'flex-start',
+                'align-items': 'stretch',
+                'flex-wrap': 'nowrap'
+              }
+            }
+          ]
+        },
         type: 'layout',
         title: '布局',
         description: '布局组件',
@@ -190,7 +278,7 @@ export default class TabsComponent extends Vue {
     if (type === 'add') {
       tabs.push(newTab);
     } else {
-      this.$set(tabs, this.editIndex, newTab)
+      this.$set(tabs, this.editIndex, newTab);
     }
     this.pageData.compAttr.tabs = tabs;
     this.handleCancel();

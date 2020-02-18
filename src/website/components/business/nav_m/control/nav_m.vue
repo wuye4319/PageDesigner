@@ -81,7 +81,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { List, Slider, Input, Switch } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 const columnMarks = {
@@ -101,7 +101,15 @@ const rowMarks = {
 };
 
 @Component({
-  name: 'nav-component'
+  name: 'nav-component',
+  components: {
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    ASlider: Slider,
+    AInput: Input,
+    ASwitch: Switch
+  }
 })
 export default class navComponent extends Vue {
   @Prop()

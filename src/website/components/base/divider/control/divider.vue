@@ -31,7 +31,10 @@
         <a-list-item-meta>
           <div slot="description">分割线样式:</div>
         </a-list-item-meta>
-        <a-select v-model="dashed" style="width:100%" @change="changeVal('dashed')">
+        <a-select
+          v-model="dashed"
+          style="width:100%"
+          @change="changeVal('dashed')">
           <a-select-option value="dashed">虚线</a-select-option>
           <a-select-option value="solid">实线</a-select-option>
         </a-select>
@@ -45,13 +48,21 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
 import { colorPicker } from '@/website/components/common'; // 颜色选择器
-
+import { List, Input, Select, Radio } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'divider-component',
   components: {
-    colorPicker
+    colorPicker,
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    AInput: Input,
+    ASelect: Select,
+    ASelectOption: Select.Option,
+    ARadio: Radio,
+    ARadioGroup: Radio.Group
   }
 })
 export default class DividerComponent extends Vue {

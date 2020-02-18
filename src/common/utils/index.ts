@@ -41,13 +41,23 @@ export const getCompsInfor = (basepath: string, component: any, ctrl?: boolean) 
 
 const loadCompCode = (basepath, component, ctrl) => {
   let url = '';
+  let infor;
   if (component.type === 'custom') {
     let userID = component.userID
-    url = component.type + '/' + userID + '/' + component.compName;
-  } else {
-    url = basepath + component.type + '/' + component.compName;
+    url = userID + '/' + component.compName;
+    if (ctrl) {
+      // webpackPrefetch: false
+      infor = () => import(/* webpackChunkName: "custom-ctrl" */'../../custom/' + url + '/control/index.ts');
+    } else {
+      infor = () => import(/* webpackChunkName: "custom" */'../../custom/' + url + '/index.ts');
+    }
+  } else if (basepath === 'website/components/') {
+    url = component.type + '/' + component.compName;
+    if (ctrl) {
+      infor = () => import(/* webpackChunkName: "utils-ctrl" */'../../website/components/' + url + '/control/index.ts');
+    } else {
+      infor = () => import(/* webpackChunkName: "utils" */'../../website/components/' + url + '/index.ts');
+    }
   }
-  let lastFile: string = ctrl ? '/control/index.ts' : '/index.ts';
-  let infor = () => import(/* webpackChunkName: "[request]" */'../../' + url + lastFile);
   return infor;
 };

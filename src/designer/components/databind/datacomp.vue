@@ -1,6 +1,11 @@
 <template>
   <div class="datacomp">
-    <component :is="dataCompComponent" :compData="compData" :compIndex="compIndex" :compsDataParent="compsDataParent" :datacompStatus="true"/>
+    <component
+      :is="dataCompComponent"
+      :compData="compData"
+      :compIndex="compIndex"
+      :compsDataParent="compsDataParent"
+      :datacompStatus="true"/>
   </div>
 </template>
 
@@ -17,13 +22,17 @@ export default class DataComp extends Vue {
   @Prop() compIndex
   @Prop() compsDataParent
 
-  currCompsData = this.compData
+  @Inject('getCompsInfor') getCompsInfor;
 
-  get dataCompComponent() {
-    let compName = this.currCompsData.compName;
-    let type = this.currCompsData.type;
-    let comp = () => import(/* webpackChunkName: "[request]" */ `@/website/components/${type}/${compName}/control/index.ts`)
-    return comp
+  currCompsData = this.compData
+  dataCompComponent: any = null;
+
+  created() {
+    this.dataCompComponent = this.getCompsInfor(
+      `website/components/`,
+      this.currCompsData,
+      true
+    )
   }
 }
 </script>

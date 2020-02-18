@@ -21,12 +21,14 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
-
+import { Button } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'grid-component',
-  components: {}
+  components: {
+    AButton: Button
+  }
 })
 export default class GridComponent extends Vue {
   @Prop() compData: any;

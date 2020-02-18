@@ -73,11 +73,7 @@
         <a-list-item-meta>
           <div slot="description">进度条的色彩:</div>
         </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="initData.strokeColor"
-          @blur="changeVal('strokeColor')"
-        />
+        <color-picker v-model="initData.strokeColor" @change="changeVal('strokeColor')" />
       </a-list-item>
 
       <a-list-item v-show="initData.type !== 'dashboard'">
@@ -137,13 +133,15 @@
         </a-radio-group>
       </a-list-item>
     </a-list>
+    <api-user-tip :apiList="apiList"></api-user-tip>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { List, Radio, Slider, Switch, Input } from 'ant-design-vue';
+import { colorPicker, apiUserTip } from '@/website/components/common'; // 颜色选择器
 const webSite = namespace('webSite');
 
 interface ProgressData {
@@ -160,7 +158,19 @@ interface ProgressData {
 }
 
 @Component({
-  name: 'progress-ant-component'
+  name: 'progress-ant-component',
+  components: {
+    apiUserTip,
+    colorPicker,
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    AInput: Input,
+    ARadio: Radio,
+    ARadioGroup: Radio.Group,
+    ASlider: Slider,
+    ASwitch: Switch
+  }
 })
 export default class progressAntComponent extends Vue {
   @Prop() compData: any
@@ -180,7 +190,10 @@ export default class progressAntComponent extends Vue {
     strokeColor: '' // 进度条的色彩
   }
   pageData: any = this.compData
-
+  apiList:any[]=[
+    { dsc: '//改变状态(normal success exception active)', api: 'updateStatus(str:string)' },
+    { dsc: '//改变进度条的值(0-100)', api: 'updateProgress(num:number)' }
+  ]
   @webSite.Getter('pageInfor')
   pageInfor: Website.pageInfor;
 

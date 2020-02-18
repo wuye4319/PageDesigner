@@ -1,6 +1,6 @@
 <template>
   <div class="view-handle">
-    <a-tooltip
+    <!-- <a-tooltip
       class="handle-item"
       :mouseEnterDelay="1"
       v-if="isShowArrow"
@@ -29,7 +29,7 @@
         @mousedown="mousedown"
         @mouseup="mouseup"
       />
-    </a-tooltip>
+    </a-tooltip> -->
     <a-tooltip class="handle-item" :mouseEnterDelay="1">
       <template slot="title">
         删除
@@ -42,7 +42,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch, Emit } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { Tooltip, Icon } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 interface info {
@@ -52,7 +52,11 @@ interface info {
 }
 
 @Component({
-  name: 'view-handle'
+  name: 'view-handle',
+  components: {
+    ATooltip: Tooltip,
+    AIcon: Icon
+  }
 })
 
 export default class ViewHandle extends Vue {
@@ -95,11 +99,11 @@ export default class ViewHandle extends Vue {
 
 <style lang='less' scoped>
 .view-handle {
-    top: 5px;
+    top: 4px;
     right: -100px;
     display: flex;
     justify-content: space-between;
-    font-size: 18px;
+    font-size: 16px;
     z-index: 99;
     .handle-item {
       width: 20px;

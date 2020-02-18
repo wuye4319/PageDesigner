@@ -7,8 +7,17 @@
     }"
   >
     <ul class="navList">
-      <li v-for="(item,i) in tableData" :key="'tableData'+item.id" :class="item.select?'active':''" @click="addRoute(item.rout,i)">
-        <a-icon :type="item.icon"/>
+      <li
+        v-for="(item,i) in this.compAttr.data"
+        :key="item.route + item.id"
+        :class="(useDefault && Number(compAttr.defaultPage) === i) || (!useDefault && item.select === 'true')?'ant-desigener-font-color':''"
+        :style="{'color':(useDefault && Number(compAttr.defaultPage) === i) || item.select === 'true'?compAttr.selectColor:compAttr.color}"
+        @click="addRoute(item.route,i)"
+      >
+        <a-icon
+          style="font-size: 16px"
+          :type="item.select === 'true'?item.iconSelect:item.icon"
+          :theme="item.iconTheme" />
         <p>{{ item.name }}</p>
       </li>
     </ul>
@@ -16,73 +25,73 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
-import commonMixin from '@/common/mixin'
-
+import { Icon } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'bottomNav-component',
-  components: {},
-  mixins: [commonMixin]
+  components: { AIcon: Icon }
 })
 export default class bottomNavComponent extends Vue {
+  $router;
+  // 组件信息
   @Prop() compData: any;
-  compAttr = this.compData.compAttr;
-  pageSelect: string = ''; // 当前选择的page
-  isMobile: string = ''; // 手机端class name
-  dataModel: any = this.compData.dataModel
-
+  // 表格信息
   @webSite.Getter('tables')
+  // 改变页面信息
   tables;
-
   @webSite.Action('changePage')
   changePage;
-
+  // 获取页面信息
   @webSite.Getter('appInfor')
   appInfor: Website.pageInfor;
 
-  // 组件的初始化数据
-  initData = [
-    { id: 'home', icon: 'home', name: '首页', select: true },
-    { id: 'find', icon: 'appstore', name: '发现' },
-    { id: 'circle', icon: 'plus-circle', name: '' },
-    { id: 'heart', icon: 'heart', name: '攻略' },
-    { id: 'user', icon: 'user', name: '我的' }
-  ]
+  compAttr = this.compData.compAttr;
+  pageSelect: string = ''; // 当前选择的page
+  isMobile: string = ''; // 手机端class name
+  dataModel: any = this.compData.dataModel;
+  useDefault: boolean = false;
 
   created() {
-    // console.log(this.form);
-    // let func = 'function test(){console.log("123")};test();'
-    // eval(func)
+    let page = this.$router.currentRoute.params.page;
+    let isSelect = false;
+    this.compAttr.data.forEach(el => {
+      if (el.route === page) {
+        el.select = 'true';
+        isSelect = true;
+      } else {
+        el.select = 'false';
+      }
+    });
+    if (!isSelect) {
+      this.useDefault = true;
+    }
   }
-
-  // 数据绑定
-  get tableData() {
-    return this.getTableData(this.tables, this.dataModel, this.initData)
-  }
-
-  mounted() { }
-
   // 添加路由
   async addRoute(router, index) {
-    let lis = document.querySelectorAll('.navList li');
-    for (let i = 0; i < lis.length; i++) {
-      let ele = lis[i];
+    this.useDefault = false;
+    let data = this.compAttr.data;
+    for (let i = 0; i < data.length; i++) {
+      let item = data[i];
       if (i === index) {
-        await ele.setAttribute('class', 'active');
-        this.tableData[i].select = true;
+        item.select = 'true';
       } else {
-        await ele.setAttribute('class', '');
-        this.tableData[i].select = false;
+        item.select = 'false';
       }
+      this.$set(data, i, item)
+      this.compAttr.data = data;
+    }
+
+    if (router === 'custom') {
+      window.open(data[index].customLink, '_blank');
     }
 
     if (router) {
       let appID = this.$router.currentRoute.params.appID;
-      let page = router
-      let routname = this.$route.name
+      let page = router;
+      let routname = this.$route.name;
 
       this.$router.push({
         path: `/${routname}/${appID}/${page}`,
@@ -92,7 +101,7 @@ export default class bottomNavComponent extends Vue {
       });
       this.changePage({ page: page });
     } else {
-      this.$message.info('请先绑定数据源！');
+      this.$message.info('请选择跳转页面！');
     }
   }
 }
@@ -111,14 +120,11 @@ export default class bottomNavComponent extends Vue {
   align-items: center;
   margin: 0;
   font-size: 12px;
+  overflow: auto;
+  border: 1px solid #eee;
+  padding: 2px 0 0 0;
   li {
     cursor: pointer;
-    &:hover {
-      color: #17bc94;
-    }
-    &.active{
-      color: #17bc94;
-    }
   }
   p {
     margin: 0;

@@ -96,12 +96,19 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
-
+import { Collapse, Input, Select, Switch } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'table-component',
-  components: {}
+  components: {
+    ACollapse: Collapse,
+    ACollapsePanel: Collapse.Panel,
+    AInput: Input,
+    ASelect: Select,
+    ASelectOption: Select.Option,
+    ASwitch: Switch
+  }
 })
 export default class tableComponent extends Vue {
   @Prop() compData: any

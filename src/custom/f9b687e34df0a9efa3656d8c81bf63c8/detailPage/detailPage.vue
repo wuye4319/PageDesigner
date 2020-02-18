@@ -22,12 +22,16 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
-
+import { Icon, Input, Button } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'pageDetail-component',
-  components: {}
+  components: {
+    AIcon: Icon,
+    AInput: Input,
+    AButton: Button
+  }
 })
 export default class pageDetailComponent extends Vue {
   created() { }

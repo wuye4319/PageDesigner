@@ -9,7 +9,7 @@
       </a>
       <a-tooltip>
         <template slot="title">{{ action.actionName +'-' + action.params }}</template>
-        <div class="actonBox">{{ action.actionName +'-' + action.params }}</div>
+        <div class="actonBox">{{ action.actionName }}</div>
       </a-tooltip>
     </a-list-item>
   </div>
@@ -18,12 +18,16 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { Icon, List, Tooltip } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'action-item',
-  components: {}
+  components: {
+    AIcon: Icon,
+    AListItem: List.Item,
+    ATooltip: Tooltip
+  }
 })
 export default class ActionItem extends Vue {
   @Prop() action;

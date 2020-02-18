@@ -28,13 +28,16 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
 import listItem from '../listItem/index';
+import { Icon, Input } from 'ant-design-vue';
 const defaultImg = require('../../../../static/images/img.png')
 const webSite = namespace('webSite');
 
 @Component({
   name: 'homePage-component',
   components: {
-    listItem
+    listItem,
+    AIcon: Icon,
+    AInput: Input
   }
 })
 export default class homePageComponent extends Vue {

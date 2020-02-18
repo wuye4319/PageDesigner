@@ -66,7 +66,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { List, Input, Switch, Radio } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 interface ProgressData {
@@ -78,7 +78,16 @@ interface ProgressData {
 }
 
 @Component({
-  name: 'title-component'
+  name: 'title-component',
+  components: {
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    AInput: Input,
+    ASwitch: Switch,
+    ARadio: Radio,
+    ARadioGroup: Radio.Group
+  }
 })
 export default class TitleComponent extends Vue {
   @Prop() compData: any

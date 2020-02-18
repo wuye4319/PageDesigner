@@ -61,13 +61,19 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
 import { colorPicker } from '@/website/components/common'; // 颜色选择器
-
+import { List, Switch, Radio } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'collapse-component',
   components: {
-    colorPicker
+    colorPicker,
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    ASwitch: Switch,
+    ARadio: Radio,
+    ARadioGroup: Radio.Group
   }
 })
 export default class CollapseComponent extends Vue {

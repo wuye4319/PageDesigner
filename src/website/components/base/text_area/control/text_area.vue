@@ -1,95 +1,139 @@
 <template>
-  <div class="compAttr active-component">
+  <div>
     <a-list itemLayout="horizontal">
       <a-list-item>
         <a-list-item-meta>
-          <div slot="description">行数:</div>
+          <div slot="description">最大宽度:</div>
         </a-list-item-meta>
-        <a-slider
-          style="width:100%"
-          v-model="pageData.rows"
-          @change="changeVal('rows')"
-          :max="8"
-          :min="1"
-        />
+        <a-input v-model="compAttr.width"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
-          <div slot="description">显示内容:</div>
+          <div slot="description">默认行数:</div>
         </a-list-item-meta>
-        <a-input
-          placeholder="请输入内容"
-          v-model="pageData.value"
-          @blur="changeVal('value')"
-        />
+        <a-input-number :min="1" v-model="compAttr.minRows" />
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
-          <div slot="description">字体大小:</div>
+          <div slot="description">最大行数:</div>
         </a-list-item-meta>
-        <a-input
-          placeholder="Basic usage"
-          v-model="pageData.fontSize"
-          @blur="changeVal('fontSize')"
-        />
+        <a-input-number :min="1" v-model="compAttr.maxRows" />
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
-          <div slot="description">字体颜色:</div>
+          <div slot="description">默认值:</div>
         </a-list-item-meta>
-        <a-input
-          type="color"
-          placeholder="Basic usage"
-          v-model="pageData.color"
-          @blur="changeVal('color')"
-        />
+        <a-input v-model="compAttr.value" />
+      </a-list-item>
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">计数器:</div>
+        </a-list-item-meta>
+        <a-switch v-model="compAttr.counter" />
+      </a-list-item>
+      <a-list-item v-if="compAttr.counter">
+        <a-list-item-meta>
+          <div slot="description">字数上限:</div>
+        </a-list-item-meta>
+        <a-input-number :min="1" v-model="compAttr.maxLength" />
+      </a-list-item>
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">显示标题:</div>
+        </a-list-item-meta>
+        <a-switch v-model="showTitle" @change="titleChange"></a-switch>
+      </a-list-item>
+      <a-list-item v-if="showTitle">
+        <a-list-item-meta>
+          <div slot="description">标题:</div>
+        </a-list-item-meta>
+        <a-input v-model="compAttr.label" />
+      </a-list-item>
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">标题排列:</div>
+        </a-list-item-meta>
+        <a-select class="borderSelect" v-model="compAttr.formLayout">
+          <a-select-option value="inline">横向排列</a-select-option>
+          <a-select-option value="vertical">纵向排列</a-select-option>
+        </a-select>
+      </a-list-item>
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">默认提示:</div>
+        </a-list-item-meta>
+        <a-input v-model="compAttr.placeHolder"/>
+      </a-list-item>
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">描述信息:</div>
+        </a-list-item-meta>
+        <a-input v-model="compAttr.help"/>
+      </a-list-item>
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">错误提示:</div>
+        </a-list-item-meta>
+        <a-input v-model="compAttr.errorTip"/>
+      </a-list-item>
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">是否必填:</div>
+        </a-list-item-meta>
+        <a-switch v-model="compAttr.required"></a-switch>
+      </a-list-item>
+      <a-list-item>
+        <a-list-item-meta>
+          <div slot="description">只读:</div>
+        </a-list-item-meta>
+        <a-switch v-model="compAttr.disabled"></a-switch>
       </a-list-item>
     </a-list>
+    <api-user-tip :apiList="apiList"></api-user-tip>
   </div>
+
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { State, Action, Mutation, namespace } from 'vuex-class';
-
-const webSite = namespace('webSite');
-
+import { apiUserTip } from '@/website/components/common'; // 线设置
+import { List, Input, Select, Switch, Slider, InputNumber } from 'ant-design-vue';
 @Component({
-  name: 'active-component'
+  name: 'active-component',
+  components: {
+    apiUserTip,
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    AInput: Input,
+    AInputNumber: InputNumber,
+    ASelect: Select,
+    ASelectOption: Select.Option,
+    ASwitch: Switch,
+    ASlider: Slider
+  }
 })
 export default class activeComponent extends Vue {
-  @Prop() compData: any
-  @Prop()
-  compIndex: number
-
-  rows: number = 1
-  placeholder: string = ''
-  value: string = ''
-  fontSize: string = '18px'
-  color: string = '#000'
-  pageData: any = this.compData.compAttr
-
-  @webSite.Getter('pageInfor')
-  pageInfor: Website.pageInfor;
-
-  @webSite.Mutation('editPageInfor')
-  editPageInfor;
-
-  created(): void {
-
+  @Prop({ type: Object, default: { compAttr: {} } })
+  compData;
+  compAttr: any = this.compData.compAttr;
+  showTitle: boolean = this.compAttr.label !== '';
+  created() {}
+  titleChange(v) {
+    this.compAttr.label = this.showTitle ? '标题' : '';
   }
-
-  changeVal(name) {
-
-  }
+  apiList:any[]=[
+    { dsc: '//获取输入框的值', api: 'getValue():string' },
+    { dsc: '//设置输入框的值', api: 'setValue(str:string)' },
+    { dsc: '//获取输入框标题', api: 'getDesc():string' },
+    { dsc: '//得到输入框标题', api: 'setDesc(str:string)' },
+    { dsc: '//检查用户输入（必填时有效）', api: 'check():boolean' },
+  ]
 }
 </script>
 
 <style lang="less" scoped>
-.compAttr{
-  padding: 0 8px;
-  /deep/.ant-list-item-content{
-    flex: 1.5;
-  }
+.borderSelect {
+  width: 100%;
 }
 </style>

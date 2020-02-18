@@ -1,5 +1,5 @@
 <template>
-  <div class="themeUi scroll-style">
+  <div class="themeUi ">
     <a-list itemLayout="horizontal">
       <a-list-item>
         <a-list-item-meta>
@@ -174,11 +174,17 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
 import { colorPicker } from '@/website/components/common'; // 颜色选择器
-
+import { List, Input, InputNumber } from 'ant-design-vue';
 @Component({
   name: 'themeUi',
   components: {
-    colorPicker
+    colorPicker,
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    AInputNumber: InputNumber,
+    AInput:Input
+
   }
 })
 

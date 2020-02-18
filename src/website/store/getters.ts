@@ -10,6 +10,9 @@ const getters: GetterTree<WebSiteState, GlobalState> = {
   [WebSite.appInfor](state) {
     return state.AppInfor;
   },
+  [WebSite.compList](state) {
+    return state.CompList;
+  },
   [WebSite.compStore](state) {
     return state.CompStore;
   },
@@ -28,8 +31,14 @@ const getters: GetterTree<WebSiteState, GlobalState> = {
   [WebSite.userData](state) {
     return state.UserData;
   },
-  [WebSite.actions](state) {
-    return state.Actions;
+  [WebSite.defaultActions](state) {
+    return state.defaultActions;
+  },
+  [WebSite.pageActions](state) {
+    return state.pageActions;
+  },
+  [WebSite.tempAppData](state) {
+    return state.TempAppData;
   }
 };
 

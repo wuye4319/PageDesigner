@@ -9,15 +9,26 @@
             <div slot="description">列表排序数据:</div>
           </a-list-item-meta>
           <div class="add">
-            <a-button type="primary" size="small" class="handle-add" icon="plus" @click="addOptions">添加</a-button>
+            <a-button
+              type="primary"
+              size="small"
+              class="handle-add"
+              icon="plus"
+              @click="addOptions">添加</a-button>
           </div>
         </a-list-item>
 
-        <div class="cont  scroll-style">
+        <div class="cont  ">
           <a-list-item v-for="(item,i) of data" :key="i">
             <div class="mylist">
               <div class="handle">
-                <a-button type="danger" size="small" class="handle-icon" shape="circle" icon="delete" @click="deleteOptions(i)" />
+                <a-button
+                  type="danger"
+                  size="small"
+                  class="handle-icon"
+                  shape="circle"
+                  icon="delete"
+                  @click="deleteOptions(i)" />
               </div>
               <div class="list-data">
                 <div class="item">
@@ -33,7 +44,10 @@
                       @change="valueChange(item.value,item)"
                     >
                       <a-select-option key="listAll" value="listAll">全部</a-select-option>
-                      <a-select-option v-for="item of menuData" :key="item" :value="item">{{ item }}</a-select-option>
+                      <a-select-option
+                        v-for="item of menuData"
+                        :key="item"
+                        :value="item">{{ item }}</a-select-option>
                     </a-select>
                   </div>
                 </div>
@@ -90,12 +104,20 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
-
+import { List, Button, Input, Select } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'list-sort-component',
-  components: {}
+  components: {
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    AButton: Button,
+    AInput: Input,
+    ASelect: Select,
+    ASelectOption: Select.Option
+  }
 })
 export default class ListSortComponent extends Vue {
   @Prop() compData: any;

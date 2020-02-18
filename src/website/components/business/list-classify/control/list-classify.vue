@@ -14,14 +14,22 @@
         <a-list-item>
           <div class="desc">
             <div class="add">
-              <a-button type="primary" size="small" class="handle-add" icon="plus" @click="addOptions">添加</a-button>
+              <a-button
+                type="primary"
+                size="small"
+                class="handle-add"
+                icon="plus"
+                @click="addOptions">添加</a-button>
               &nbsp;&nbsp;<span>(全部绑定值为 list-all)</span>
             </div>
-            <div class="mylist scroll-style">
-              <div class="list-data" v-for="(item,i) of data" :key="i">
+            <div class="mylist ">
+              <div
+                class="list-data"
+                v-for="(item,i) of data"
+                :key="i">
                 <div class="label">
                   标签名{{ i+1 }}
-                  <a-input v-model="item.label" />
+                  <a-input v-model="item.label" :disabled="!dataModel.tableName || !compData.dataModel.mapData[0].tableMap" />
                 </div>
                 <div class="value">
                   绑定值{{ i+1 }}
@@ -32,11 +40,16 @@
                     <a-select-option key="listAll" value="listAll">全部</a-select-option>
                     <a-select-option v-for="item of menuData" :key="item" :value="item">{{item}}</a-select-option>
                   </a-select> -->
-                  <a-input v-model="item.value" />
+                  <a-input v-model="item.value" :disabled="!dataModel.tableName || !compData.dataModel.mapData[0].tableMap" />
                 </div>
                 <div class="handle">
                   <div>操作</div>
-                  <a-button type="danger" class="handle-icon" shape="circle" icon="minus" @click="deleteOptions(i)" />
+                  <a-button
+                    type="danger"
+                    class="handle-icon"
+                    shape="circle"
+                    icon="minus"
+                    @click="deleteOptions(i)" />
                 </div>
               </div>
             </div>
@@ -60,8 +73,14 @@
         </a-list-item>
 
         <a-list-item>
-          <div class="option ant-desigener-border-color" :class="{checked: style === 'base'}" @click="chooseClassify('base')">
-            <a-radio-group class="option-list" defaultValue="a" buttonStyle="solid">
+          <div
+            class="option ant-desigener-border-color"
+            :class="{checked: style === 'base'}"
+            @click="chooseClassify('base')">
+            <a-radio-group
+              class="option-list"
+              defaultValue="a"
+              buttonStyle="solid">
               <a-radio-button class="option-list-item" value="all">全部</a-radio-button>
               <a-radio-button class="option-list-item" value="a">分类1</a-radio-button>
               <a-radio-button class="option-list-item" value="b">分类2</a-radio-button>
@@ -71,7 +90,10 @@
         </a-list-item>
 
         <a-list-item>
-          <div class="option ant-desigener-border-color" :class="{checked: style === 'tabs'}" @click="chooseClassify('tabs')">
+          <div
+            class="option ant-desigener-border-color"
+            :class="{checked: style === 'tabs'}"
+            @click="chooseClassify('tabs')">
             <a-radio-group class="option-list" defaultValue="a">
               <a-radio-button class="option-list-item tab" value="all">全部</a-radio-button>
               <a-radio-button class="option-list-item tab" value="a">分类1</a-radio-button>
@@ -100,12 +122,21 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
-
+import { List, Button, Input, Radio } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'list-classify-component',
-  components: {}
+  components: {
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    AButton: Button,
+    AInput: Input,
+    ARadio: Radio,
+    ARadioGroup: Radio.Group,
+    ARadioButton: Radio.Button
+  }
 })
 export default class ListClassifyComponent extends Vue {
   @Prop() compData: any;
@@ -244,6 +275,5 @@ export default class ListClassifyComponent extends Vue {
     text-align: left;
     margin-bottom: 10px;
   }
-
 
 </style>

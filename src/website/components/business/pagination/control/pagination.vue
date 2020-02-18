@@ -79,7 +79,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { List, Slider, InputNumber, Switch } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 interface ProgressData {
@@ -92,7 +92,15 @@ interface ProgressData {
 }
 
 @Component({
-  name: 'pagination-component'
+  name: 'pagination-component',
+  components: {
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta,
+    ASlider: Slider,
+    AInputNumber: InputNumber,
+    ASwitch: Switch
+  }
 })
 export default class PaginationComponent extends Vue {
   @Prop() compData: any

@@ -16,11 +16,14 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { Pagination } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
-  name: 'pagination'
+  name: 'pagination',
+  components: {
+    APagination: Pagination
+  }
 })
 
 export default class PaginationView extends Vue {

@@ -1,10 +1,6 @@
 <template>
-  <div class="mymap">
-    <img
-      :src="require('../../../../../static/images/map.png')"
-      :style="comAttr"
-      alt=""
-    >
+  <div class="mymap" :style="comAttr">
+    <img :src="require('../../../../../static/images/map.png')" alt="">
   </div>
 </template>
 
@@ -17,19 +13,20 @@ const webSite = namespace('webSite');
 @Component({
   name: 'map-component'
 })
-
 export default class mapComponent extends Vue {
   @Prop() compData: any;
 
   comAttr: any = this.compData.compAttr;
 
-  created(): void {
-  }
+  created(): void {}
 }
 </script>
 
 <style lang="less" scoped>
 .mymap {
   width: 100%;
+  img {
+    width: 100%;
+  }
 }
 </style>

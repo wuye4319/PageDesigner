@@ -15,5 +15,9 @@ export enum WebSite {
   tables = 'tables',
   userData = 'userData',
   handleUserData = 'handleUserData',
-  actions = 'actions'
+  openUrl='openUrl',
+  pageActions = 'pageActions',
+  defaultActions = 'defaultActions', // 默认事件
+  tempAppData = 'tempAppData',
+  compList = 'compList'
 }

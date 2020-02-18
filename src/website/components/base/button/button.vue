@@ -1,51 +1,48 @@
 <template>
   <a-button
     class="mybutton"
-    type="primary"
-    :style="comAttr"
+    :type="compAttr.type || 'primary'"
+    :style="setStyle()"
     @click="handleClick"
-  >{{ comAttr.value }}</a-button>
+    :ref="compAttr.uid"
+    :size="compAttr.size"
+    :disabled="compAttr.status"
+  ><a-icon
+    v-if="compAttr.icon"
+    :type="compAttr.iconType || 'plus'"
+    :style="{'color': compAttr.iconColor}"
+    :theme="compAttr.iconTheme || 'filled'" />{{ compAttr.value }}</a-button>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import { namespace } from "vuex-class";
-import { Button } from "ant-design-vue";
-import actions from "../../../store/actions";
+import { Component, Prop, Vue, Watch, Mixins } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
+import { Button, Icon } from 'ant-design-vue';
+import actions from '../../../store/actions';
 
-const webSite = namespace("webSite");
+const webSite = namespace('webSite');
 
 @Component({
-  name: "button-component"
+  name: 'button-component',
+  components: {
+    AButton: Button,
+    AIcon: Icon
+  }
 })
 export default class buttonComponent extends Vue {
   @Prop() compData: any;
+  @Prop() trigFunc: any;
+  compAttr: any = this.compData.compAttr;
 
-  @webSite.Getter("pageInfor") pageInfor;
-
-  comAttr: any = this.compData.compAttr;
-
-  created() {
-    console.log("buttonPageInfor", this.pageInfor);
-    console.log("compData", this.compData);
+  setStyle() {
+    return {
+      'margin': this.compAttr.margin,
+      'width': this.compAttr.width || '200px'
+    }
   }
+
   handleClick() {
-    this.compData.actionModel.forEach(mod => {
-      if (mod.eventType === "click") {
-        mod.actions.forEach(action => {
-          this.$emit(mod.actionFunc, mod.params);
-        });
-      }
-    });
-  }
-  handleDblClick() {
-    this.compData.actionModel.forEach(mod => {
-      if (mod.eventType === "dblclick") {
-        mod.actions.forEach(action => {
-          this.$emit(mod.actionFunc, mod.params);
-        });
-      }
-    });
+    this.trigFunc('click', this.compData.actionModel);
   }
 }
 </script>
@@ -53,6 +50,6 @@ export default class buttonComponent extends Vue {
 <style lang="less" scoped>
 .mybutton {
   transition: 0.5s all;
-  margin-top: 5px;
+  // margin-top: 5px;
 }
 </style>

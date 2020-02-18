@@ -1,8 +1,17 @@
 
 <template>
   <div class="list-classify">
-    <a-radio-group class="option-list" :buttonStyle="buttonStyle" v-model="myVal" @change="radioChange">
-      <a-radio-button class="option-list-item" v-for="(item,i) of compAttr.data" :key="i" :class="{tab: compAttr.style === 'tabs'}" :value="i.toString()">{{ item.label }}</a-radio-button>
+    <a-radio-group
+      class="option-list"
+      :buttonStyle="buttonStyle"
+      v-model="myVal"
+      @change="radioChange">
+      <a-radio-button
+        class="option-list-item"
+        v-for="(item,i) of compAttr.data"
+        :key="i"
+        :class="{tab: compAttr.style === 'tabs'}"
+        :value="i.toString()">{{ item.label }}</a-radio-button>
     </a-radio-group>
   </div>
 </template>
@@ -10,12 +19,15 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
-
+import { Radio } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'list-classify-view',
-  components: {}
+  components: {
+    ARadioGroup: Radio.Group,
+    ARadioButton: Radio.Button
+  }
 })
 export default class ListClassifyView extends Vue {
   @Prop() compData;
@@ -36,8 +48,9 @@ export default class ListClassifyView extends Vue {
 
   created() {
     if (this.compAttr.bindUid && this.compAttr.bindName) {
-      let eventName = `${this.compAttr.bindUid}-tableName`;
+      let eventName = `${this.compAttr.bindUid}-tableName-classify`;
       // 绑定事件
+      this.$store.off(eventName);
       this.$store.on(eventName, this.changeTableName);
     }
   }
@@ -57,7 +70,7 @@ export default class ListClassifyView extends Vue {
       };
     }
     if (this.compAttr.bindUid && this.compAttr.bindName) {
-      this.$store.$emit(`${this.compAttr.bindUid}-${this.compAttr.bindName}`, tableName, params);
+      this.$store.$emit(`${this.compAttr.bindUid}-${this.compAttr.bindName}`, tableName, params, 'classify');
     } else {
       this.$store.$emit(this.compAttr.emit, tableName, params);
     }
@@ -66,6 +79,13 @@ export default class ListClassifyView extends Vue {
   // 改变tab名称
   changeTableName(name) {
     this.dataModel.tableName = name;
+    this.dataModel.mapData.forEach((item, i) => {
+      this.dataModel.mapData[i].tableMap = ''
+    })
+    this.compAttr.data.forEach((item, i) => {
+      this.compAttr.data[i].value = ''
+    })
+    this.myVal = '0'
   }
 }
 </script>

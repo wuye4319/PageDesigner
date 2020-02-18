@@ -52,7 +52,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { Input, InputNumber } from 'ant-design-vue';
 interface BackgroundStyle {
   width:string,
   height:string,
@@ -61,7 +61,11 @@ interface BackgroundStyle {
 }
 
 @Component({
-  name: 'app-background'
+  name: 'app-background',
+  components: {
+    AInput: Input,
+    AInputNumber: InputNumber
+  }
 })
 
 export default class AppBackground extends Vue {

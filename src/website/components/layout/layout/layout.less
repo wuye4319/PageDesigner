@@ -1,0 +1,177 @@
+.layout {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  &.designer {
+    border: 1px dashed rgba(151, 151, 151, 1);
+  }
+  // &.layout-hover {
+  //   &:hover {
+  //     // padding-top: 25px;
+  //   }
+  // }
+}
+
+.column {
+  flex: 1;
+  // min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  &.out-border {
+    border: 1px dashed rgba(151, 151, 151, 1);
+    &:nth-child(n + 1) {
+      border-right: none;
+    }
+    &:last-child {
+      border-right: 1px dashed rgba(151, 151, 151, 1);
+    }
+  }
+  &.inner-border {
+    border-right: 1px dashed rgba(151, 151, 151, 1);
+    border-top: 1px dashed rgba(151, 151, 151, 1);
+    border-bottom: 1px dashed rgba(151, 151, 151, 1);
+    &:last-child {
+      border-right: none;
+    }
+  }
+  &.droping {
+    background: #38c9a0;
+    .layout-item {
+      background: #ffffff;
+    }
+  }
+  // &.bg-green {
+  //   background: #38c9a0;
+  // }
+}
+.handle-button {
+  margin-right: 10px;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+.layout-view {
+  flex: 1;
+  display: flex;
+  overflow: auto;
+  &.designer {
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      height: 100%;
+      top: 0;
+      left: 0;
+      border-right: 1px dashed rgba(151, 151, 151, 1);
+    }
+  }
+  &.empty {
+    padding-bottom: 20px;
+  }
+  &.bordershow {
+    border: 1px dashed rgba(151, 151, 151, 1);
+  }
+}
+.tips {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+}
+.bg-green {
+  background: #38c9a0;
+}
+.insert {
+  position: relative;
+  padding-top: 20px;
+  &::after {
+    content: "";
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #38c9a0;
+  }
+}
+.empty {
+  height: 30px;
+}
+
+.layout-item {
+  &.layout-choose {
+    border-width: 1px;
+    border-style: solid;
+    overflow: visible;
+  }
+}
+
+.item-designer {
+  position: relative;
+  // overflow: hidden;
+  .handle {
+    display: none;
+    position: absolute;
+    top: -2px;
+    &.hover {
+      display: block;
+      // animation: myAnimation 0.3s;
+      // animation-fill-mode: forwards;
+      right: 2px; 
+    }
+    &.hover-right {
+      display: block;
+      top: -4px;
+      // animation: myAnimation2 0.3s;
+      // animation-fill-mode: forwards;
+      right: -18px;
+    }
+    &.hover-left {
+      display: block;
+      top: -4px;
+      // animation: myAnimation3 0.3s;
+      // animation-fill-mode: forwards;
+      left: -18px;   
+    }
+  }
+  
+}
+
+@keyframes myAnimation {
+  from {
+    opacity: 0;
+    right: -10px;
+  }
+  to {
+    opacity: 1;
+    right: 2px;  
+  }
+}
+
+@keyframes myAnimation2 {
+  from {
+    opacity: 0;
+    right: 0;
+  }
+  to {
+    opacity: 1;
+    right: -18px;   
+  }
+}
+
+@keyframes myAnimation3 {
+  from {
+    opacity: 0;
+    left: 0;
+  }
+  to {
+    opacity: 1;
+    left: -18px;   
+  }
+}
+
+.pointer-event {
+  pointer-events: none;
+}

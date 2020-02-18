@@ -21,7 +21,7 @@ Events.prototype.off = function (evt, callback) {
   }
   let events = this.events[evt]
   if (!callback) {
-    delete this[evt]
+    delete this.events[evt]
   } else {
     for (let i = 0; i < events.length; i++) {
       if (events[i] === callback) {
@@ -42,17 +42,17 @@ Events.prototype.trigger = function (evt, ...arg) {
 
 Events.prototype.emit = Events.prototype.trigger
 Events.mixTo = function (receiver) {
-  var proto = Events.prototype
+  let proto = Events.prototype
   if (isFunction(receiver)) {
-    for (var key in proto) {
-      if (proto.hasOwnProperty(key)) {
-        receiver.prototype[key] = proto[key]
+    for (let k in proto) {
+      if (proto.hasOwnProperty(k)) {
+        receiver.prototype[k] = proto[k]
       }
     }
   } else {
-    for (var key in proto) {
-      if (proto.hasOwnProperty(key)) {
-        receiver[key] = proto[key]
+    for (let k in proto) {
+      if (proto.hasOwnProperty(k)) {
+        receiver[k] = proto[k]
       }
     }
   }

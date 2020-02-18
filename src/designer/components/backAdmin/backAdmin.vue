@@ -3,19 +3,17 @@
     <a-button
       class="back-btn"
       type="primary"
-      @click="openModal"
-    >
-      <a-icon type="left"/>
+      @click="openModal">
+      <a-icon type="left" />
     </a-button>
 
     <a-modal
       v-model="visible"
       :bodyStyle="bodyStyle"
       :footer="null"
-      :width="416"
-    >
+      :width="416">
       <div class="back-cont">
-        <a-icon type="question-circle" class="ant-desigener-font-warning-color back-icon"/>
+        <a-icon type="question-circle" class="ant-desigener-font-warning-color back-icon" />
         <span class="text">你确定要离开设计器页面吗?</span>
       </div>
       <div class="back-footer">
@@ -23,29 +21,40 @@
         <a-button
           class="back-footer-btn"
           type="danger"
-          @click="backAdmin"
-        >直接离开</a-button>
+          @click="backAdmin">直接离开</a-button>
         <a-button
           class="back-footer-btn"
           type="primary"
-          @click="backSave"
-        >保存后离开</a-button>
+          @click="backSave">保存后离开</a-button>
       </div>
     </a-modal>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch, Emit, Provide, Inject, Model } from 'vue-property-decorator';
+import {
+  Component,
+  Prop,
+  Vue,
+  Watch,
+  Emit,
+  Provide,
+  Inject,
+  Model
+} from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
 import { adminUrl } from '@/common/config/env';
-
+import { Modal, Icon, Button } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
-  name: 'back-admin'
+  name: 'back-admin',
+  components: {
+    AModal: Modal,
+    AIcon: Icon,
+    AButton: Button
+  }
 })
-
 export default class BackAdmin extends Vue {
   @webSite.Getter('pageInfor')
   pageInfor;
@@ -59,25 +68,46 @@ export default class BackAdmin extends Vue {
   @webSite.Getter('global')
   global: Website.pageInfor;
 
-  @Prop() pageSelect
+  @Prop() pageSelect;
 
-  $router
-  $message
-  visible: boolean = false
+  $router;
+  $message;
+  visible: boolean = false;
   bodyStyle: object = {
     'border-bottom-width': 0
-  }
-  timer:any = null;
-  oldAppInfo: string = ''
-  oldGlobal: string = ''
+  };
+  timer: any = null;
+  oldAppInfo: string = '';
+  oldGlobal: string = '';
+  beforeunload:boolean=false;
 
   created() {
     this.initOldPage();
+    // window.addEventListener('beforeunload', this.noTipSave);
+    window.addEventListener('popstate', this.noTipSave);
+    let that = this;
+    if (process.env.NODE_ENV !== 'development') {
+      window.onbeforeunload = function(e) {
+        if ((!(window as any).localtionreload && that.checkUser()) && !that.beforeunload) {
+          e = window.event || e;
+          e.returnValue = '确定离开当前页面吗？';
+          return '确认关闭？';
+        }
+      };
+    }
   }
 
   beforeDestroy() {
     this.visible = false;
+    // window.removeEventListener('beforeunload', this.noTipSave);
+    window.removeEventListener('popstate', this.noTipSave);
     clearInterval(this.timer);
+    //  window.onbeforeunload = () => {};
+  }
+  noTipSave() {
+    if (this.checkUser()) {
+      this.saveInfo(true);
+    }
   }
 
   // 初始化旧页面
@@ -90,25 +120,34 @@ export default class BackAdmin extends Vue {
         this.oldGlobal = JSON.stringify(this.global);
         clearInterval(this.timer);
       }
-    }, 300)
+    }, 300);
   }
-
-  // 退回admin
-  openModal() {
+  // 检测用户是否有操作
+  checkUser() {
+    let ks = false;
     let newAppInfo = JSON.stringify(this.appInfor);
     let newGlobal = JSON.stringify(this.global);
     let stateApp = this.oldAppInfo === newAppInfo;
     let stateGlobal = this.oldGlobal === newGlobal;
-    if (stateApp && stateGlobal) {
-      this.backAdmin();
-    } else {
+    if (!(stateApp && stateGlobal)) {
+      ks = true;
+    }
+    return ks;
+  }
+
+  // 退回admin
+  openModal() {
+    if (this.checkUser()) {
       this.visible = true;
+    } else {
+      this.backAdmin();
     }
   }
 
   // 直接退出
   backAdmin() {
-    window.open(adminUrl + '#/admin/', '_self')
+    this.beforeunload = true;
+    window.open(adminUrl + '#/admin/', '_self');
   }
 
   // 保存退出
@@ -119,11 +158,11 @@ export default class BackAdmin extends Vue {
   cancelAsync() {
     this.saveInfo().then(() => {
       this.backAdmin();
-    })
+    });
   }
 
   // 保存
-  saveInfo() {
+  saveInfo(isTip?: boolean) {
     let appInfor = this.appInfor;
     appInfor[this.pageSelect].module = this.pageInfor;
     let params = {
@@ -135,14 +174,18 @@ export default class BackAdmin extends Vue {
       this.handleAppInfo({
         url: '/page/pageconfig/' + appID,
         params
-      }).then((res) => {
-        this.$message.success('保存成功！');
-        this.visible = false;
-        resolve();
-      }).catch((rej) => {
-        this.$message.error('保存失败，请重新尝试');
-        reject(new Error('error'));
-      });
+      })
+        .then(res => {
+          if (!isTip) {
+            this.$message.success('保存成功！');
+          }
+          this.visible = false;
+          resolve();
+        })
+        .catch(rej => {
+          this.$message.error('保存失败，请重新尝试');
+          reject(new Error('error'));
+        });
     });
   }
 
@@ -164,7 +207,9 @@ export default class BackAdmin extends Vue {
     };
     for (let name of Object.keys(theme)) {
       if (Array.isArray(theme[name])) {
-        themeObj[name] = `rgba(${this.getRGBColor(theme[name][0])},${theme[name][1]}%)`;
+        themeObj[name] = `rgba(${this.getRGBColor(theme[name][0])},${
+          theme[name][1]
+        }%)`;
       } else {
         themeObj[name] = theme[name];
       }
@@ -199,27 +244,26 @@ export default class BackAdmin extends Vue {
 </script>
 
 <style lang='less' scoped>
-  .back-btn {
-    font-size: 18px;
-    margin-right: 10px;
-  }
-  .back-cont {
-    font-size: 20px;
-  }
-  .back-icon {
-    vertical-align: middle;
-  }
-  .text {
-    margin-left: 16px;
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.85);
-  }
-  .back-footer {
-    margin-top: 24px;
-    text-align: right;
-
-  }
-  .back-footer-btn {
-    margin-left: 8px;
-  }
+.back-btn {
+  font-size: 18px;
+  margin-right: 10px;
+}
+.back-cont {
+  font-size: 20px;
+}
+.back-icon {
+  vertical-align: middle;
+}
+.text {
+  margin-left: 16px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.85);
+}
+.back-footer {
+  margin-top: 24px;
+  text-align: right;
+}
+.back-footer-btn {
+  margin-left: 8px;
+}
 </style>

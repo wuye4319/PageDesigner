@@ -2,7 +2,7 @@ import { GlobalState } from '@/wrapper/store';
 import { ActionTree } from 'vuex';
 import { WebSiteState } from './index';
 import { WebSite } from './types';
-import { getPageInfor, getProductList, handlePageInfo } from '@/website/service';
+import { getPageInfor, getProductList, handlePageInfo, getPageActions, getCompList } from '@/website/service';
 
 const actions: ActionTree<WebSiteState, GlobalState> = {
   // 初始化vuex内信息
@@ -10,12 +10,31 @@ const actions: ActionTree<WebSiteState, GlobalState> = {
     let appData: any = await getPageInfor(param.appID);
     commit(WebSite.appInfor, { data: appData.data, page: param.page });
   },
+  // 获取组件列表
+  async [WebSite.compList]({ commit }, param) {
+    let res: any = await getCompList(param);
+    let compList = res && res.data;
+    commit(WebSite.compList, compList);
+  },
   // 页面改变时
   [WebSite.selectPage]({ commit }, param) {
     commit(WebSite.selectPage, param.page);
   },
   [WebSite.editPageInfor]({ commit }, param) {
     commit(WebSite.editPageInfor, param);
+  },
+  // 设置页面函数
+  async [WebSite.pageActions]({ commit }, params) {
+    let resData: any = await getPageActions(params);
+    let actionStr = resData.data && resData.data[0] ? resData.data[0].actionsStr : '';
+    commit(WebSite.pageActions, actionStr);
+  }, // defaultActions
+  // 设置默认函数
+  async [WebSite.defaultActions]({ commit }, params) {
+    let resData: any = await getPageActions(params);
+    if (resData.data && resData.data[0]) {
+      commit(WebSite.defaultActions, resData.data[0].actionsStr);
+    }
   },
   // 改变 全局信息
   async [WebSite.handleAppInfo]({ commit }, options) {

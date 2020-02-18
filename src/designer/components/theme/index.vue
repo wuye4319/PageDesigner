@@ -1,5 +1,5 @@
 <template>
-  <div class="theme scroll-style">
+  <div class="theme ">
     <a-popover
       placement="bottomRight"
       :overlayStyle="overlayStyle"
@@ -30,13 +30,17 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
 import themeUi from './themeUi.vue';
-
+import { Popover, Button, Icon } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'theme',
   components: {
-    themeUi
+    themeUi,
+    APopover: Popover,
+    AButton: Button,
+    AIcon: Icon
+
   }
 })
 

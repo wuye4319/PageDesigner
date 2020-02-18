@@ -86,7 +86,7 @@
         </div>
       </div>
       <div class="item">
-        <div class="name">&nbsp;</div>
+        <div class="name" style="visibility:hidden">圆角</div>
         <div class="desc">
           <a-input
             v-model="borderTopRightRadius"
@@ -142,7 +142,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { Icon, Select, Input } from 'ant-design-vue';
 interface BorderInfo {
   commonStyle:string, // 线形
   commonWidth:string, // 高
@@ -156,7 +156,13 @@ interface BorderInfo {
 const webSite = namespace('webSite');
 
 @Component({
-  name: 'app-border'
+  name: 'app-border',
+  components: {
+    AIcon: Icon,
+    ASelect: Select,
+    ASelectOption: Select.Option,
+    AInput: Input
+  }
 })
 
 export default class AppBorder extends Vue {

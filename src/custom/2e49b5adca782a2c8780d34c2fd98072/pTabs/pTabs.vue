@@ -15,11 +15,15 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
 import mix from '@/common/mixin/modeMixins';
+import { Tabs } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'showData-component',
-  components: {},
+  components: {
+    ATabs: Tabs,
+    ATabPane: Tabs.TabPane
+  },
   mixins: [mix]
 })
 export default class showDataComponent extends Vue {

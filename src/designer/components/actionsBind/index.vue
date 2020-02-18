@@ -1,24 +1,38 @@
 <template>
-  <div class="app-style">
+  <div class="actionstyle">
     <div class="cont" v-if="Object.keys(globalOptions).length > 0">
-      <a-collapse :activeKey="operateEvent && operateEvent.eventType" :bordered="false" v-if="compData.actionModel && compData.actionModel.length > 0">
+      <div class="anouce" v-if="!compData.actionModel || !compData.actionModel.actionData">
+        组件暂未提供事件绑定
+      </div>
+      <a-collapse
+        v-if="compData.actionModel && compData.actionModel.actionData"
+        :activeKey="operateEvent && operateEvent.eventType"
+        :bordered="false">
         <a-collapse-panel
-          v-for="(item,j) in compData.actionModel"
+          v-for="(item,j) in compData.actionModel.actionData"
           :header="item.eventName"
           :key="item.eventType"
           :style="customStyle"
         >
-          <action-item
-            v-for="(action,i) in item.actions"
-            :key="i"
-            :action="action"
-            :eventIndex="j"
-            :index="i"
-            :operateAction="operateAction"
-          />
+          <template v-if="item.actions.length">
+            <action-item
+              v-for="(action,i) in item.actions"
+              :key="i"
+              :action="action"
+              :eventIndex="j"
+              :index="i"
+              :operateAction="operateAction"
+            />
+          </template>
+          <template v-else>
+            暂未绑定动作，<span
+              style="cursor: pointer"
+              class="ant-desigener-font-color"
+              @click="openActionModal">去绑定</span>
+          </template>
         </a-collapse-panel>
       </a-collapse>
-      <div class="operations">
+      <div v-if="compData.actionModel && compData.actionModel.actionData" class="operations">
         <a-button type="primary" @click="openActionModal">添加动作</a-button>
         <a-button type="primary" @click="openEditorModal">自定义动作</a-button>
       </div>
@@ -27,7 +41,7 @@
       :visible="actionVisible"
       :openEditorModal="openEditorModal"
       :closeModal="closeActionModal"
-      :actionModel="compData.actionModel"
+      :actionModel="compData.actionModel.actionData"
       :setActionModel="setActionModel"
       :setEditEvent="setOperateEvent"
     />
@@ -39,13 +53,13 @@
       :visible="actionEVisible"
       :openEditorModal="openEditorModal"
       :closeModal="closeActionModalEdit"
-      :actionModel="compData.actionModel"
+      :actionModel="compData.actionModel.actionData"
       :setActionModel="setActionModel"
     />
     <editorModal
       :visible="editorVisible"
       :closeModal="closeEditorModal"
-      :actionModel="compData.actionModel"
+      :actionModel="compData.actionModel.actionData"
       :setActionModel="setActionModel"
     />
   </div>
@@ -58,7 +72,8 @@ import actionItem from './actionItem.vue';
 import actionModal from './actionModal.vue';
 import actionEditModal from './actionEditModal.vue';
 import editorModal from './editorModal.vue';
-
+import ViewHandle from '../../../../npm/website/components/view_handle/index.vue';
+import { Collapse, Button } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
@@ -67,7 +82,10 @@ const webSite = namespace('webSite');
     actionItem,
     actionModal,
     editorModal,
-    actionEditModal
+    actionEditModal,
+    ACollapse: Collapse,
+    ACollapsePanel: Collapse.Panel,
+    AButton: Button
   }
 })
 export default class actionBind extends Vue {
@@ -76,6 +94,7 @@ export default class actionBind extends Vue {
 
   @webSite.Mutation('changeappInfor')
   changeappInfor;
+  @webSite.Getter('pageActions') pageActions;
 
   @Prop() compData;
   @Prop() compIndex;
@@ -100,24 +119,23 @@ export default class actionBind extends Vue {
     return obj;
   }
   operateAction(type, eventIndex, index) {
-    let event = this.compData.actionModel[eventIndex];
+    let event = this.compData.actionModel.actionData[eventIndex];
     if (type === 'edit') {
       this.openActionModalEdit(eventIndex, index);
     } else {
-      let modals = this.compData.actionModel;
-      modals &&
-        modals.forEach((mod, i) => {
-          if (mod.eventType === event.eventType) {
-            modals[i].actions.splice(index - 1, 1);
-          }
-        });
+      let modals = this.compData.actionModel.actionData;
+      modals[0] && modals.forEach((mod, i) => {
+        if (mod.eventType === event.eventType) {
+          modals[i].actions.splice(index, 1);
+        }
+      });
       this.setActionModel(modals);
     }
   }
   setActionModel(value) {
-    this.compData.actionModel = value;
+    this.compData.actionModel.actionData = value;
   }
-  setOperateEvent(event){
+  setOperateEvent(event) {
     this.operateEvent = event;
   }
   openActionModal() {
@@ -129,7 +147,7 @@ export default class actionBind extends Vue {
     this.actionEVisible = false;
   }
   openActionModalEdit(eventIndex, index) {
-    let event: any = this.compData.actionModel[eventIndex];
+    let event: any = this.compData.actionModel.actionData[eventIndex];
     this.editEvent = event;
     this.editAction = event.actions[index];
     this.actionParams =
@@ -152,20 +170,7 @@ export default class actionBind extends Vue {
 </script>
 
 <style lang='less' scoped>
-.edit {
-  width: 200px;
-  height: 81px;
-  padding: 21px 18px;
-  margin: 0 auto;
-}
-.cont {
-  text-align: left;
-  /deep/ .arrow {
-    right: 16px;
-    left: auto !important;
-  }
-}
-.app-style {
+.actionstyle {
   font-size: 12px;
   /deep/.ant-collapse {
     background: transparent;
@@ -175,11 +180,15 @@ export default class actionBind extends Vue {
     margin-bottom: 8px;
     border-radius: 4px;
     background: #ffffff;
-    .ant-collapse-header {
+    /deep/.ant-collapse-header {
       padding: 6px 8px;
       color: #000000;
       font-size: 12px;
     }
+  }
+  /deep/.ant-collapse-arrow{
+    left: auto !important;
+    right: 16px;
   }
 }
 .operations {
@@ -195,5 +204,13 @@ export default class actionBind extends Vue {
       margin-left: 16px;
     }
   }
+}
+.anouce{
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+}
+.cont {
+  text-align: left;
 }
 </style>

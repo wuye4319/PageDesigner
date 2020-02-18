@@ -1,24 +1,16 @@
 <template>
-  <div
-    class="nav-mobile"
-    :class="{'show-border':pageData.showBorder}"
-  >
+  <div class="nav-mobile" :class="{'show-border':pageData.showBorder}">
     <a-list
       :grid="pageData"
       :dataSource="navData"
-      :bordered="false"
-    >
+      :bordered="false">
       <a-list-item slot="renderItem" slot-scope="item,i">
-        <div
-          class="list-item"
-          :class="{'line-row':pageData.lineRow}"
-        >
+        <div class="list-item" :class="{'line-row':pageData.lineRow}">
           <div class="pic">
             <img
               class="img"
               :src="require(`./nav${i}.png`)"
-              alt=""
-            >
+              alt="">
           </div>
           <div class="text">
             {{ item.text }}
@@ -32,7 +24,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { List } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 const numberData = [
@@ -43,18 +35,21 @@ const numberData = [
 ];
 
 @Component({
-  name: 'nav-mobile'
+  name: 'nav-mobile',
+  components: {
+    AList: List,
+    AListItem: List.Item
+  }
 })
-
 export default class Navmobile extends Vue {
-  @Prop() compData: any
+  @Prop() compData: any;
 
-  pageData:any = this.compData.compAttr
+  pageData: any = this.compData.compAttr;
 
   @webSite.Getter('pageInfor')
   pageInfor: Website.pageInfor;
 
-  get navData():object[] {
+  get navData(): object[] {
     let row = this.pageData.row;
     let column = this.pageData.column;
     let maxLen = row * column;
@@ -67,9 +62,7 @@ export default class Navmobile extends Vue {
     return arr;
   }
 
-  created():void {
-
-  }
+  created(): void {}
 }
 </script>
 
@@ -77,11 +70,14 @@ export default class Navmobile extends Vue {
 .nav-mobile {
   margin: 10px auto;
   &.show-border {
-    box-shadow: 0 0 16px 0 rgba(124,118,180,.2);
+    box-shadow: 0 0 16px 0 rgba(124, 118, 180, 0.2);
   }
-  .img{
+  .img {
     width: 40px;
     height: 40px;
+  }
+  /deep/.ant-list-grid .ant-list-item {
+    margin-bottom: 0;
   }
 }
 .card-icon {

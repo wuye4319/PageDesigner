@@ -1,6 +1,9 @@
 <template>
   <div class="classPage">
-    <div class="imgCard" v-for="(item,i) in classes" :key="i">
+    <div
+      class="imgCard"
+      v-for="(item,i) in classes"
+      :key="i">
       <img :src="item.bg" alt="">
       <p>{{ item.text }}</p>
     </div>

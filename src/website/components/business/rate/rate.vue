@@ -7,11 +7,14 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { Rate } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
-  name: 'rate'
+  name: 'rate',
+  components: {
+    ARate: Rate
+  }
 })
 
 export default class rateView extends Vue {

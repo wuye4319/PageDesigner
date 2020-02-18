@@ -17,16 +17,21 @@
 import { Component, Prop, Vue, Mixins, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
 import { getTableContent } from '@/website/service';
-// import mix from '@/common/mixin/modeMixins';
+import listbind from '@/common/mixin/listbind';
+import { List } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 @Component({
   name: 'list-view',
-  components: {},
-  // mixins: [mix]
+  components: {
+    AList: List,
+    AListItem: List.Item,
+    AListItemMeta: List.Item.Meta
+  }
 })
-export default class ListView extends Vue {
+export default class ListView extends Mixins(listbind) {
   @Prop() compData;
+  @Prop() trigFunc: any; // 动作绑定
 
   @webSite.Getter('tables')
   tables;
@@ -35,10 +40,14 @@ export default class ListView extends Vue {
   compAttr: any = this.compData.compAttr;
   dataModel: any = this.compData.dataModel;
   mapData: any = this.compData.dataModel.mapData;
-  apiData: object[] = [];
-  params: object = {};
+  apiData: object[] = []; // 接口返回数据
+  tableName: string = '' // 表名称
+  classifyParams: object = {} // 分类参数
+  sortParams: object = {} // 排序参数
+  params: object = {}; // 排序和分类合并参数
+  getListDataFn = this.getListData; // 触发的方法
 
-  data = [
+  defaultData = [
     {
       title: 'Ant Design Title 1',
       cont: 'Ant Design Description 1'
@@ -50,83 +59,63 @@ export default class ListView extends Vue {
     {
       title: 'Ant Design Title 3',
       cont: 'Ant Design Description 3'
-    },
-    {
-      title: 'Ant Design Title 4',
-      cont: 'Ant Design Description 4'
     }
   ];
 
-  get tableData() {
-    let index = this.tables.findIndex(item => {
-      return item.tableName === this.dataModel.tableName;
-    });
-    let data = [];
-    if (index > -1) {
-      data = this.tables[index].content;
-    }
-    return data;
-  }
-
-  get mylist() {
-    let arr = [];
-    if (this.apiData.length > 0) {
-      arr = this.apiData;
-    } else {
-      arr = this.tableData;
-    }
-    return arr;
-  }
-
-  get listData() {
-    let obj = {};
-    this.mapData.forEach(item => {
-      obj[item.key] = item.tableMap;
-    });
-    let listData = this.mylist.map((item, i) => {
-      let dataObj = {};
-      for (let k in obj) {
-        dataObj[k] = item[obj[k]];
-      }
-      return dataObj;
-    });
-    if (listData.length === 0) {
-      listData = this.data;
-    }
-    return listData;
-  }
-
-  @Watch('dataModel.tableName')
-  tableNameChange(newVal) {
-    let eventName = `${this.compAttr.uid}-tableName`;
-    this.$store.$emit(eventName, newVal);
-  }
-
   created() {
-    let uid = this.genID(15);
-    this.compAttr['uid'] = this.compAttr['uid'] ? this.compAttr['uid'] : `${uid}`;
-    // 绑定列表分类排序 查询事件
-    this.$store.on(`${this.compAttr.uid}-${this.compData.compName}`, this.getListData);
+    this.trigFunc('created', this.compData.actionModel);
   }
 
-  mounted() {}
+  mounted() {
+    this.trigFunc('mounted', this.compData.actionModel);
+  }
 
-  async getListData(tableName, params) {
+  //更新排序
+  async updateOrder() {
+    let params = Object.assign({},this.classifyParams)
+    for (let k of Object.keys(params)) {
+      if (!params[k]) {
+        delete params[k];
+      }
+    }
+    let arr = [];
+    if (this.tableName) {
+      let res = await getTableContent(this.tableName, params);
+      arr = res.data || [];
+    }
+    return arr
+  }
+
+  //更新分类
+  async updateFilter() {
+    let params = Object.assign({},this.sortParams)
+    for (let k of Object.keys(params)) {
+      if (!params[k]) {
+        delete params[k];
+      }
+    }
+    let arr = [];
+    if (this.tableName) {
+      let res = await getTableContent(this.tableName, params);
+      arr = res.data || [];
+    }
+    return arr
+  }
+
+  async getListData(tableName, params, type) {
     Object.assign(this.params, params);
+    this[`${type}Params`] = params;
+    this.tableName = tableName;
     for (let k of Object.keys(this.params)) {
       if (!this.params[k]) {
-        delete this.params[k]
+        delete this.params[k];
       }
     }
     if (tableName) {
       let res = await getTableContent(tableName, this.params);
-      this.apiData = res.data;
+      this.dataSource = 'apiData';
+      this.apiData = res.data || [];
     }
-  }
-
-  // 创建唯一id
-  genID(length) {
-    return Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
   }
 }
 </script>

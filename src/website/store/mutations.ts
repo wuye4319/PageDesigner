@@ -23,7 +23,12 @@ const mutations: MutationTree<WebSiteState> = {
     state.CompStore = param.data.compStore;
     state.Global = Object.keys(param.data.global).length > 0 ? param.data.global : globalObj;
     state.Tables = param.data.tables;
-    state.Actions = param.data.actions;
+    // 全局注入JS
+    eval(param.data.apps.jsCode); // eslint-disable-line
+  },
+  [WebSite.compList](state, param) {
+    state.CompList = param;
+    state.CompStore = param || [];
   },
   [WebSite.selectPage](state, param) {
     state.PageInfor = state.AppInfor[param].module;
@@ -53,10 +58,20 @@ const mutations: MutationTree<WebSiteState> = {
       state[HandleAppEnum[k]] = Object.assign({}, param[k]);
     });
   },
+  [WebSite.pageActions](state, param) {
+    state.pageActions = param;
+  },
+  [WebSite.defaultActions](state, param) {
+    state.defaultActions = param;
+  },
 
   // 用户提交数据
   [WebSite.handleUserData](state, { key, value }) { // param是所有包含apps、global等属性
     Vue.set(state.UserData, key, value);
+  },
+  // 改变临时应用数据
+  [WebSite.tempAppData](state, { key, value }) {
+    Vue.set(state.TempAppData, key, value);
   }
 };
 

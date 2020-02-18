@@ -7,5 +7,7 @@ interface bus extends Vue{
 declare module 'vue/types/vue' {
     interface Vue {
         $bus:bus;
+        $addLanguage(str:string, obj:object, force?:boolean):{locale:string, messages:any, default:any};
+        $i18nLocale(str:string/** 切换语言的key值 */):string;
     }
 }

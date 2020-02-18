@@ -52,7 +52,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Action, Mutation, namespace } from 'vuex-class';
-
+import { List, Input, Card, Icon } from 'ant-design-vue';
 const webSite = namespace('webSite');
 
 const rowData = [
@@ -72,7 +72,15 @@ const columnData = [
 ];
 
 @Component({
-  name: 'active-mobile'
+  name: 'active-mobile',
+  components: {
+    AList: List,
+    AListItem: List.Item,
+    AInput: Input,
+    ACard: Card,
+    ACardMeta: Card.Meta,
+    AIcon: Icon
+  }
 })
 
 export default class activemobile extends Vue {
@@ -122,7 +130,7 @@ export default class activemobile extends Vue {
     top: 20px;
     opacity: .5;
     background: rgba(0,0,0,.2);
-    border-radius: 0 .3rem .3rem .3rem;
+    border-radius: 15px 15px 15px;
     z-index: 6;
     color: #fff;
   }

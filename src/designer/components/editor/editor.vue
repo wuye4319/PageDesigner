@@ -1,16 +1,18 @@
 <template>
-  <div class="myEditor" :style="{'height':height || 'auto'}">
+  <div class="myEditor">
     <!-- <p v-if="!isSave">
       <a-button @click="RunResult" type="primary">保存</a-button>
     </p>-->
-    <div id="container" ref="container" :style="{'height':editorHeight || '600px'}"></div>
+    <div
+      id="container"
+      ref="container"
+      :style="{'height':editorHeight || '600px'}"></div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
 import * as monaco from 'monaco-editor';
-
 @Component({
   name: 'editor',
   components: {}
@@ -23,7 +25,7 @@ export default class Editor extends Vue {
   @Prop() editorHeight: string;
   // @Prop() isSave: boolean;
 
-  codesCopy: null // 内容备份
+  codesCopy: any = null // 内容备份
   monacoEditor
 
   created() { }
@@ -34,19 +36,25 @@ export default class Editor extends Vue {
 
   initEditor() {
     let self = this;
-    let container: any = this.$refs.container
-    container.innerHTML = '';
+    let container: any = this.$refs.container;
+    if (container) {
+      container.innerHTML = '';
+    }
     this.monacoEditor = monaco.editor.create(container, {
-      value: this.codes || "console.log('hello world!')",
+      value: this.codes || '',
       language: this.language,
       theme: 'vs-dark', // vs, hc-black, or vs-dark
     });
-    this.$emit("onMounted", self.monacoEditor); // 编辑器创建完成回调
+    this.$emit('onMounted', self.monacoEditor); // 编辑器创建完成回调
     this.monacoEditor.onDidChangeModelContent(async function (event) {
       // 编辑器内容changge事件
-      self.codesCopy = self.monacoEditor.getValue();
-      let tstext = await self.getTypeScriptText(self.monacoEditor)
-      self.$emit("onCodeChange", tstext, event);
+      if (self.language === 'typescript') {
+        self.codesCopy = await self.getTypeScriptText(self.monacoEditor)
+      } else {
+        self.codesCopy = self.monacoEditor.getValue();
+      }
+
+      self.$emit('onCodeChange', self.codesCopy, event);
     });
     // 编辑器随窗口自适应
     window.addEventListener('resize', function () {
@@ -69,7 +77,6 @@ export default class Editor extends Vue {
             });
         });
     })
-
   }
 
   // RunResult() {
