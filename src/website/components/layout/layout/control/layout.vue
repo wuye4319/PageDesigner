@@ -11,7 +11,8 @@
         <a-radio-group
           v-model="initData.typeVal"
           @change="changeLayout()"
-          class="type-radio">
+          class="type-radio"
+        >
           <a-radio-button value="1:1">12:12</a-radio-button>
           <a-radio-button value="1:2">8:16</a-radio-button>
           <a-radio-button value="2:1">16:8</a-radio-button>
@@ -26,7 +27,7 @@
         <a-list-item-meta>
           <div slot="description">最小高度开关:</div>
         </a-list-item-meta>
-        <a-switch v-model="initData.minHeightSwitch" @change="changeVal('minHeightSwitch')" />
+        <a-switch v-model="initData.minHeightSwitch" @change="changeVal('minHeightSwitch')"/>
       </a-list-item>
 
       <a-list-item v-show="initData.minHeightSwitch">
@@ -49,7 +50,7 @@
         :key="i"
         v-for="(item,i) of initData.childListAttr"
       >
-        <box-model :key="'box'+i" :boxOptions="item.boxOptions" />
+        <box-model :key="'box'+i" :boxOptions="item.boxOptions"/>
 
         <a-list itemLayout="horizontal">
           <a-list-item>

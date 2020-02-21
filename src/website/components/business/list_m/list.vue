@@ -9,9 +9,9 @@
         <div class="other-dsc"><span class="time">{{ data.times|formatTime }}</span><span>共{{ data.total }}讲</span></div>
         <div class="button-warp">
           <a class="button1" @click="goTo(data.url)">
-            <a-icon type="file-text" class="icon1" />文稿</a>
+            <a-icon type="file-text" class="icon1"/>文稿</a>
           <span class="button2" @click="showPoup(data)">
-            <a-icon type="caret-right" class="icon" />播放</span></div>
+            <a-icon type="caret-right" class="icon"/>播放</span></div>
       </li>
 
     </ul>
@@ -19,7 +19,8 @@
     <div
       class="play-warp"
       v-if="option.show"
-      :style="compAttr.postionAttr">
+      :style="compAttr.postionAttr"
+    >
       <div class="img-warp"><img :src="audioData.imgUrl"></div>
       <div class="play-info">
         <div class="title">{{ audioData.title }}</div>
@@ -29,16 +30,19 @@
             type="pause"
             class="icon"
             @click="play"
-            v-if="option.play" />
+            v-if="option.play"
+          />
           <a-icon
             type="caret-right"
             class="icon"
             v-else
-            @click="play" />
+            @click="play"
+          />
           <a-icon
             type="close"
             class="icon"
-            @click="showPoup" />
+            @click="showPoup"
+          />
           <audio :src="audioData.audioUrl" ref="audio"></audio>
         </div>
       </div>

@@ -40,14 +40,14 @@ import { baseUrl } from '@/common/config/env';
 
 const webSite = namespace('webSite');
 const piclist = [
-  { 
-    src: 'https://desk-fd.zol-img.com.cn/t_s960x600c5/g2/M00/0E/0B/ChMlWl1ksc2IRkiuADw2SJ3TI00AAM0DQNNbW4APDZg807.jpg', urlType: '无操作' 
-  }, 
-  { 
+  {
+    src: 'https://desk-fd.zol-img.com.cn/t_s960x600c5/g2/M00/0E/0B/ChMlWl1ksc2IRkiuADw2SJ3TI00AAM0DQNNbW4APDZg807.jpg', urlType: '无操作'
+  },
+  {
     src: 'https://desk-fd.zol-img.com.cn/t_s960x600c5/g2/M00/0D/07/ChMlWl1fixqIZoNFAAe4FQDS3jIAAMvHQB_5FgAB7gt197.jpg', urlType: '无操作'
   },
   {
-    src: 'https://desk-fd.zol-img.com.cn/t_s960x600c5/g2/M00/0D/07/ChMlWl1fi0yIFvCZAAaPNZf-mjwAAMvIQBaKWwABo9N293.jpg', urlType: '无操作' 
+    src: 'https://desk-fd.zol-img.com.cn/t_s960x600c5/g2/M00/0D/07/ChMlWl1fi0yIFvCZAAaPNZf-mjwAAMvIQBaKWwABo9N293.jpg', urlType: '无操作'
   }
 ];
 
@@ -74,9 +74,9 @@ export default class swiperView extends Vue {
 
   get list() { // 列表信息
     let arr;
-    if(this.compAttr.data && this.compAttr.data.length > 0){
+    if (this.compAttr.data && this.compAttr.data.length > 0) {
       arr = this.compAttr.data
-    }else {
+    } else {
       arr = piclist
     }
     return arr
@@ -90,16 +90,16 @@ export default class swiperView extends Vue {
 
   // url 跳转
   goUrl(urlType, url, openType) {
-    if(urlType === '无操作') {
-      
-    }else if(urlType === '用户自定义') {
-      window.open(url,openType)
-    }else {
+    if (urlType === '无操作') {
+
+    } else if (urlType === '用户自定义') {
+      window.open(url, openType)
+    } else {
       let appID = this.$router.currentRoute.params.appID;
       let page = urlType;
       let routname = this.$route.name;
       let fullPath = `#/${routname}/${appID}/${page}?screen=${this.appInfor[page].screen}`
-      window.open(fullPath,openType)
+      window.open(fullPath, openType)
     }
   }
 

@@ -11,7 +11,8 @@
         v-for="(item,i) in tableData"
         :key="'tableData'+item.id"
         :class="item.select?'active':''"
-        @click="addRoute(item.rout,i)">
+        @click="addRoute(item.rout,i)"
+      >
         <a-icon :type="item.icon"/>
         <p>{{ item.name }}</p>
       </li>

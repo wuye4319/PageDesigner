@@ -2,17 +2,20 @@
   <div
     class="collapse"
     v-if="listData.length > 0"
-    :class="{'arrow-right': pageData.arrow}">
+    :class="{'arrow-right': pageData.arrow}"
+  >
     <a-collapse
       v-model="activeKey"
       :bordered="bordered"
-      :accordion="!pageData.accordion">
+      :accordion="!pageData.accordion"
+    >
       <a-collapse-panel
         v-for="(item,i) of listData"
         :header="item.title"
         :key="i.toString()"
         :style="customStyle"
-        :showArrow="pageData.showArrow">
+        :showArrow="pageData.showArrow"
+      >
         {{ item.cont }}
       </a-collapse-panel>
     </a-collapse>

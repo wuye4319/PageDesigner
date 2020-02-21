@@ -3,17 +3,19 @@
     <a-button
       class="back-btn"
       type="primary"
-      @click="openModal">
-      <a-icon type="left" />
+      @click="openModal"
+    >
+      <a-icon type="left"/>
     </a-button>
 
     <a-modal
       v-model="visible"
       :bodyStyle="bodyStyle"
       :footer="null"
-      :width="416">
+      :width="416"
+    >
       <div class="back-cont">
-        <a-icon type="question-circle" class="ant-desigener-font-warning-color back-icon" />
+        <a-icon type="question-circle" class="ant-desigener-font-warning-color back-icon"/>
         <span class="text">你确定要离开设计器页面吗?</span>
       </div>
       <div class="back-footer">
@@ -21,11 +23,13 @@
         <a-button
           class="back-footer-btn"
           type="danger"
-          @click="backAdmin">直接离开</a-button>
+          @click="backAdmin"
+        >直接离开</a-button>
         <a-button
           class="back-footer-btn"
           type="primary"
-          @click="backSave">保存后离开</a-button>
+          @click="backSave"
+        >保存后离开</a-button>
       </div>
     </a-modal>
   </div>

@@ -6,7 +6,8 @@
         :type="comAttr.iconInfo.type"
         :theme="comAttr.iconInfo.theme"
         :twoToneColor="comAttr.iconInfo.color"
-        :style="comAttr.iconInfo" />
+        :style="comAttr.iconInfo"
+      />
     </span>
   </div>
 </template>

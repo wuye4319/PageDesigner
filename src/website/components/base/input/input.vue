@@ -6,14 +6,16 @@
         :label="comAttr.label"
         :help="comAttr.help"
         :label-col="formItemLayout.labelCol"
-        :wrapper-col="formItemLayout.wrapperCol">
+        :wrapper-col="formItemLayout.wrapperCol"
+      >
         <a-input
           @blur="onBlur"
           @focus="onFocus"
           @change="onChange"
           :disabled="comAttr.disabled"
           :placeholder="comAttr.placeHolder"
-          v-decorator="['value', { initialValue:comAttr.value,rules: [{ required: comAttr.required, message: comAttr.errorTip }] }]" />
+          v-decorator="['value', { initialValue:comAttr.value,rules: [{ required: comAttr.required, message: comAttr.errorTip }] }]"
+        />
       </a-form-item>
     </a-form>
   </div>

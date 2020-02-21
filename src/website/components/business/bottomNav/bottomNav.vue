@@ -17,7 +17,8 @@
         <a-icon
           style="font-size: 16px"
           :type="item.select === 'true'?item.iconSelect:item.icon"
-          :theme="item.iconTheme" />
+          :theme="item.iconTheme"
+        />
         <p>{{ item.name }}</p>
       </li>
     </ul>

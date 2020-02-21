@@ -6,10 +6,11 @@
         :class="{'user-action':clickNum === i}"
         @click="chooseItem(item.value,item.sort,i)"
         v-for="(item,i) of compAttr.data"
-        :key="i">{{ item.label }}
+        :key="i"
+      >{{ item.label }}
       </span>
       <div class="icon-warp" v-if="compAttr.styleKs">
-        <a-icon :type="this.icon" @click="iconClick" />
+        <a-icon :type="this.icon" @click="iconClick"/>
       </div>
     </div>
   </div>

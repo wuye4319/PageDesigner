@@ -34,7 +34,8 @@
         <a-select
           v-model="dashed"
           style="width:100%"
-          @change="changeVal('dashed')">
+          @change="changeVal('dashed')"
+        >
           <a-select-option value="dashed">虚线</a-select-option>
           <a-select-option value="solid">实线</a-select-option>
         </a-select>

@@ -6,7 +6,8 @@
         :label="comAttr.label"
         :help="comAttr.help"
         :label-col="formItemLayout.labelCol"
-        :wrapper-col="formItemLayout.wrapperCol">
+        :wrapper-col="formItemLayout.wrapperCol"
+      >
         <a-textarea
           :key="'sfsfsf'+ntextarea"
           @blur="onBlur"
@@ -16,7 +17,8 @@
           :maxLength="counter"
           :disabled="comAttr.disabled"
           :placeholder="comAttr.placeHolder"
-          v-decorator="['value', { initialValue:comAttr.value,rules: [{ required: comAttr.required, message: comAttr.errorTip }] }]" />
+          v-decorator="['value', { initialValue:comAttr.value,rules: [{ required: comAttr.required, message: comAttr.errorTip }] }]"
+        />
         <span class="tip" v-if="comAttr.counter">{{ strNum }}/{{ comAttr.maxLength }}</span>
       </a-form-item>
     </a-form>

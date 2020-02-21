@@ -36,7 +36,7 @@
       <a-list-item-meta>
         <div slot="description">线条颜色</div>
       </a-list-item-meta>
-      <color-picker v-model="compAttr.borderColor" />
+      <color-picker v-model="compAttr.borderColor"/>
     </a-list-item>
     <a-list-item v-if="fontSize">
       <a-list-item-meta>
@@ -50,7 +50,7 @@
       <a-list-item-meta>
         <div slot="description">字体颜色</div>
       </a-list-item-meta>
-      <color-picker v-model="compAttr.color" />
+      <color-picker v-model="compAttr.color"/>
     </a-list-item>
 
   </a-list>

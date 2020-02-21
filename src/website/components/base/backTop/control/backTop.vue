@@ -10,7 +10,8 @@
           style="width: 100%"
           placeholder="请输入"
           v-model="compAttr.positionC"
-          @change="handlePosCChange">
+          @change="handlePosCChange"
+        >
           <a-select
             slot="addonBefore"
             style="width: 75px;font-size: 12px"
@@ -30,7 +31,8 @@
           style="width: 100%"
           placeholder="请输入"
           v-model="compAttr.positionV"
-          @change="handlePosVChange">
+          @change="handlePosVChange"
+        >
           <a-select
             slot="addonBefore"
             style="width: 75px;font-size: 12px"
@@ -44,8 +46,8 @@
         </a-input>
       </div>
       <div class="item">
-        <label >滚动距离:</label>
-        <a-input-number v-model="compAttr.scroll" />
+        <label>滚动距离:</label>
+        <a-input-number v-model="compAttr.scroll"/>
       </div>
     </div>
   </div>

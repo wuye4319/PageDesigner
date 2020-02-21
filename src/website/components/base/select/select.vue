@@ -5,17 +5,20 @@
         :label="comAttr.label"
         :help="comAttr.help"
         :label-col="formItemLayout.labelCol"
-        :wrapper-col="formItemLayout.wrapperCol">
+        :wrapper-col="formItemLayout.wrapperCol"
+      >
         <a-select
           @change="onChange"
           :size="comAttr.size"
           :mode="comAttr.mode"
           :disabled="comAttr.disabled"
-          v-decorator="['value', {initialValue:comAttr.value, rules: [{ required: comAttr.required, message: comAttr.errorTip }] }]">
+          v-decorator="['value', {initialValue:comAttr.value, rules: [{ required: comAttr.required, message: comAttr.errorTip }] }]"
+        >
           <a-select-option
             v-for="o in comAttr.option"
             :value="o.value"
-            :key="o.value">{{ o.title }}</a-select-option>
+            :key="o.value"
+          >{{ o.title }}</a-select-option>
         </a-select>
       </a-form-item>
     </a-form>  </div>

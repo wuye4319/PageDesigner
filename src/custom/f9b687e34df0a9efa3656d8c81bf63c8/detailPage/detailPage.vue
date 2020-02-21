@@ -1,18 +1,18 @@
 <template>
   <div class="pageDetail">
     <div class="top">
-      <a-icon type="left" />
+      <a-icon type="left"/>
       <h5>标题</h5>
-      <a-icon type="ellipsis" />
+      <a-icon type="ellipsis"/>
     </div>
     <div class="center">
 
     </div>
     <div class="bottom">
-      <a-input placeholder="评论" />
+      <a-input placeholder="评论"/>
       <div class="operate">
-        <a-icon type="star" />
-        <a-icon type="heart" />
+        <a-icon type="star"/>
+        <a-icon type="heart"/>
         <a-button type="primary" style="padding: 0 4px;height: 24px;line-height: 24px">发送</a-button>
       </div>
     </div>

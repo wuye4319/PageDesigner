@@ -3,7 +3,8 @@
     class="divider-color"
     ref="divider"
     :dashed="pageData.dashed === 'dashed'"
-    v-bind="orientation">
+    v-bind="orientation"
+  >
     {{ pageData.cont }}
   </a-divider>
 </template>

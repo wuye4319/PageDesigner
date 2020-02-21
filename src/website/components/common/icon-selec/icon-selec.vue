@@ -11,12 +11,14 @@
             :type="iconInfo.type"
             :theme="iconInfo.theme"
             :twoToneColor="iconInfo.color"
-            class="icon-tip" />
+            class="icon-tip"
+          />
           <span v-if="iconInfo.type==='null'">无</span>
           <a-icon
             type="right"
             theme="outlined"
-            class="icon-right" />
+            class="icon-right"
+          />
         </div>
       </a-list-item>
       <a-list-item v-if="userSet.size">
@@ -26,14 +28,15 @@
         <a-input
           placeholder="请输入字体大小"
           v-model="iconInfo.fontSize"
-          @blur="changeVal('fontSize')" />
+          @blur="changeVal('fontSize')"
+        />
       </a-list-item>
 
       <a-list-item v-if="userSet.color">
         <a-list-item-meta>
           <div slot="description">{{ userText.color }}</div>
         </a-list-item-meta>
-        <color-picker v-model="iconInfo.color" @change="changeVal('color')" />
+        <color-picker v-model="iconInfo.color" @change="changeVal('color')"/>
       </a-list-item>
     </a-list>
     <div class="user-selec-icon" :class="{'show-user-selec':iconPanKs}">
@@ -41,33 +44,38 @@
         <a-icon
           type="left"
           theme="outlined"
-          class="icon-left" />
+          class="icon-left"
+        />
         请选择图标</div>
       <div class="tab-height">
         <a-tabs defaultActiveKey="1" style="height:100%;">
           <a-tab-pane
             :tab="tap.title"
             v-for="(tap,n) of tabData"
-            :key="tap.key">
+            :key="tap.key"
+          >
             <div class="panne-height">
               <div
                 class="icon-warp"
                 v-for="idata1 of iconData[n]"
-                :key="idata1.type">
+                :key="idata1.type"
+              >
                 <div class="icon-title">{{ idata1.type }}</div>
                 <template v-for="i of idata1.list">
                   <span
                     v-if="i==='null'"
                     :key="i"
                     @click="iconSelec(idata1.theme,i)"
-                    class="icon-style">无</span>
+                    class="icon-style"
+                  >无</span>
                   <a-icon
                     v-else
                     @click="iconSelec(idata1.theme,i)"
                     class="icon-style"
                     :key="i"
                     :type="i"
-                    :theme="idata1.theme" />
+                    :theme="idata1.theme"
+                  />
                 </template>
               </div>
             </div>

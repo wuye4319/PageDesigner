@@ -89,7 +89,8 @@
               <a-select-option
                 v-for="page in pageList"
                 :key="page"
-                :value="page">{{ page }}</a-select-option>
+                :value="page"
+              >{{ page }}</a-select-option>
             </a-select>
             <a-input
               v-if="siteType === 'externalLink' || !siteType && actionParams.siteType === 'externalLink'"

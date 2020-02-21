@@ -14,7 +14,8 @@
               size="small"
               class="handle-add"
               icon="plus"
-              @click="addOptions">添加</a-button>
+              @click="addOptions"
+            >添加</a-button>
           </div>
         </a-list-item>
 
@@ -28,13 +29,14 @@
                   class="handle-icon"
                   shape="circle"
                   icon="delete"
-                  @click="deleteOptions(i)" />
+                  @click="deleteOptions(i)"
+                />
               </div>
               <div class="list-data">
                 <div class="item">
                   <div class="name">标签名{{ i+1 }}</div>
                   <div class="desc">
-                    <a-input v-model="item.label" />
+                    <a-input v-model="item.label"/>
                   </div>
                 </div>
                 <div class="item">
@@ -43,12 +45,14 @@
                     <a-select
                       style="width: 100%;"
                       v-model="item.value"
-                      @change="valueChange(item.value,item)">
+                      @change="valueChange(item.value,item)"
+                    >
                       <a-select-option key="listAll" value="listAll">全部</a-select-option>
                       <a-select-option
                         v-for="item of menuData"
                         :key="item"
-                        :value="item">{{ item }}</a-select-option>
+                        :value="item"
+                      >{{ item }}</a-select-option>
                     </a-select>
                   </div>
                 </div>
@@ -86,13 +90,13 @@
           <a-list-item-meta>
             <div slot="description">风格切换:</div>
           </a-list-item-meta>
-          <a-switch v-model="pageData.compAttr.styleKs" />
+          <a-switch v-model="pageData.compAttr.styleKs"/>
         </a-list-item>
         <a-list-item v-if="!pageData.compAttr.bindName">
           <a-list-item-meta>
             <div slot="description">触发事件:</div>
           </a-list-item-meta>
-          <a-input @blur="changeVal('emit')" v-model="emit" />
+          <a-input @blur="changeVal('emit')" v-model="emit"/>
         </a-list-item>
       </template>
 

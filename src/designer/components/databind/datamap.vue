@@ -7,11 +7,13 @@
         :open="false"
         @dropdownVisibleChange="showModal"
         v-model="tableName"
-        :disabled="dataModel.tableNameSwitch === 0">
+        :disabled="dataModel.tableNameSwitch === 0"
+      >
         <a-select-option
           v-for="menu of tablesData"
           :key="menu.tableName"
-          :value="menu.tableName">{{ menu.title }}</a-select-option>
+          :value="menu.tableName"
+        >{{ menu.title }}</a-select-option>
       </a-select>
     </div>
 
@@ -25,18 +27,21 @@
       :columns="detailsColumns"
       :dataSource="detailsData"
       bordered
-      :pagination="false">
+      :pagination="false"
+    >
       <template slot="val" slot-scope="val,obj,index">
         <div class="my-select" ref="my-select">
           <a-select
             style="width: 100%;"
             v-model="detailsData[index].val"
             @change="compChange(index)"
-            :getPopupContainer="getPopupContainer">
+            :getPopupContainer="getPopupContainer"
+          >
             <a-select-option
               v-for="menu of compSelectList"
               :key="menu"
-              :value="menu">{{ menu }}</a-select-option>
+              :value="menu"
+            >{{ menu }}</a-select-option>
           </a-select>
         </div>
       </template>
@@ -50,7 +55,8 @@
       okText="确定"
       @cancel="handleCancel"
       cancelText="取消"
-      :bodyStyle="bodyStyle">
+      :bodyStyle="bodyStyle"
+    >
       <div class="data-list">
         <div class="menu">
           <div class="menu-title flex">
@@ -63,7 +69,8 @@
               class=""
               mode="vertical"
               v-model="selectedKeys"
-              @select="menuSelect">
+              @select="menuSelect"
+            >
               <a-menu-item v-for="menu of tablesData" :key="menu.tableName">
                 {{ menu.title }}
               </a-menu-item>
@@ -83,7 +90,8 @@
             :dataSource="modalData"
             bordered
             :pagination="false"
-            :scroll="{ y: 300 }" />
+            :scroll="{ y: 300 }"
+          />
         </div>
       </div>
     </a-modal>

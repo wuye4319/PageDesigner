@@ -2,10 +2,10 @@
   <div class="event-item">
     <a-list-item slot="renderItem">
       <a slot="actions" @click="operateAction('edit',eventIndex,index)">
-        <a-icon type="edit" />
+        <a-icon type="edit"/>
       </a>
       <a slot="actions" @click="operateAction('delete',eventIndex,index)">
-        <a-icon type="delete" style="color: red" />
+        <a-icon type="delete" style="color: red"/>
       </a>
       <a-tooltip>
         <template slot="title">{{ action.actionName +'-' + action.params }}</template>

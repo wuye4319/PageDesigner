@@ -7,11 +7,11 @@
         </a-list-item-meta>
         <a-input v-model="compAttr.width"/>
       </a-list-item>
-      <a-list-item >
+      <a-list-item>
         <a-list-item-meta>
           <div slot="description">默认值:</div>
         </a-list-item-meta>
-        <a-switch v-model="compAttr.value" />
+        <a-switch v-model="compAttr.value"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
@@ -23,7 +23,7 @@
         <a-list-item-meta>
           <div slot="description">标题:</div>
         </a-list-item-meta>
-        <a-input v-model="compAttr.label" />
+        <a-input v-model="compAttr.label"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>

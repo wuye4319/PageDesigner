@@ -6,9 +6,10 @@
       :class="{line: isLine(i)}"
       v-for="(item,i) of classifyData"
       :key="i"
-      :style="{width:(100/compAttr.column)+'%'}">
+      :style="{width:(100/compAttr.column)+'%'}"
+    >
       <div class="item-cont" @click="goUrl(item.urlType,item.url)">
-        <a-icon v-if="item.icon.type !== 'none'" v-bind="item.icon" />
+        <a-icon v-if="item.icon.type !== 'none'" v-bind="item.icon"/>
         <span class="item-text">{{ item.label }}</span>
         <span>({{ item.sum }})</span>
       </div>

@@ -6,7 +6,8 @@
       :class="{act:obj.selecd}"
       v-for="obj in defaultData"
       :key="obj.title"
-      @click="bClick(obj)">{{ obj.title }}</span>
+      @click="bClick(obj)"
+    >{{ obj.title }}</span>
   </div>
 </template>
 

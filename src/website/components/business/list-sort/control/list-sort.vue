@@ -14,7 +14,8 @@
               size="small"
               class="handle-add"
               icon="plus"
-              @click="addOptions">添加</a-button>
+              @click="addOptions"
+            >添加</a-button>
           </div>
         </a-list-item>
 
@@ -28,12 +29,13 @@
                   class="handle-icon"
                   shape="circle"
                   icon="delete"
-                  @click="deleteOptions(i)" />
+                  @click="deleteOptions(i)"
+                />
               </div>
               <div class="list-data">
                 <div class="item">
                   <div class="name">标签名{{ i+1 }}</div>
-                  <div class="desc"><a-input v-model="item.label" /></div>
+                  <div class="desc"><a-input v-model="item.label"/></div>
                 </div>
                 <div class="item">
                   <div class="name">绑定值{{ i+1 }}</div>
@@ -47,7 +49,8 @@
                       <a-select-option
                         v-for="item of menuData"
                         :key="item"
-                        :value="item">{{ item }}</a-select-option>
+                        :value="item"
+                      >{{ item }}</a-select-option>
                     </a-select>
                   </div>
                 </div>

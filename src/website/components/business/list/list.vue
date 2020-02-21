@@ -70,9 +70,9 @@ export default class ListView extends Mixins(listbind) {
     this.trigFunc('mounted', this.compData.actionModel);
   }
 
-  //更新排序
+  // 更新排序
   async updateOrder() {
-    let params = Object.assign({},this.classifyParams)
+    let params = Object.assign({}, this.classifyParams)
     for (let k of Object.keys(params)) {
       if (!params[k]) {
         delete params[k];
@@ -86,9 +86,9 @@ export default class ListView extends Mixins(listbind) {
     return arr
   }
 
-  //更新分类
+  // 更新分类
   async updateFilter() {
-    let params = Object.assign({},this.sortParams)
+    let params = Object.assign({}, this.sortParams)
     for (let k of Object.keys(params)) {
       if (!params[k]) {
         delete params[k];

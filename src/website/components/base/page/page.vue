@@ -5,7 +5,8 @@
     <a
       :style="setStyle()"
       :href="compAttr.href"
-      v-if="compAttr.textType === 'href'">{{ compAttr.cont }}</a>
+      v-if="compAttr.textType === 'href'"
+    >{{ compAttr.cont }}</a>
   </div>
 </template>
 

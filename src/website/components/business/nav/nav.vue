@@ -5,7 +5,8 @@
         v-for="(item,i) in compAttr.data"
         :key="i"
         :class="(useDefault && Number(compAttr.defaultPage) === i) || (!useDefault && item.select === 'true')?'ant-desigener-border-color active':'default'"
-        @click="addRoute(item.route,i)">{{ item.name }}</li>
+        @click="addRoute(item.route,i)"
+      >{{ item.name }}</li>
     </ul>
   </div>
 </template>

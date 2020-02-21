@@ -8,7 +8,8 @@
         placeholder="请选择导航风格"
         style="width: 120px"
         v-model="compAttr.type"
-        :getPopupContainer="getPopupContainer1">
+        :getPopupContainer="getPopupContainer1"
+      >
         <a-select-option value="line">风格一</a-select-option>
         <a-select-option value="outline">风格二</a-select-option>
         <a-select-option value="tab">风格三</a-select-option>
@@ -20,7 +21,8 @@
         placeholder="请选择导航风格"
         style="width: 120px"
         v-model="compAttr.position"
-        :getPopupContainer="getPopupContainer">
+        :getPopupContainer="getPopupContainer"
+      >
         <a-select-option value="center">居中</a-select-option>
         <a-select-option value="left">靠左</a-select-option>
         <a-select-option value="right">靠右</a-select-option>
@@ -30,7 +32,8 @@
       <a-button
         type="primary"
         style="width: 100%"
-        @click="addPage">添加</a-button>
+        @click="addPage"
+      >添加</a-button>
       <p style="margin:10px 0 0 0;font-size:12px">*添加导航时，请设置跳转页面</p>
       <a-collapse :bordered="false">
         <a-collapse-panel
@@ -49,7 +52,7 @@
           </div>
           <div>
             <span>文字：</span>
-            <a-input placeholder="标题" v-model="item.name" />
+            <a-input placeholder="标题" v-model="item.name"/>
           </div>
           <div>
             <span>链接至：</span>
@@ -57,12 +60,14 @@
               size="small"
               placeholder="请选择连接页面"
               style="width: 120px"
-              v-model="item.route">
+              v-model="item.route"
+            >
               <a-select-opt-group label="站内路由">
                 <a-select-option
                   v-for="page in pageList"
                   :key="page"
-                  :value="page">{{ page }}</a-select-option>
+                  :value="page"
+                >{{ page }}</a-select-option>
               </a-select-opt-group>
               <a-select-option value="custom">自定义</a-select-option>
             </a-select>
@@ -72,7 +77,8 @@
             <a-input
               style="width: 100%"
               placeholder="请输入地址"
-              @change="(e)=>{handleCustomLink(e,i)}">
+              @change="(e)=>{handleCustomLink(e,i)}"
+            >
               <a-select
                 slot="addonBefore"
                 defaultValue="http://"
@@ -88,7 +94,8 @@
             <a-button
               size="small"
               type="danger"
-              @click="deletePage(i)">删除</a-button>
+              @click="deletePage(i)"
+            >删除</a-button>
           </div>
         </a-collapse-panel>
       </a-collapse>

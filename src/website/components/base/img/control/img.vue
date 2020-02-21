@@ -17,7 +17,7 @@
             :action="baseUrl + '/file/imgfile/' + userID"
             @change="handleChange"
           >
-            <a-icon type="upload" style="cursor: pointer" />
+            <a-icon type="upload" style="cursor: pointer"/>
           </a-upload>
         </a-input>
       </a-list-item>
@@ -38,7 +38,8 @@
         <a-select
           v-model="borderStyle"
           @change="changeVal('borderStyle')"
-          style="width: 100%">
+          style="width: 100%"
+        >
           <a-select-option value="none">无</a-select-option>
           <a-select-option value="solid"><a-icon type="minus"/></a-select-option>
           <a-select-option value="dashed"><a-icon type="dash"/></a-select-option>
@@ -49,7 +50,7 @@
         <a-list-item-meta>
           <div slot="description">颜色:</div>
         </a-list-item-meta>
-        <color-picker v-model="compAttr.borderColor" />
+        <color-picker v-model="compAttr.borderColor"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>

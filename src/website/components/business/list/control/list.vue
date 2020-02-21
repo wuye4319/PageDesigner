@@ -6,16 +6,17 @@
       :compIndex="compIndex"
       :compsDataParent="compsDataParent"
       @change="listChange"
-      :options="options" />
+      :options="options"
+    />
     <!-- api描述提示 -->
-    <api-user-tip :apiList="apiList" />
+    <api-user-tip :apiList="apiList"/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Inject } from 'vue-property-decorator';
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
-import listControl from './list-control.vue';  // 列表的分类和排序控制
+import listControl from './list-control.vue'; // 列表的分类和排序控制
 import { apiUserTip } from '@/website/components/common'; // api提示
 
 const webSite = namespace('webSite');
@@ -28,7 +29,7 @@ interface ListData {
 
 @Component({
   name: 'list-component',
-  components: { 
+  components: {
     listControl,
     apiUserTip
   }

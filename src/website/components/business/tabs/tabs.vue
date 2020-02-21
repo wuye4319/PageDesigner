@@ -7,13 +7,15 @@
       :size="pageData.size"
       :tabPosition="pageData.tabPosition"
       :tabBarGutter="0"
-      :defaultActiveKey="'tab'+(pageData.activeKey || '0')">
+      :defaultActiveKey="'tab'+(pageData.activeKey || '0')"
+    >
       <a-tab-pane
         v-for="(pane,i) in paneData"
         :tab="pane.title"
         :key="'tab'+i"
-        :closable="pane.closable">
-        <layout v-if="pane.content" :compData="pane.content" />
+        :closable="pane.closable"
+      >
+        <layout v-if="pane.content" :compData="pane.content"/>
       </a-tab-pane>
     </a-tabs>
   </div>

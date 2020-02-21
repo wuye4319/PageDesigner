@@ -6,7 +6,8 @@
     <div
       id="container"
       ref="container"
-      :style="{'height':editorHeight || '600px'}"></div>
+      :style="{'height':editorHeight || '600px'}"
+    ></div>
   </div>
 </template>
 <script lang="ts">

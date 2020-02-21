@@ -4,7 +4,8 @@
     <span
       @click="handleClick"
       v-else
-      style="color: #bfbfbf;">请输入文字</span>
+      style="color: #bfbfbf;"
+    >请输入文字</span>
   </div>
 </template>
 

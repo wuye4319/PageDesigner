@@ -84,7 +84,8 @@
           size="small"
           class="handle-add"
           icon="plus"
-          @click="addOptions">添加</a-button>
+          @click="addOptions"
+        >添加</a-button>
       </div>
     </a-list-item>
     <div class="cont-base  ">
@@ -97,26 +98,28 @@
               class="handle-icon"
               shape="circle"
               icon="delete"
-              @click="deleteOptions(i)" />
+              @click="deleteOptions(i)"
+            />
           </div>
           <div class="list-data-base">
             <div class="item-base">
               <div class="name-base">图片标题{{ i+1 }}</div>
-              <div class="desc-base"><a-input v-model="item.alt" /></div>
+              <div class="desc-base"><a-input v-model="item.alt"/></div>
             </div>
             <div class="item-base">
               <div class="name-base">图片地址{{ i+1 }}</div>
               <div class="desc-base">
-                <a-input v-model="item.src" />
+                <a-input v-model="item.src"/>
               </div>
             </div>
             <div class="item-base">
               <div class="name-base">跳转{{ i+1 }}</div>
-              <div class="desc-base" >
+              <div class="desc-base">
                 <a-select
                   v-model="item.urlType"
                   style="width:100%"
-                  @change="handleChange">
+                  @change="handleChange"
+                >
                   <a-select-opt-group label="取消跳转">
                     <a-select-option value="无操作">无操作</a-select-option>
                   </a-select-opt-group>
@@ -124,7 +127,8 @@
                     <a-select-option
                       v-for="item of pageList"
                       :key="item"
-                      :value="item">{{ item }}</a-select-option>
+                      :value="item"
+                    >{{ item }}</a-select-option>
                   </a-select-opt-group>
                   <a-select-opt-group label="自定义链接">
                     <a-select-option value="用户自定义">自定义</a-select-option>
@@ -132,9 +136,9 @@
                 </a-select>
               </div>
             </div>
-            <div class="item-base" v-if="item.urlType === '用户自定义'" >
+            <div class="item-base" v-if="item.urlType === '用户自定义'">
               <div class="name-base">链接{{ i+1 }}</div>
-              <div class="desc-base"><a-input v-model="item.url" /></div>
+              <div class="desc-base"><a-input v-model="item.url"/></div>
             </div>
             <div class="item-base">
               <div class="name-base">打开方式{{ i+1 }}</div>
@@ -151,7 +155,7 @@
     </div>
 
     <!-- api描述提示 -->
-    <api-user-tip :apiList="apiList" />
+    <api-user-tip :apiList="apiList"/>
   </a-list>
 </template>
 

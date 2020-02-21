@@ -8,7 +8,8 @@
       :operateTree="operateTree"
       :draggable="false"
       :initType="'common'"
-      :selectedKey="selectedKey">
+      :selectedKey="selectedKey"
+    >
     </MyTree>
     <div v-else style="margin-top: 24px">
       该应用没有任何共享元素
@@ -17,23 +18,26 @@
       title="编辑元素共享"
       v-model="visible"
       centered
-      :footer="null">
+      :footer="null"
+    >
       <div class="model-cont">
         <div class="name"><span class="required">*</span>组件名称:</div>
         <div class="desc">
-          <a-input placeholder="请输入组件名称" v-model.trim="editShareComp.title" />
+          <a-input placeholder="请输入组件名称" v-model.trim="editShareComp.title"/>
         </div>
       </div>
       <div style="margin-top: 24px">共享页面：</div>
       <div
         class="model-checkbox"
         v-for="(item,i) of pageList"
-        :key="i">
+        :key="i"
+      >
         <a-checkbox
           :disabled="checkStatus(item)"
           @change="handleShare"
           :checked="sharePage[item.route] ? true: false"
-          :value="item.route">{{ item.pageName }}</a-checkbox>
+          :value="item.route"
+        >{{ item.pageName }}</a-checkbox>
       </div>
       <div style="margin-top: 24px">注：勾选添加共享元素到对应页面, 组件类型与页面类型不匹配则无法添加!</div>
     </a-modal>
@@ -42,11 +46,13 @@
       v-model="deleteVisible"
       @ok="handleOk"
       centered
-      :footer="Object.keys(sharePage).length?null:true">
+      :footer="Object.keys(sharePage).length?null:true"
+    >
       <div
         style="font-weight: 500"
         v-for="(item,i) of Object.keys(sharePage)"
-        :key="i">
+        :key="i"
+      >
         {{ item }}
       </div>
       <div v-if="Object.keys(sharePage).length" style="margin-top: 24px">注：以上页面正在使用该元素，无法删除</div>

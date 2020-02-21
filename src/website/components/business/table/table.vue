@@ -9,7 +9,8 @@
       :bordered="compAttr.tableAttr.bordered"
       :loading="compAttr.tableAttr.loading"
       :pagination="pagination"
-      :size="compAttr.tableAttr.size" />
+      :size="compAttr.tableAttr.size"
+    />
 
   </div>
 </template>

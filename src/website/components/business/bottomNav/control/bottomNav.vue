@@ -18,7 +18,8 @@
           style="width: 100%"
           placeholder="请输入"
           v-model="compAttr.position"
-          @change="handlePosChange">
+          @change="handlePosChange"
+        >
           <a-select
             slot="addonBefore"
             defaultValue="top"
@@ -46,11 +47,11 @@
       <label>颜色：</label>
       <div>
         <span>默认</span>
-        <color-picker v-model="compAttr.color" />
+        <color-picker v-model="compAttr.color"/>
       </div>
       <div>
         <span>按下</span>
-        <color-picker v-model="compAttr.selectColor" />
+        <color-picker v-model="compAttr.selectColor"/>
       </div>
     </div>
     <div>
@@ -58,7 +59,8 @@
         size="small"
         type="primary"
         style="width: 100%;font-size: 12px"
-        @click="addPage">添加</a-button>
+        @click="addPage"
+      >添加</a-button>
       <p style="margin:10px 0 0 0;font-size:12px">*添加底部导航时，请设置连接页面</p>
       <a-collapse :bordered="false">
         <a-collapse-panel
@@ -72,7 +74,8 @@
             <a-input
               size="small"
               placeholder="标题"
-              v-model="item.name" />
+              v-model="item.name"
+            />
           </div>
           <div>
             <span>链接至：</span>
@@ -80,12 +83,14 @@
               size="small"
               placeholder="请选择连接页面"
               style="width: 120px"
-              v-model="item.route">
+              v-model="item.route"
+            >
               <a-select-opt-group label="站内路由">
                 <a-select-option
                   v-for="page in pageList"
                   :key="page"
-                  :value="page">{{ page }}</a-select-option>
+                  :value="page"
+                >{{ page }}</a-select-option>
               </a-select-opt-group>
               <a-select-option value="custom">自定义</a-select-option>
             </a-select>
@@ -95,7 +100,8 @@
             <a-input
               style="width: 100%"
               placeholder="请输入地址"
-              @change="(e)=>{handleCustomLink(e,i)}">
+              @change="(e)=>{handleCustomLink(e,i)}"
+            >
               <a-select
                 slot="addonBefore"
                 defaultValue="http://"
@@ -137,7 +143,8 @@
             <a-button
               size="small"
               type="danger"
-              @click="deletePage(i)">删除</a-button>
+              @click="deletePage(i)"
+            >删除</a-button>
           </div>
         </a-collapse-panel>
       </a-collapse>
@@ -156,12 +163,14 @@
         <a-tab-pane
           :tab="tap.title"
           v-for="(tap,n) of tabData"
-          :key="tap.key">
+          :key="tap.key"
+        >
           <div class="panne-height">
             <div
               class="icon-warp"
               v-for="idata1 of iconData[n]"
-              :key="idata1.type">
+              :key="idata1.type"
+            >
               <div class="icon-title">{{ idata1.type }}</div>
               <a-icon
                 class="icon-style"

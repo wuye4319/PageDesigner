@@ -7,13 +7,13 @@
         <a-list-item-meta>
           <div slot="description">边框:</div>
         </a-list-item-meta>
-        <a-switch v-model="tableAttr.bordered" />
+        <a-switch v-model="tableAttr.bordered"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
           <div slot="description">固定表头:</div>
         </a-list-item-meta>
-        <a-switch @change="setY" v-model="tableFlex" />
+        <a-switch @change="setY" v-model="tableFlex"/>
       </a-list-item>
       <div class="tip" :class="{'tip-show':tableAttr.scroll.y}">tip:固定表头需要根据实际情况设置列宽，否则列头和内容可能不对齐。（建议留一列不设宽度以适应弹性布局且宽和小于总宽）</div>
       <a-list-item>
@@ -24,7 +24,8 @@
           style="width:100%"
           size="small"
           v-model="tableAttr.size"
-          @change="setY(tableFlex)">
+          @change="setY(tableFlex)"
+        >
           <a-select-option v-for="i in size" :key="i">
             {{ i }}
           </a-select-option>
@@ -40,7 +41,8 @@
         <a-button
           type="primary"
           @click="add"
-          size="small">增加</a-button>
+          size="small"
+        >增加</a-button>
       </a-list-item>
     </a-list>
     <a-table
@@ -49,13 +51,15 @@
       bordered
       :scroll="scroll"
       size="small"
-      :pagination="false">
+      :pagination="false"
+    >
       <template slot="title1" slot-scope="text,re">
         <a-input
           v-model="re.title1"
           class="input-width"
           size="small"
-          @change="handleChange">
+          @change="handleChange"
+        >
         </a-input>
       </template>
       <template slot="align" slot-scope="text,re">
@@ -63,11 +67,13 @@
           v-model="re.align"
           class="selec-width"
           @change="handleChange"
-          :size="'small'">
+          :size="'small'"
+        >
           <a-select-option
             v-for="o of optionObj.align"
             :value="o.value"
-            :key="o.value">{{ o.key }}</a-select-option>
+            :key="o.value"
+          >{{ o.key }}</a-select-option>
         </a-select>
       </template>
       <template slot="fixed" slot-scope="text,re">
@@ -75,11 +81,13 @@
           v-model="re.fixed"
           class="selec-width"
           @change="handleChange"
-          :size="'small'">
+          :size="'small'"
+        >
           <a-select-option
             v-for="o of optionObj.fixed"
             :value="o.value"
-            :key="o.value">{{ o.key }}</a-select-option>
+            :key="o.value"
+          >{{ o.key }}</a-select-option>
         </a-select>
       </template>
       <template slot="width" slot-scope="text,re">
@@ -87,17 +95,19 @@
           class="input-width2"
           size="small"
           v-model="re.width"
-          @change="handleChange">
+          @change="handleChange"
+        >
         </a-input>
       </template>
       <template slot="sorter" slot-scope="text,re">
-        <a-switch v-model="re.sorter" @change="handleChange" />
+        <a-switch v-model="re.sorter" @change="handleChange"/>
       </template>
       <template slot="dele" slot-scope="text,re">
         <a-button
           type="danger"
           @click="dele(re)"
-          size="small">删除</a-button>
+          size="small"
+        >删除</a-button>
       </template>
     </a-table>
   </div>

@@ -4,15 +4,17 @@
       <a-button
         @click="openCreate"
         type="primary"
-        size="small">
-        <a-icon type="plus-square" />
+        size="small"
+      >
+        <a-icon type="plus-square"/>
       </a-button>
       <a-button
         type="danger"
         class="delete"
         @click="openDelete"
-        size="small">
-        <a-icon type="minus-square" />
+        size="small"
+      >
+        <a-icon type="minus-square"/>
       </a-button>
     </div>
     <!-- 新增对话框 -->
@@ -24,7 +26,8 @@
       :okButtonProps="{ props: {disabled: createPageButton} }"
       cancelText="取消"
       centered
-      :confirmLoading="createPage.confirmLoading">
+      :confirmLoading="createPage.confirmLoading"
+    >
       <a-list itemLayout="horizontal">
         <a-list-item>
           <div class="model-cont">
@@ -33,7 +36,8 @@
               <a-input
                 placeholder="请输入需要添加的标题"
                 v-model.trim="createPage.title"
-                @change="titleChange" />
+                @change="titleChange"
+              />
             </div>
           </div>
         </a-list-item>
@@ -44,7 +48,8 @@
               <a-input
                 placeholder="请输入需要添加的页面名称"
                 v-model.trim="createPage.name"
-                @change="nameChange" />
+                @change="nameChange"
+              />
             </div>
           </div>
         </a-list-item>
@@ -60,7 +65,7 @@
                 <template slot="title">
                   <span>不同终端支持不同的组件库，选择支持多终端时，则只有在这些终端上都支持的组件才会显示出来。</span>
                 </template>
-                <a-icon style="color: red;margin-left: 40px" type="question" />
+                <a-icon style="color: red;margin-left: 40px" type="question"/>
               </a-tooltip>
             </div>
           </div>
@@ -72,7 +77,8 @@
               <a-textarea
                 placeholder="请输入需要添加的描述"
                 :rows="2"
-                v-model="createPage.desc" />
+                v-model="createPage.desc"
+              />
             </div>
           </div>
         </a-list-item>
@@ -82,19 +88,22 @@
     <a-modal
       title="删除子页面"
       v-model="deletePage.visible"
-      centered>
+      centered
+    >
       <div :style="{ borderBottom: '1px solid #E9E9E9' }">
         <a-checkbox
           :indeterminate="deletePage.indeterminate"
           @change="deleteCheckAll"
-          :checked="deletePage.checkAll">全选</a-checkbox>
+          :checked="deletePage.checkAll"
+        >全选</a-checkbox>
       </div>
-      <br />
+      <br/>
       <a-checkbox-group v-model="deletePage.checkedList" @change="deleteChange">
         <div
           class="model-checkbox"
           v-for="(item,i) of deletePage.options"
-          :key="i">
+          :key="i"
+        >
           <a-checkbox :value="item">{{ item }}</a-checkbox>
         </div>
       </a-checkbox-group>
@@ -105,11 +114,13 @@
             title="你确定要删除这些页面吗?"
             @confirm="deleteOk"
             okText="确定"
-            cancelText="取消">
+            cancelText="取消"
+          >
             <a-icon
               slot="icon"
               type="question-circle-o"
-              style="color: red" />
+              style="color: red"
+            />
             <a-button type="danger" :loading="deletePage.confirmLoading">删除</a-button>
           </a-popconfirm>
         </template>
@@ -117,7 +128,8 @@
           <a-button
             type="danger"
             :loading="deletePage.confirmLoading"
-            disabled>删除</a-button>
+            disabled
+          >删除</a-button>
         </template>
       </div>
     </a-modal>

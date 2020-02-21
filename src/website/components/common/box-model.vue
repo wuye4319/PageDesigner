@@ -5,7 +5,8 @@
         class="box-margin position ant-desigener-border-color flex-box"
         :class="{background: bgDesc === 'all' || bgDesc === 'margin'}"
         @mouseenter="mouseenter('margin')"
-        @mouseleave="mouseleave('margin')">
+        @mouseleave="mouseleave('margin')"
+      >
         <div class="top flex-size flex-cont">
           <div class="content-s input" v-show="inputStatus === 'marginTop'">
             <a-input
@@ -14,12 +15,14 @@
               size="small"
               v-model="boxObj.marginTop"
               @blur="statusReset('marginTop')"
-              @keydown.enter="statusReset('marginTop')" />
+              @keydown.enter="statusReset('marginTop')"
+            />
           </div>
           <div
             class="content-s"
             v-show="inputStatus !== 'marginTop'"
-            @dblclick="doubleclick('marginTop')">{{ boxObj.marginTop }}</div>
+            @dblclick="doubleclick('marginTop')"
+          >{{ boxObj.marginTop }}</div>
           <div class="text">margin</div>
         </div>
         <div class="mid margin flex-cont">
@@ -31,12 +34,14 @@
                 size="small"
                 v-model="boxObj.marginLeft"
                 @keydown.enter="statusReset('marginLeft')"
-                @blur="statusReset('marginLeft')" />
+                @blur="statusReset('marginLeft')"
+              />
             </div>
             <div
               class="content-s"
               v-show="inputStatus !== 'marginLeft'"
-              @dblclick="doubleclick('marginLeft')">{{ boxObj.marginLeft }}</div>
+              @dblclick="doubleclick('marginLeft')"
+            >{{ boxObj.marginLeft }}</div>
           </div>
           <div class="right">
             <div class="content-s input" v-show="inputStatus === 'marginRight'">
@@ -46,12 +51,14 @@
                 size="small"
                 v-model="boxObj.marginRight"
                 @keydown.enter="statusReset('marginRight')"
-                @blur="statusReset('marginRight')" />
+                @blur="statusReset('marginRight')"
+              />
             </div>
             <div
               class="content-s"
               v-show="inputStatus !== 'marginRight'"
-              @dblclick="doubleclick('marginRight')">{{ boxObj.marginRight }}</div>
+              @dblclick="doubleclick('marginRight')"
+            >{{ boxObj.marginRight }}</div>
           </div>
         </div>
         <div class="btm flex-size flex-cont">
@@ -62,19 +69,22 @@
               size="small"
               v-model="boxObj.marginBottom"
               @keydown.enter="statusReset('marginBottom')"
-              @blur="statusReset('marginBottom')" />
+              @blur="statusReset('marginBottom')"
+            />
           </div>
           <div
             class="content-s"
             v-show="inputStatus !== 'marginBottom'"
-            @dblclick="doubleclick('marginBottom')">{{ boxObj.marginBottom }}</div>
+            @dblclick="doubleclick('marginBottom')"
+          >{{ boxObj.marginBottom }}</div>
         </div>
       </div>
       <div
         class="box-border position ant-desigener-border-color flex-box"
         :class="{background: bgDesc === 'all' || bgDesc === 'border'}"
         @mouseenter="mouseenter('border')"
-        @mouseleave="mouseleave('border')">
+        @mouseleave="mouseleave('border')"
+      >
         <div class="top flex-size flex-cont">
           <div class="content-s input" v-show="inputStatus === 'borderTopWidth'">
             <a-input
@@ -83,12 +93,14 @@
               size="small"
               v-model="boxObj.borderTopWidth"
               @keydown.enter="statusReset('borderTopWidth')"
-              @blur="statusReset('borderTopWidth')" />
+              @blur="statusReset('borderTopWidth')"
+            />
           </div>
           <div
             class="content-s"
             v-show="inputStatus !== 'borderTopWidth'"
-            @dblclick="doubleclick('borderTopWidth')">{{ boxObj.borderTopWidth }}</div>
+            @dblclick="doubleclick('borderTopWidth')"
+          >{{ boxObj.borderTopWidth }}</div>
           <div class="text">border</div>
         </div>
         <div class="mid border flex-cont">
@@ -100,12 +112,14 @@
                 size="small"
                 v-model="boxObj.borderLeftWidth"
                 @keydown.enter="statusReset('borderLeftWidth')"
-                @blur="statusReset('borderLeftWidth')" />
+                @blur="statusReset('borderLeftWidth')"
+              />
             </div>
             <div
               class="content-s"
               v-show="inputStatus !== 'borderLeftWidth'"
-              @dblclick="doubleclick('borderLeftWidth')">{{ boxObj.borderLeftWidth }}</div>
+              @dblclick="doubleclick('borderLeftWidth')"
+            >{{ boxObj.borderLeftWidth }}</div>
           </div>
           <div class="right">
             <div class="content-s input" v-show="inputStatus === 'borderRightWidth'">
@@ -115,12 +129,14 @@
                 size="small"
                 v-model="boxObj.borderRightWidth"
                 @keydown.enter="statusReset('borderRightWidth')"
-                @blur="statusReset('borderRightWidth')" />
+                @blur="statusReset('borderRightWidth')"
+              />
             </div>
             <div
               class="content-s"
               v-show="inputStatus !== 'borderRightWidth'"
-              @dblclick="doubleclick('borderRightWidth')">{{ boxObj.borderRightWidth }}</div>
+              @dblclick="doubleclick('borderRightWidth')"
+            >{{ boxObj.borderRightWidth }}</div>
           </div>
         </div>
         <div class="btm flex-size flex-cont">
@@ -131,12 +147,14 @@
               size="small"
               v-model="boxObj.borderBottomWidth"
               @keydown.enter="statusReset('borderBottomWidth')"
-              @blur="statusReset('borderBottomWidth')" />
+              @blur="statusReset('borderBottomWidth')"
+            />
           </div>
           <div
             class="content-s"
             v-show="inputStatus !== 'borderBottomWidth'"
-            @dblclick="doubleclick('borderBottomWidth')">{{ boxObj.borderBottomWidth }}</div>
+            @dblclick="doubleclick('borderBottomWidth')"
+          >{{ boxObj.borderBottomWidth }}</div>
         </div>
       </div>
 
@@ -144,7 +162,8 @@
         class="box-padding position ant-desigener-border-color flex-box"
         :class="{background: bgDesc === 'all' || bgDesc === 'padding'}"
         @mouseenter="mouseenter('padding')"
-        @mouseleave="mouseleave('padding')">
+        @mouseleave="mouseleave('padding')"
+      >
         <div class="top flex-size flex-cont">
           <div class="content-s input ml" v-show="inputStatus === 'paddingTop'">
             <a-input
@@ -153,12 +172,14 @@
               size="small"
               v-model="boxObj.paddingTop"
               @keydown.enter="statusReset('paddingTop')"
-              @blur="statusReset('paddingTop')" />
+              @blur="statusReset('paddingTop')"
+            />
           </div>
           <div
             class="content-s"
             v-show="inputStatus !== 'paddingTop'"
-            @dblclick="doubleclick('paddingTop')">{{ boxObj.paddingTop }}</div>
+            @dblclick="doubleclick('paddingTop')"
+          >{{ boxObj.paddingTop }}</div>
           <div class="text">padding</div>
         </div>
         <div class="mid flex-size flex-cont">
@@ -170,12 +191,14 @@
                 size="small"
                 v-model="boxObj.paddingLeft"
                 @keydown.enter="statusReset('paddingLeft')"
-                @blur="statusReset('paddingLeft')" />
+                @blur="statusReset('paddingLeft')"
+              />
             </div>
             <div
               class="content-s"
               v-show="inputStatus !== 'paddingLeft'"
-              @dblclick="doubleclick('paddingLeft')">{{ boxObj.paddingLeft }}</div>
+              @dblclick="doubleclick('paddingLeft')"
+            >{{ boxObj.paddingLeft }}</div>
           </div>
           <div class="right">
             <div class="content-s input" v-show="inputStatus === 'paddingRight'">
@@ -185,12 +208,14 @@
                 size="small"
                 v-model="boxObj.paddingRight"
                 @keydown.enter="statusReset('paddingRight')"
-                @blur="statusReset('paddingRight')" />
+                @blur="statusReset('paddingRight')"
+              />
             </div>
             <div
               class="content-s"
               v-show="inputStatus !== 'paddingRight'"
-              @dblclick="doubleclick('paddingRight')">{{ boxObj.paddingRight }}</div>
+              @dblclick="doubleclick('paddingRight')"
+            >{{ boxObj.paddingRight }}</div>
           </div>
         </div>
         <div class="btm flex-size flex-cont">
@@ -201,19 +226,22 @@
               size="small"
               v-model="boxObj.paddingBottom"
               @keydown.enter="statusReset('paddingBottom')"
-              @blur="statusReset('paddingBottom')" />
+              @blur="statusReset('paddingBottom')"
+            />
           </div>
           <div
             class="content-s"
             v-show="inputStatus !== 'paddingBottom'"
-            @dblclick="doubleclick('paddingBottom')">{{ boxObj.paddingBottom }}</div>
+            @dblclick="doubleclick('paddingBottom')"
+          >{{ boxObj.paddingBottom }}</div>
         </div>
       </div>
       <div
         class="box-content position ant-desigener-border-color flex-cont"
         :class="{background: bgDesc === 'all' || bgDesc === 'content'}"
         @mouseenter="mouseenter('content')"
-        @mouseleave="mouseleave('content')">
+        @mouseleave="mouseleave('content')"
+      >
         <div class="content input" v-show="inputStatus === 'width'">
           <a-input
             class="cont-input"
@@ -221,12 +249,14 @@
             size="small"
             v-model="boxObj.width"
             @keydown.enter="statusReset('width')"
-            @blur="statusReset('width')" />
+            @blur="statusReset('width')"
+          />
         </div>
         <div
           class="content"
           v-show="inputStatus !== 'width'"
-          @dblclick="doubleclick('width')">{{ boxObj.width }}</div>
+          @dblclick="doubleclick('width')"
+        >{{ boxObj.width }}</div>
         <span class="ant-desigener-font-color">x</span>
         <div class="content input" v-show="inputStatus === 'height'">
           <a-input
@@ -235,18 +265,21 @@
             size="small"
             v-model="boxObj.height"
             @keydown.enter="statusReset('height')"
-            @blur="statusReset('height')" />
+            @blur="statusReset('height')"
+          />
         </div>
         <div
           class="content"
           v-show="inputStatus !== 'height'"
-          @dblclick="doubleclick('height')">{{ boxObj.height }}</div>
+          @dblclick="doubleclick('height')"
+        >{{ boxObj.height }}</div>
       </div>
     </div>
     <a-list
       itemLayout="horizontal"
       size="small"
-      class="unit-selec">
+      class="unit-selec"
+    >
       <a-list-item>
         <a-list-item-meta>
           <div slot="description">盒模型单位:</div>
@@ -255,7 +288,8 @@
           :defaultValue="boxObj.unit"
           style="width: 100%;"
           size="small"
-          @change="unitChange">
+          @change="unitChange"
+        >
           <a-select-option value="px">px</a-select-option>
         </a-select>
       </a-list-item>
@@ -305,7 +339,7 @@ export default class BoxModel extends Vue {
 
   created() {
     for (let k of Object.keys(this.compBox)) {
-      if(this.compBox[k] === '0') {
+      if (this.compBox[k] === '0') {
         delete this.compBox[k]
       }
       if (k !== 'unit') {
@@ -347,7 +381,7 @@ export default class BoxModel extends Vue {
       this.compBox[name] = temp.val;
     }
     this.boxObj[name] = temp.val;
-    if(temp.val === '0') {
+    if (temp.val === '0') {
       delete this.compBox[name]
     }
     /*    if (!val) {

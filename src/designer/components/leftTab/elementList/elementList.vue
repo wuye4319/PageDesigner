@@ -2,7 +2,8 @@
   <div
     style="height: 100%;overflow: auto;padding-top:4px;padding-bottom: 24px"
     @drop.stop="handleDrop($event)"
-    @dragover.prevent>
+    @dragover.prevent
+  >
     <MyTree
       v-if="pageInfor.length"
       :treeData="pageInfor"
@@ -26,11 +27,12 @@
       @ok="handleOk"
       okText="确认"
       cancelText="取消"
-      centered>
+      centered
+    >
       <div class="model-cont">
         <div class="name"><span class="required">*</span>组件名称:</div>
         <div class="desc">
-          <a-input placeholder="请输入组件名称" v-model.trim="compTitle" />
+          <a-input placeholder="请输入组件名称" v-model.trim="compTitle"/>
         </div>
       </div>
     </a-modal>

@@ -4,7 +4,8 @@
       class="component-view"
       v-for="(comp,i) in handlePageInfo"
       :key="i"
-      :style="getFixed(comp)">
+      :style="getFixed(comp)"
+    >
       <component
         :style="comp.compInfo.boxOptions"
         class=" component-details "

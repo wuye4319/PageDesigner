@@ -18,13 +18,15 @@
         <a-switch
           size="small"
           v-model="icon"
-          @change="changeVal('icon')" />
+          @change="changeVal('icon')"
+        />
         <a-icon
           style="margin-left: 10px;font-size: 14px;margin-right:10px"
           @click="showIconModal"
           :theme="iconTheme || 'filled'"
-          :type="iconType || 'plus'" />
-        <color-picker v-model="compAttr.iconColor" />
+          :type="iconType || 'plus'"
+        />
+        <color-picker v-model="compAttr.iconColor"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
@@ -33,7 +35,8 @@
         <a-select
           v-model="type"
           @change="changeVal('type')"
-          style="width: 100%">
+          style="width: 100%"
+        >
           <a-select-option value="default">default</a-select-option>
           <a-select-option value="primary">primary</a-select-option>
           <a-select-option value="dashed">dashed</a-select-option>
@@ -90,7 +93,7 @@
         <a-list-item-meta>
           <div slot="description">禁用:</div>
         </a-list-item-meta>
-        <a-switch v-model="status" @change="changeVal('status')" />
+        <a-switch v-model="status" @change="changeVal('status')"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
@@ -111,12 +114,14 @@
         <a-tab-pane
           :tab="tap.title"
           v-for="(tap,n) of tabData"
-          :key="tap.key">
+          :key="tap.key"
+        >
           <div class="panne-height">
             <div
               class="icon-warp"
               v-for="idata1 of iconData[n]"
-              :key="idata1.type">
+              :key="idata1.type"
+            >
               <div class="icon-title">{{ idata1.type }}</div>
               <a-icon
                 class="icon-style"

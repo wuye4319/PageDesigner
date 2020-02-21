@@ -2,7 +2,7 @@
   <div class="container">
     <div class="head-bar">
       <div class="page-nav">
-        <back-admin :pageSelect="pageSelect" ref="backAdmin" />
+        <back-admin :pageSelect="pageSelect" ref="backAdmin"/>
         <!-- <a-select v-model="pageSelect" class="page-select" @change="handleChange">
           <a-select-option v-for="page in pageList" :key="page" :value="page">{{ page }}</a-select-option>
         </a-select> -->
@@ -10,15 +10,17 @@
       </div>
       <div class="apps-title">{{ currentApps.appName }}</div>
       <div class="handle-button">
-        <theme class="btn" />
+        <theme class="btn"/>
         <a-button
           class="btn"
           icon="eye"
-          @click="openfullscreen">预览</a-button>
+          @click="openfullscreen"
+        >预览</a-button>
         <a-button
           class="btn"
           @click="saveInfo()"
-          icon="save">保存</a-button>
+          icon="save"
+        >保存</a-button>
         <a-button
           class="btn"
           type="primary"
@@ -37,16 +39,18 @@
             class="compStore "
             @moveDragend="moveDragend"
             @moveDragstart="moveDragstart"
-            @addPageComp="addPageComp" />
+            @addPageComp="addPageComp"
+          />
           <PageList
             slot="pages"
             :createOk="creatOk"
             :pageSelect="pageSelect"
             :pageChange="handleChange"
-            :changeScreenType="changeScreenType" />
+            :changeScreenType="changeScreenType"
+          />
         </LeftTab>
         <div class="arrow-handle arrow-left handle-left arrow-top" @click="leftShow = false">
-          <a-icon type="left" />
+          <a-icon type="left"/>
         </div>
       </div>
       <!-- 内容 -->
@@ -55,21 +59,24 @@
           <a-radio-group
             v-model="screen"
             @change="changeScreenType"
-            v-if="currentScreen === 'both'">
+            v-if="currentScreen === 'both'"
+          >
             <a-radio-button value="desktop">PC端设计</a-radio-button>
             <a-radio-button value="mobile">移动端设计</a-radio-button>
           </a-radio-group>
           <div
             class="arrow-handle arrow-right handle-mid-right"
             :class="leftShow ? 'mid-left-hidden': 'mid-left-show'"
-            @click="leftShow = true">
-            <a-icon type="right" />
+            @click="leftShow = true"
+          >
+            <a-icon type="right"/>
           </div>
           <div
             class="arrow-handle arrow-left handle-mid-left"
             :class="rightShow ? 'mid-right-hidden': 'mid-right-show'"
-            @click="rightShow = true">
-            <a-icon type="left" />
+            @click="rightShow = true"
+          >
+            <a-icon type="left"/>
           </div>
         </div>
         <!-- view -->
@@ -80,9 +87,9 @@
       </div>
       <!-- 右侧属性动作绑定 -->
       <div class="design-attribute" :class="rightShow ? 'rightShow': 'rightHidden'">
-        <classify :key="pageSelect" ref="classify" />
+        <classify :key="pageSelect" ref="classify"/>
         <div class="arrow-handle arrow-right handle-right arrow-top" @click="rightShow = false">
-          <a-icon type="right" />
+          <a-icon type="right"/>
         </div>
       </div>
     </div>

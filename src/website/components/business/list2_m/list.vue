@@ -14,12 +14,12 @@
     <div class="poup" :class="{'poup-show':option.show}"><i class="bg"></i>
       <ul class="user-option">
         <li @click="userTop">
-          <a-icon type="to-top" class="icon-fz" /> 置顶</li>
+          <a-icon type="to-top" class="icon-fz"/> 置顶</li>
         <li>
           <a @click="goTo(optionData.url)">
-            <a-icon type="file-text" class="icon-fz" /> 详情</a></li>
+            <a-icon type="file-text" class="icon-fz"/> 详情</a></li>
         <li>
-          <a-icon type="share-alt" class="icon-fz" /> 分享</li>
+          <a-icon type="share-alt" class="icon-fz"/> 分享</li>
         <li class="cancel" @click="showPoup">取消</li>
       </ul>
     </div>

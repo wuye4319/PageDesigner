@@ -7,7 +7,8 @@
       <a-collapse
         v-if="compData.actionModel && compData.actionModel.actionData"
         :activeKey="operateEvent && operateEvent.eventType"
-        :bordered="false">
+        :bordered="false"
+      >
         <a-collapse-panel
           v-for="(item,j) in compData.actionModel.actionData"
           :header="item.eventName"
@@ -28,7 +29,8 @@
             暂未绑定动作，<span
               style="cursor: pointer"
               class="ant-desigener-font-color"
-              @click="openActionModal">去绑定</span>
+              @click="openActionModal"
+            >去绑定</span>
           </template>
         </a-collapse-panel>
       </a-collapse>

@@ -11,31 +11,31 @@
         <a-list-item-meta>
           <div slot="description">默认行数:</div>
         </a-list-item-meta>
-        <a-input-number :min="1" v-model="compAttr.minRows" />
+        <a-input-number :min="1" v-model="compAttr.minRows"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
           <div slot="description">最大行数:</div>
         </a-list-item-meta>
-        <a-input-number :min="1" v-model="compAttr.maxRows" />
+        <a-input-number :min="1" v-model="compAttr.maxRows"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
           <div slot="description">默认值:</div>
         </a-list-item-meta>
-        <a-input v-model="compAttr.value" />
+        <a-input v-model="compAttr.value"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
           <div slot="description">计数器:</div>
         </a-list-item-meta>
-        <a-switch v-model="compAttr.counter" />
+        <a-switch v-model="compAttr.counter"/>
       </a-list-item>
       <a-list-item v-if="compAttr.counter">
         <a-list-item-meta>
           <div slot="description">字数上限:</div>
         </a-list-item-meta>
-        <a-input-number :min="1" v-model="compAttr.maxLength" />
+        <a-input-number :min="1" v-model="compAttr.maxLength"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
@@ -47,7 +47,7 @@
         <a-list-item-meta>
           <div slot="description">标题:</div>
         </a-list-item-meta>
-        <a-input v-model="compAttr.label" />
+        <a-input v-model="compAttr.label"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>

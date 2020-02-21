@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header">
-      <operate-modal :creatOk="createOk" />
+      <operate-modal :creatOk="createOk"/>
     </div>
     <MyTree
       :treeType="'pagelist'"
@@ -10,7 +10,8 @@
       :draggable="false"
       :actions="['edit','delete']"
       :operateTree="operateTree"
-      :selectedKey="selectedKey">
+      :selectedKey="selectedKey"
+    >
     </MyTree>
     <a-modal
       title="编辑页面信息"
@@ -18,7 +19,8 @@
       @ok="handleOk('edit',editPageInfor)"
       okText="确认"
       cancelText="取消"
-      centered>
+      centered
+    >
       <a-list itemLayout="horizontal">
         <a-list-item>
           <div class="model-cont">
@@ -30,7 +32,8 @@
                 disabled
                 placeholder="请输入需要添加的标题"
                 v-model.trim="editPageInfor.title"
-                @change="titleChange" />
+                @change="titleChange"
+              />
             </div>
           </div>
         </a-list-item>
@@ -43,7 +46,8 @@
               <a-input
                 placeholder="请输入需要添加的页面名称"
                 v-model.trim="editPageInfor.name"
-                @change="nameChange" />
+                @change="nameChange"
+              />
             </div>
           </div>
         </a-list-item>
@@ -59,7 +63,7 @@
                 <template slot="title">
                   <span>不同终端支持不同的组件库，选择支持多终端时，则只有在这些终端上都支持的组件才会显示出来。</span>
                 </template>
-                <a-icon style="color: red;margin-left: 40px" type="question" />
+                <a-icon style="color: red;margin-left: 40px" type="question"/>
               </a-tooltip>
             </div>
           </div>
@@ -71,7 +75,8 @@
               <a-textarea
                 placeholder="请输入需要添加的描述"
                 :rows="2"
-                v-model="editPageInfor.desc" />
+                v-model="editPageInfor.desc"
+              />
             </div>
           </div>
         </a-list-item>

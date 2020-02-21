@@ -3,34 +3,40 @@
     class="myTree"
     @drop.stop="dropComp($event,'',treeData)"
     @dragenter.prevent.stop="dragenter($event,'')"
-    @dragover.prevent>
+    @dragover.prevent
+  >
     <li
       v-for="(item,i) in treeData"
       :key="i + '-' + parseInt((Math.random()*10000).toFixed(0))"
       @drop.stop="dropComp($event,i,treeData,layoutComp)"
-      @dragover.prevent>
+      @dragover.prevent
+    >
       <span
         :draggable="draggable"
         @dragstart="dragstart($event,item)"
         @dragenter.prevent.stop="dragenter($event,item,i)"
         @dragend.prevent.stop="dragend(i,treeData,$event,item)"
         :class="itemClass(item)"
-        @click.stop="handleChange(item,i,treeData)">
+        @click.stop="handleChange(item,i,treeData)"
+      >
         <span :class="item.compAttr?'element'+item.compAttr.uid:''">
           <i
             class="folderIcon"
-            v-if="item.compAttr && (item.compAttr.childList || item.compAttr.tabs)">
+            v-if="item.compAttr && (item.compAttr.childList || item.compAttr.tabs)"
+          >
             <a-icon
               type="caret-right"
               v-if="!item.open"
-              @click="handleFolder(item,true)" />
+              @click="handleFolder(item,true)"
+            />
             <a-icon
               type="caret-down"
               v-else
-              @click="handleFolder(item,false)" />
-            <a-icon type="appstore" />
+              @click="handleFolder(item,false)"
+            />
+            <a-icon type="appstore"/>
           </i>
-          <a-icon type="file" v-else />
+          <a-icon type="file" v-else/>
           {{ item.title }}
         </span>
         <span class="actions" v-if="!(initType && initType === 'common' && treeType === 'layout')">
@@ -40,7 +46,8 @@
               :key="j"
               :type="act"
               :style="{'color': actionColor(item, act),'margin-left': j!= 0?'6px':'0'}"
-              @click.stop="operateTree(act,item,i,treeData)" />
+              @click.stop="operateTree(act,item,i,treeData)"
+            />
           </template>
         </span>
       </span>
@@ -50,21 +57,25 @@
           v-for="(layout,h) in childList(item)"
           :key="h"
           @drop.stop="dropComp($event,'',layout,item)"
-          @dragover.prevent>
+          @dragover.prevent
+        >
           <span
             @dragenter.prevent.stop="dragenter($event,item,h,'layout')"
             :id="item.compAttr.uid + h"
-            :class="enterIndex === (item.compAttr.uid + h)?'dragin layoutCell':'layoutCell'">
+            :class="enterIndex === (item.compAttr.uid + h)?'dragin layoutCell':'layoutCell'"
+          >
             <i class="folderIcon">
               <a-icon
                 type="caret-right"
                 v-if="(item.compAttr.childListAttr && !item.compAttr.childListAttr[h].open) || (item.compAttr.tabs &&!item.compAttr.tabs[h].open)"
-                @click="handleFolder(item.compAttr.childListAttr && item.compAttr.childListAttr[h] || (item.compAttr.tabs && item.compAttr.tabs[h]),true)" />
+                @click="handleFolder(item.compAttr.childListAttr && item.compAttr.childListAttr[h] || (item.compAttr.tabs && item.compAttr.tabs[h]),true)"
+              />
               <a-icon
                 type="caret-down"
                 v-else
-                @click="handleFolder((item.compAttr.childListAttr && item.compAttr.childListAttr[h] || item.compAttr.tabs[h]),false)" />
-              <a-icon type="appstore" />
+                @click="handleFolder((item.compAttr.childListAttr && item.compAttr.childListAttr[h] || item.compAttr.tabs[h]),false)"
+              />
+              <a-icon type="appstore"/>
             </i>
             <span>{{ item.compAttr.tabs? layout.title + h: '布局格子' + h }}</span>
           </span>
@@ -81,7 +92,8 @@
             :treeType="'layout'"
             :initType="initType"
             :dropContainer="dropContainer"
-            :selectedKey="selectedKey"></my-tree>
+            :selectedKey="selectedKey"
+          ></my-tree>
         </li>
       </ul>
     </li>

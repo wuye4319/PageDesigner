@@ -3,7 +3,8 @@
     <a-radio-group
       @change="onChange"
       v-model="compType"
-      style="margin: 10px 0">
+      style="margin: 10px 0"
+    >
       <a-radio-button value="system">系统组件</a-radio-button>
       <a-radio-button value="custom">自定义组件</a-radio-button>
     </a-radio-group>
@@ -12,19 +13,22 @@
         v-for="(item,c) in classifyComp"
         :key="c"
         :header="item.title"
-        :disabled="!item.data.length">
+        :disabled="!item.data.length"
+      >
         <div class="details">
           <a-popover
             placement="bottomRight"
             :mouseEnterDelay="1"
             v-for="(base,i) of item.data"
-            :key="i">
+            :key="i"
+          >
             <template slot="content" width="200px">
               <div class="imgBox" style="width: 154px;height: 128px;display: flex;justify-content: center;align-items: center;">
                 <img
                   @click="addComp(base)"
                   :src="getImg(base)"
-                  width="100%" />
+                  width="100%"
+                />
               </div>
             </template>
             <span slot="title">{{ base.title }}</span>
@@ -36,7 +40,8 @@
               draggable
               @dragstart="dragstart($event,base)"
               @dragend="dragend"
-              @click="addComp(base)">{{ base.title }}</a-button>
+              @click="addComp(base)"
+            >{{ base.title }}</a-button>
           </a-popover>
         </div>
       </a-collapse-panel>

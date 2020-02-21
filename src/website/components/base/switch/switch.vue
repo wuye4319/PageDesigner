@@ -6,13 +6,15 @@
         :label="comAttr.label"
         :help="comAttr.help"
         :label-col="formItemLayout.labelCol"
-        :wrapper-col="formItemLayout.wrapperCol">
+        :wrapper-col="formItemLayout.wrapperCol"
+      >
         <a-switch
           @change="onChange"
           :disabled="comAttr.disabled"
           v-model="comAttr.value"
 
-          a-switch>
+          a-switch
+        >
         </a-switch></a-form-item>
     </a-form>
   </div>

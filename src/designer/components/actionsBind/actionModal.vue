@@ -6,7 +6,8 @@
       @cancel="handleCancle"
       :footer="null"
       width="700px"
-      :destroyOnClose="true">
+      :destroyOnClose="true"
+    >
       <div class="topOperation">
         <label>
           事件触发：
@@ -14,11 +15,13 @@
             labelInValue
             @change="handleChange"
             placeholder="请选择绑定事件"
-            v-if="actionModel && actionModel.length">
+            v-if="actionModel && actionModel.length"
+          >
             <a-select-option
               v-for="(item,i) in actionModel"
               :key="i"
-              :value="item.eventType">{{ item.eventName }}</a-select-option>
+              :value="item.eventType"
+            >{{ item.eventName }}</a-select-option>
           </a-select>
         </label>
         <label>
@@ -26,30 +29,35 @@
           <a-select
             labelInValue
             @change="handleActionChange"
-            placeholder="请选择响应动作">
+            placeholder="请选择响应动作"
+          >
             <a-select-opt-group label="系统响应动作">
               <a-select-option
                 v-for="(item,i) in defaultFunctions"
                 :key="item.actionFunc + i"
-                :value="item.actionFunc">{{ item.actionName }}</a-select-option>
+                :value="item.actionFunc"
+              >{{ item.actionName }}</a-select-option>
             </a-select-opt-group>
             <a-select-opt-group label="自定义响应动作">
               <template v-for="(item,i) in pageFunctions">
                 <a-select-option
                   v-if="item.actionFunc"
                   :key="item.actionFunc + i"
-                  :value="item.actionFunc">{{ item.actionName }}</a-select-option>
+                  :value="item.actionFunc"
+                >{{ item.actionName }}</a-select-option>
               </template>
             </a-select-opt-group>
             <template v-for="(item) in pageFunctions">
               <a-select-opt-group
                 :key="Object.keys(item)[0]"
                 :label="Object.keys(item)[0]"
-                v-if="!item.actionFunc">
+                v-if="!item.actionFunc"
+              >
                 <a-select-option
                   v-for="(func) in item[Object.keys(item)[0]]"
                   :key="Object.keys(item)[0]+'.' + func.actionFunc"
-                  :value="Object.keys(item)[0]+'.'+func.actionFunc">{{ func.actionName }}</a-select-option>
+                  :value="Object.keys(item)[0]+'.'+func.actionFunc"
+                >{{ func.actionName }}</a-select-option>
               </a-select-opt-group>
             </template>
             <a-select-option value="customAction" @click="openEditorModalN">自定义动作</a-select-option>
@@ -71,21 +79,25 @@
               v-model="siteUrl"
               size="default"
               placeholder="请选择连接页面"
-              style="width: 100%">
+              style="width: 100%"
+            >
               <a-select-option
                 v-for="page in pageList"
                 :key="page"
-                :value="page">{{ page }}</a-select-option>
+                :value="page"
+              >{{ page }}</a-select-option>
             </a-select>
             <a-input
               v-if="siteType === 'externalLink'"
               placeholder="请输入地址"
-              v-model="siteUrl">
+              v-model="siteUrl"
+            >
               <a-select
                 slot="addonBefore"
                 defaultValue="http://"
                 style="width: 90px"
-                v-model="linkPrefix">
+                v-model="linkPrefix"
+              >
                 <a-select-option value="http://">http://</a-select-option>
                 <a-select-option value="https://">https://</a-select-option>
               </a-select>
@@ -106,7 +118,8 @@
             :codes="javascriptCodes"
             @onMounted="javascriptOnMounted"
             @onCodeChange="javascriptOnCodeChange"
-            :isSave="true" />
+            :isSave="true"
+          />
         </div>
         <div v-else></div>
       </div>
@@ -114,7 +127,8 @@
         <a-button
           type="primary"
           @click="handledSubmit"
-          :disabled="!(this.changedEvent.eventName && this.selectedAction.actionName) || (this.selectedAction.actionFunc==='openUrl' && (!this.siteUrl || !this.openType || !this.siteUrl))">确认</a-button>
+          :disabled="!(this.changedEvent.eventName && this.selectedAction.actionName) || (this.selectedAction.actionFunc==='openUrl' && (!this.siteUrl || !this.openType || !this.siteUrl))"
+        >确认</a-button>
       </div>
     </a-modal>
   </div>

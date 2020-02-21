@@ -3,7 +3,8 @@
     <div
       class="imgCard"
       v-for="(item,i) in classes"
-      :key="i">
+      :key="i"
+    >
       <img :src="item.bg" alt="">
       <p>{{ item.text }}</p>
     </div>

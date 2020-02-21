@@ -2,9 +2,9 @@
   <div class="homePage">
     <div class="header">
       <a-input placeholder="搜索">
-        <a-icon slot="prefix" type="search" />
+        <a-icon slot="prefix" type="search"/>
       </a-input>
-      <a-icon type="appstore" style="margin-left: 8px;font-size: 16px;color: white" />
+      <a-icon type="appstore" style="margin-left: 8px;font-size: 16px;color: white"/>
     </div>
     <!-- <div class="swipper">
       <img width="100%" height="128" :src="defaultImg" alt="">

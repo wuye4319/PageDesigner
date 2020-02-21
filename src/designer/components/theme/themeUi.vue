@@ -183,7 +183,7 @@ import { List, Input, InputNumber } from 'ant-design-vue';
     AListItem: List.Item,
     AListItemMeta: List.Item.Meta,
     AInputNumber: InputNumber,
-    AInput:Input
+    AInput: Input
 
   }
 })

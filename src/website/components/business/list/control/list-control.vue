@@ -17,7 +17,8 @@
         checkedChildren="开"
         unCheckedChildren="关"
         @change="showComp('classify')"
-        v-model="classify" />
+        v-model="classify"
+      />
     </a-list-item>
 
     <a-list-item v-if="options['sort-switch']">
@@ -28,7 +29,8 @@
         checkedChildren="开"
         unCheckedChildren="关"
         @change="showComp('sort')"
-        v-model="sort" />
+        v-model="sort"
+      />
     </a-list-item>
   </a-list>
 </template>

@@ -43,7 +43,8 @@
             v-if="isDesigner"
             @mouseenter="mouseEvent(comp.compInfo.compAttr.uid)"
             @mouseleave="mouseEvent('')"
-            @deleteComponent="deleteComponent(i)"/>
+            @deleteComponent="deleteComponent(i)"
+          />
         </div>
         <div
           class="component-view empty-cont"
@@ -307,7 +308,7 @@ export default class Pageindex extends Mixins(listMixins) {
 
   // 记录移动过程中位置信息
   dragenter(value) {
-    if(this.tempAppData['dragStartUid']) {
+    if (this.tempAppData['dragStartUid']) {
       this.newNum = value;
     }
   }

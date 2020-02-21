@@ -3,6 +3,6 @@ module.exports = {
     '@vue/app',
   ],
   plugins: [
-    ['import', { libraryName: 'h3-antd-vue', libraryDirectory: 'es', style: true }]
+    ['import', { libraryName: 'ant-design-vue', libraryDirectory: 'es', style: true }, 'ant-design-vue']
   ]
 };

@@ -11,7 +11,8 @@
     v-if="compAttr.icon"
     :type="compAttr.iconType || 'plus'"
     :style="{'color': compAttr.iconColor}"
-    :theme="compAttr.iconTheme || 'filled'" />{{ compAttr.value }}</a-button>
+    :theme="compAttr.iconTheme || 'filled'"
+  />{{ compAttr.value }}</a-button>
 </template>
 
 <script lang="ts">

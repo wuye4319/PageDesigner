@@ -6,14 +6,16 @@
         <a-tooltip
           v-if="tag.length > 20"
           :key="tag"
-          :title="tag">
+          :title="tag"
+        >
           <a-tag
             :key="tag"
             :color="color"
             :closable="pageData.closable"
             :visible="pageData.visible"
             :style="{'max-width': pageData.maxWidth}"
-            @close="handleClose(tag)">
+            @close="handleClose(tag)"
+          >
             {{ `${tag.slice(0, 20)}...` }}
           </a-tag>
         </a-tooltip>
@@ -24,7 +26,8 @@
           :closable="pageData.closable"
           :visible="pageData.visible"
           :style="{'max-width': pageData.maxWidth}"
-          @close="handleClose(tag)">
+          @close="handleClose(tag)"
+        >
           {{ tag }}
         </a-tag>
       </template>
@@ -42,13 +45,14 @@
       <a-tag
         v-else
         @click="showInput"
-        style="background: #fff; borderStyle: dashed;">
-        <a-icon type="plus" /> New Tag
+        style="background: #fff; borderStyle: dashed;"
+      >
+        <a-icon type="plus"/> New Tag
       </a-tag>
     </div>
     <!-- 描述信息 -->
     <div class="desc">
-      {{pageData.desc}}
+      {{ pageData.desc }}
     </div>
     <div class="tips" v-if="pageData.required && tags.length === 0">
       请至少填写一个标签
@@ -96,7 +100,7 @@ export default class TagView extends Vue {
 
   // 关闭
   handleClose(removedTag) {
-    if(this.pageData.visible) {
+    if (this.pageData.visible) {
       const tags = this.tags.filter(tag => tag !== removedTag);
       this.tags = tags;
       this.pageData.tags = this.tags;
@@ -148,7 +152,6 @@ export default class TagView extends Vue {
     // 值变化触发事件
     this.trigFunc('change', this.compData.actionModel);
   }
-
 }
 </script>
 

@@ -5,23 +5,27 @@
       class="item"
       @click="chooseItem(item.value,item.sort,i)"
       v-for="(item,i) of compAttr.data"
-      :key="i">
+      :key="i"
+    >
       <div class="name" :class="{'ant-desigener-font-color': clickNum === i}">{{ item.label }}</div>
       <div
         class="sort"
         :class="{'single-icon': item.sort !== 'sort'}"
-        v-if="item.sort !== 'none'">
+        v-if="item.sort !== 'none'"
+      >
         <a-icon
           class="sort-icon"
           :class="{'ant-desigener-font-color': clickNum === i && clickSort === 'asc'}"
           v-if="item.sort === 'asc' || item.sort === 'sort'"
-          type="caret-up" />
+          type="caret-up"
+        />
 
         <a-icon
           class="sort-icon sort-icon-down"
           :class="{'ant-desigener-font-color': clickNum === i && clickSort === 'desc'}"
           v-if="item.sort === 'desc' || item.sort === 'sort'"
-          type="caret-down" />
+          type="caret-down"
+        />
       </div>
     </div>
   </div>

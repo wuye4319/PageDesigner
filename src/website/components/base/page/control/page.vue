@@ -19,7 +19,8 @@
         <a-select
           v-model="initData.textType"
           @change="changeVal('textType')"
-          style="width: 100%">
+          style="width: 100%"
+        >
           <a-select-option value="text">文本</a-select-option>
           <a-select-option value="title">标题</a-select-option>
           <a-select-option value="href">超链接</a-select-option>
@@ -75,7 +76,7 @@
         <a-list-item-meta>
           <div slot="description">字体颜色:</div>
         </a-list-item-meta>
-        <color-picker v-model="compAttr.color" />
+        <color-picker v-model="compAttr.color"/>
       </a-list-item>
 
       <a-list-item>
@@ -87,16 +88,16 @@
           v-model="initData.textAlign"
           class="type-radio"
         >
-          <a-radio value="left"><a-icon type="align-left" /></a-radio>
-          <a-radio value="center"><a-icon type="align-center" /></a-radio>
-          <a-radio value="right"><a-icon type="align-right" /></a-radio>
+          <a-radio value="left"><a-icon type="align-left"/></a-radio>
+          <a-radio value="center"><a-icon type="align-center"/></a-radio>
+          <a-radio value="right"><a-icon type="align-right"/></a-radio>
         </a-radio-group>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
           <div slot="description">自动换行:</div>
         </a-list-item-meta>
-        <a-switch v-model="initData.whiteSpace" @change="changeVal('whiteSpace')" />
+        <a-switch v-model="initData.whiteSpace" @change="changeVal('whiteSpace')"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>

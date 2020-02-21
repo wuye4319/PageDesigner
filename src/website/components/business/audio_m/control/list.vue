@@ -11,7 +11,8 @@
           style="width:100%"
           size="small"
           :defaultValue="selec"
-          @change="userSelec">
+          @change="userSelec"
+        >
           <a-select-option v-for="i in postionList" :key="i.key">
             {{ i.title }}
           </a-select-option>

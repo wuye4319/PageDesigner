@@ -4,11 +4,13 @@
       <a-collapse
         :bordered="false"
         v-if="appArr && appArr.length > 0"
-        v-model="showStyle">
+        v-model="showStyle"
+      >
         <a-collapse-panel
           :header="item.header"
           :key="item.styleName"
-          v-for="item of appArr">
+          v-for="item of appArr"
+        >
           <component :is="item.compFn" :appStyle="globalOptions[item.styleName]"/>
         </a-collapse-panel>
       </a-collapse>

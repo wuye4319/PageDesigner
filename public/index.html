@@ -4,13 +4,25 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <!-- 移动端兼容性支持 -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no,email=no,address=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+  <!-- 在某些APP如钉钉的webview里面动态改变会有bug，所以默认设置为0.5 -->
+  <meta name="viewport"
+    content="maximum-scale=0.5,minimum-scale=0.5,user-scalable=0,width=device-width,user-scalable=no" />
+  <!-- 设计稿按375标准，设计稿是750,测量是20px,那么写样式时就写0.2rem,用插件换算就是除以100 支持url参数模拟测试 例如 xxx?setrem=375 详情请查看flexible.js -->
+  <script src="/plugin/flexible.js"></script>
+  <!-- 移动端兼容性支持end -->
   <link rel="icon" href="./favicon.ico">
   <title>
     <%= htmlWebpackPlugin.options.title %>
   </title>
   <script src="/plugin/vue2.6.10.js"></script>
   <script src="/plugin/vue-router3.0.7.js"></script>
+  <script src="/plugin/lib.umd.min.js"></script>
 </head>
 
 <body class="wind-body">

@@ -10,7 +10,11 @@
     >
       <!-- 组件 -->
       <template v-if="Object.keys(currCompsData).length > 0">
-        <a-tab-pane tab="组件属性" key="comp" class="tab-cont bg attr-warp">
+        <a-tab-pane
+          tab="组件属性"
+          key="comp"
+          class="tab-cont bg attr-warp"
+        >
           <box-model
             v-if="boxSwitch === 1"
             :key="'box'+new Date().getTime()"
@@ -28,7 +32,12 @@
           />
         </a-tab-pane>
 
-        <a-tab-pane tab="数据绑定" v-if="dataSwitch === 1" key="data" class="tab-cont bg">
+        <a-tab-pane
+          tab="数据绑定"
+          v-if="dataSwitch === 1"
+          key="data"
+          class="tab-cont bg"
+        >
           <databind
             :compData="currCompsData"
             :compIndex="compIndex"
@@ -37,7 +46,11 @@
           />
         </a-tab-pane>
 
-        <a-tab-pane tab="动作绑定" key="editor" class="tab-cont bg">
+        <a-tab-pane
+          tab="动作绑定"
+          key="editor"
+          class="tab-cont bg"
+        >
           <actions-bind
             :compData="currCompsData"
             :compIndex="compIndex"
@@ -48,11 +61,19 @@
 
       <!-- 页面 -->
       <template v-else>
-        <a-tab-pane tab="页面属性" key="page" class="tab-cont">
+        <a-tab-pane
+          tab="页面属性"
+          key="page"
+          class="tab-cont"
+        >
           <app-style/>
         </a-tab-pane>
 
-        <a-tab-pane tab="页面事件" key="event" class="tab-cont bg">
+        <a-tab-pane
+          tab="页面事件"
+          key="event"
+          class="tab-cont bg"
+        >
           <page-event/>
         </a-tab-pane>
       </template>

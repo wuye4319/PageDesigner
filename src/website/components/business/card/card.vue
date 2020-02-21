@@ -3,40 +3,48 @@
     <a-list
       class="myList"
       :grid="column"
-      :dataSource="listData">
+      :dataSource="listData"
+    >
       <a-list-item
         slot="renderItem"
         slot-scope="item"
-        :style="{'margin-bottom':compAttr.marginBottom}">
+        :style="{'margin-bottom':compAttr.marginBottom}"
+      >
         <a-card hoverable>
           <img
             v-if="compAttr.cover"
             :src="item.cover"
-            slot="cover" />
+            slot="cover"
+          />
           <template
             v-if="compAttr.actions"
             class="ant-card-actions"
-            slot="actions">
+            slot="actions"
+          >
             <a-icon
               v-for="(action,i) in item.actions"
               :type="action"
-              :key="action + i" />
+              :key="action + i"
+            />
           </template>
           <a-card-meta>
             <h5
               class="overElip"
               :title="item.title"
               v-if="compAttr.title"
-              slot="title">{{ item.title }}</h5>
+              slot="title"
+            >{{ item.title }}</h5>
             <p
               class="desc overElip"
               :title="item.description"
               v-if="compAttr.description"
-              slot="title">{{ item.description }}</p>
+              slot="title"
+            >{{ item.description }}</p>
             <a-avatar
               v-if="compAttr.avatar"
               slot="avatar"
-              :src="item.avatar" />
+              :src="item.avatar"
+            />
           </a-card-meta>
         </a-card>
       </a-list-item>

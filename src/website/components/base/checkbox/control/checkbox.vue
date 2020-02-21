@@ -11,13 +11,13 @@
         <a-list-item-meta>
           <div slot="description">默认值(数组):</div>
         </a-list-item-meta>
-        <a-input v-model="valueArr" @blur="valueChange" />
+        <a-input v-model="valueArr" @blur="valueChange"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
           <div slot="description">选项(数组):</div>
         </a-list-item-meta>
-        <a-textarea v-model="option" @blur="optinChange" />
+        <a-textarea v-model="option" @blur="optinChange"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
@@ -29,7 +29,7 @@
         <a-list-item-meta>
           <div slot="description">标题:</div>
         </a-list-item-meta>
-        <a-input v-model="compAttr.label" />
+        <a-input v-model="compAttr.label"/>
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>

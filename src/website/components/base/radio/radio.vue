@@ -5,16 +5,19 @@
         :label="comAttr.label"
         :help="comAttr.help"
         :label-col="formItemLayout.labelCol"
-        :wrapper-col="formItemLayout.wrapperCol">
+        :wrapper-col="formItemLayout.wrapperCol"
+      >
         <a-radio-group
           @change="onChange"
           :disabled="comAttr.disabled"
-          v-decorator="['value', {initialValue:comAttr.value, rules: [{ required: comAttr.required, message: comAttr.errorTip }] }]">
+          v-decorator="['value', {initialValue:comAttr.value, rules: [{ required: comAttr.required, message: comAttr.errorTip }] }]"
+        >
           <a-radio
             v-for="o in comAttr.option"
             :value="o.value"
             :style="comAttr.vertical?radioStyle:{}"
-            :key="o.value">{{ o.title }}</a-radio>
+            :key="o.value"
+          >{{ o.title }}</a-radio>
         </a-radio-group>
       </a-form-item>
     </a-form>  </div>

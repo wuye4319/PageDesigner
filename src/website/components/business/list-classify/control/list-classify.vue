@@ -19,17 +19,19 @@
                 size="small"
                 class="handle-add"
                 icon="plus"
-                @click="addOptions">添加</a-button>
+                @click="addOptions"
+              >添加</a-button>
               &nbsp;&nbsp;<span>(全部绑定值为 list-all)</span>
             </div>
             <div class="mylist ">
               <div
                 class="list-data"
                 v-for="(item,i) of data"
-                :key="i">
+                :key="i"
+              >
                 <div class="label">
                   标签名{{ i+1 }}
-                  <a-input v-model="item.label" :disabled="!dataModel.tableName || !compData.dataModel.mapData[0].tableMap" />
+                  <a-input v-model="item.label" :disabled="!dataModel.tableName || !compData.dataModel.mapData[0].tableMap"/>
                 </div>
                 <div class="value">
                   绑定值{{ i+1 }}
@@ -40,7 +42,7 @@
                     <a-select-option key="listAll" value="listAll">全部</a-select-option>
                     <a-select-option v-for="item of menuData" :key="item" :value="item">{{item}}</a-select-option>
                   </a-select> -->
-                  <a-input v-model="item.value" :disabled="!dataModel.tableName || !compData.dataModel.mapData[0].tableMap" />
+                  <a-input v-model="item.value" :disabled="!dataModel.tableName || !compData.dataModel.mapData[0].tableMap"/>
                 </div>
                 <div class="handle">
                   <div>操作</div>
@@ -49,7 +51,8 @@
                     class="handle-icon"
                     shape="circle"
                     icon="minus"
-                    @click="deleteOptions(i)" />
+                    @click="deleteOptions(i)"
+                  />
                 </div>
               </div>
             </div>
@@ -76,11 +79,13 @@
           <div
             class="option ant-desigener-border-color"
             :class="{checked: style === 'base'}"
-            @click="chooseClassify('base')">
+            @click="chooseClassify('base')"
+          >
             <a-radio-group
               class="option-list"
               defaultValue="a"
-              buttonStyle="solid">
+              buttonStyle="solid"
+            >
               <a-radio-button class="option-list-item" value="all">全部</a-radio-button>
               <a-radio-button class="option-list-item" value="a">分类1</a-radio-button>
               <a-radio-button class="option-list-item" value="b">分类2</a-radio-button>
@@ -93,7 +98,8 @@
           <div
             class="option ant-desigener-border-color"
             :class="{checked: style === 'tabs'}"
-            @click="chooseClassify('tabs')">
+            @click="chooseClassify('tabs')"
+          >
             <a-radio-group class="option-list" defaultValue="a">
               <a-radio-button class="option-list-item tab" value="all">全部</a-radio-button>
               <a-radio-button class="option-list-item tab" value="a">分类1</a-radio-button>

@@ -24,7 +24,8 @@
           :key="new Date().getTime()+'datacomp'"
           :compData="compData"
           :compIndex="compIndex"
-          :compsDataParent="compsDataParent" />
+          :compsDataParent="compsDataParent"
+        />
       </a-collapse-panel>
     </a-collapse>
   </div>

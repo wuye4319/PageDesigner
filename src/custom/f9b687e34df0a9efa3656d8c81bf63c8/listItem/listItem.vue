@@ -4,7 +4,8 @@
       <img
         width="100px"
         src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1800972588,3781195765&fm=26&gp=0.jpg"
-        alt="">
+        alt=""
+      >
     </div>
     <div class="rightContent">
       <div class="lineT">
@@ -16,15 +17,15 @@
       </div>
       <div class="lineS">
         <div class="hot">
-          <a-icon type="fire" />
+          <a-icon type="fire"/>
           <span>最新西藏旅游线路攻略</span>
         </div>
         <div class="hot">
-          <a-icon type="fire" />
+          <a-icon type="fire"/>
           <span>最新西藏旅游线路攻略</span>
         </div>
         <div class="hot">
-          <a-icon type="fire" />
+          <a-icon type="fire"/>
           <span>最新西藏旅游线路攻略</span>
         </div>
       </div>

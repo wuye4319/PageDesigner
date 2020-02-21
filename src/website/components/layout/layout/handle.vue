@@ -293,7 +293,7 @@ export default class layoutComponent extends Vue {
 
   // 拖动过程
   dragover(e, i, j) {
-    if(this.tempAppData['dragStartUid']) {
+    if (this.tempAppData['dragStartUid']) {
       this.bgPositon = String(i) + j;
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {

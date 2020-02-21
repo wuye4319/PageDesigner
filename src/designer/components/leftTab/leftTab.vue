@@ -5,39 +5,43 @@
         v-if="fullScreen !== 'topCtl'"
         type="fullscreen"
         class="controlIcon"
-        @click="handleScreen('topCtl')" />
+        @click="handleScreen('topCtl')"
+      />
       <a-icon
         v-else
         type="fullscreen-exit"
         class="controlIcon"
-        @click="cancelScreen()" />
+        @click="cancelScreen()"
+      />
       <a-tabs defaultActiveKey="1">
         <a-tab-pane tab="页面" key="1">
           <slot name="pages"></slot>
         </a-tab-pane>
         <a-tab-pane tab="元素" key="2">
-          <ElementList />
+          <ElementList/>
         </a-tab-pane>
       </a-tabs>
     </div>
-    <i class="line ant-desigener-bg-color" ></i>
+    <i class="line ant-desigener-bg-color"></i>
     <div :class="'bottomCtl' + (fullScreen === 'bottomCtl' ? ' fullScreen' : '')">
       <a-icon
         v-if="fullScreen !== 'bottomCtl'"
         type="fullscreen"
         class="controlIcon"
-        @click="handleScreen('bottomCtl')" />
+        @click="handleScreen('bottomCtl')"
+      />
       <a-icon
         v-else
         type="fullscreen-exit"
         class="controlIcon"
-        @click="cancelScreen()" />
+        @click="cancelScreen()"
+      />
       <a-tabs defaultActiveKey="1">
         <a-tab-pane tab="组件" key="1">
           <slot name="compStore"></slot>
         </a-tab-pane>
         <a-tab-pane tab="共享元素" key="2">
-          <CommonElement />
+          <CommonElement/>
         </a-tab-pane>
       </a-tabs>
     </div>

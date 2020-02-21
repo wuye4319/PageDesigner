@@ -5,7 +5,8 @@
       :compData="compData"
       :compIndex="compIndex"
       :compsDataParent="compsDataParent"
-      :datacompStatus="true"/>
+      :datacompStatus="true"
+    />
   </div>
 </template>
 

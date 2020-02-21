@@ -3,14 +3,16 @@
     <a-list
       :grid="pageData"
       :dataSource="navData"
-      :bordered="false">
+      :bordered="false"
+    >
       <a-list-item slot="renderItem" slot-scope="item,i">
         <div class="list-item" :class="{'line-row':pageData.lineRow}">
           <div class="pic">
             <img
               class="img"
               :src="require(`./nav${i}.png`)"
-              alt="">
+              alt=""
+            >
           </div>
           <div class="text">
             {{ item.text }}

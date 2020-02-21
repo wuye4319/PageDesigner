@@ -73,7 +73,7 @@
         <a-list-item-meta>
           <div slot="description">进度条的色彩:</div>
         </a-list-item-meta>
-        <color-picker v-model="initData.strokeColor" @change="changeVal('strokeColor')" />
+        <color-picker v-model="initData.strokeColor" @change="changeVal('strokeColor')"/>
       </a-list-item>
 
       <a-list-item v-show="initData.type !== 'dashboard'">

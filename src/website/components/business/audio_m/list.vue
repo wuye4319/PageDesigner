@@ -4,7 +4,8 @@
     <div
       class="play-warp"
       v-if="option.show"
-      :style="compAttr.postionAttr">
+      :style="compAttr.postionAttr"
+    >
       <div class="img-warp"><img :src="audioData.imgUrl"></div>
       <div class="play-info">
         <div class="title">{{ audioData.title }}</div>
@@ -14,16 +15,19 @@
             type="pause"
             class="icon"
             @click="play"
-            v-if="option.play" />
+            v-if="option.play"
+          />
           <a-icon
             type="caret-right"
             class="icon"
             v-else
-            @click="play" />
+            @click="play"
+          />
           <a-icon
             type="close"
             class="icon"
-            @click="showPoup" />
+            @click="showPoup"
+          />
           <audio :src="audioData.audioUrl" ref="audio"></audio>
         </div>
       </div>

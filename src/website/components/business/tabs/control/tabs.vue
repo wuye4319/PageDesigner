@@ -13,16 +13,19 @@
           type="edit"
           @click="editTabM(i)"
           title="编辑内容"
-          style="margin-right: 8px" />
+          style="margin-right: 8px"
+        />
         <a-popconfirm
           title="删除该标签?"
           @confirm="confirm(i)"
           okText="是"
-          cancelText="否">
+          cancelText="否"
+        >
           <a-icon
             type="delete"
             title="删除标签"
-            style="color: red;margin-right: 8px" />
+            style="color: red;margin-right: 8px"
+          />
         </a-popconfirm>
         <a-radio
           :checked="Number(initData.activeKey) === i"
@@ -35,8 +38,9 @@
         <a-button
           class="addBtn"
           type="primary"
-          @click="showTabModal">
-          <a-icon type="plus" />
+          @click="showTabModal"
+        >
+          <a-icon type="plus"/>
         </a-button>
       </template>
     </a-table>
@@ -49,7 +53,8 @@
         <a-radio-group
           @change="changeVal('type')"
           v-model="initData.type"
-          class="type-radio">
+          class="type-radio"
+        >
           <a-radio value="line">线型</a-radio>
           <a-radio value="card">卡片</a-radio>
         </a-radio-group>
@@ -61,7 +66,8 @@
         <a-radio-group
           @change="changeVal('size')"
           v-model="initData.size"
-          class="type-radio">
+          class="type-radio"
+        >
           <a-radio value="large">大</a-radio>
           <a-radio value="default">中</a-radio>
           <a-radio value="small">小</a-radio>
@@ -96,20 +102,22 @@
       title="添加选项"
       :visible="visible"
       @ok="operateTab('add')"
-      @cancel="handleCancel">
+      @cancel="handleCancel"
+    >
       <label>
         标签名：
-        <a-input v-model="tabName" placeholder="请输入标签名" />
+        <a-input v-model="tabName" placeholder="请输入标签名"/>
       </label>
     </a-modal>
     <a-modal
       title="编辑选项"
       :visible="visibleE"
       @ok="operateTab('edit')"
-      @cancel="handleCancel">
+      @cancel="handleCancel"
+    >
       <label>
         标签名：
-        <a-input v-model="tabName" placeholder="请输入标签名" />
+        <a-input v-model="tabName" placeholder="请输入标签名"/>
       </label>
     </a-modal>
   </div>

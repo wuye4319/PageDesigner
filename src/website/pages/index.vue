@@ -1,5 +1,5 @@
 <template>
-  <component v-if="websiteShow" :is="name" />
+  <component v-if="websiteShow" :is="name"/>
 </template>
 
 <script lang="ts">

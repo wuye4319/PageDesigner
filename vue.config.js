@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const tsImportPluginFactory = require('ts-import-plugin');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const AntDesignThemePlugin = require('antd-theme-webpack-plugin'); // antd 主题插件
-
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin'); // 去除console.log
 const antdOptions = {
   antDir: path.join(__dirname, './node_modules/ant-design-vue'), // antd包位置
   stylesDir: path.join(__dirname, './src/common/styles/theme'), // 主题文件所在文件夹
@@ -19,6 +19,7 @@ const antdOptions = {
   indexFileName: './public/index.html', // index.html所在位置
   generateOnce: false // 是否只生成一次（if you don't want to generate color.less on each chnage in code to make build process fast in development mode, assign it true value. But if you have new changes in your styles, you need to re-run your build process npm start.）
 };
+// const projectname = process.argv
 
 /**
  * 初始化本地开发配置
@@ -51,7 +52,7 @@ module.exports = {
       entry: 'src/main.ts',
       publicPath: './dist/',
       template: 'public/index.html',
-      chunkFilename: '[name].js',
+      // chunkFilename: '[name].test.js',
       filename: 'index.html',
       title: 'Page Designer',
       chunks: ['chunk-vendors', 'chunk-common', 'designer']
@@ -72,9 +73,38 @@ module.exports = {
         },
         javascriptEnabled: true
       }
-    }
+    },
+    // extract: false, // 是否使用css分离插件 ExtractTextPlugin
+    sourceMap: false, // 开启 CSS source maps
+  },
+  chainWebpack: (config) => {
+    config.resolve.alias
+      .set('@', path.join(__dirname, 'src'));
+    // config.module.rule('ts').use('ts-loader').tap(options => Object.assign(options, {
+    //   getCustomTransformers: () => ({
+    //     before: [tsImportPluginFactory({
+    //       libraryName: 'h3-antd-vue',
+    //       libraryDirectory: 'es',
+    //       style: true
+    //     })]
+    //   }),
+    // }));
+    // config.plugins.delete('preload-index');
+    config.plugins.delete('prefetch-index');
   },
   configureWebpack: (config) => {
+    if (process.env.NODE_ENV === 'production') {
+      // 为生产环境修改配置...
+      config.optimization.minimizer.push(
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            compress: {
+              drop_console: true // console
+            }
+          }
+        })
+      );
+    }
     config.externals = {
       'vue': 'Vue',
       'vue-router': 'VueRouter',
@@ -85,26 +115,17 @@ module.exports = {
         to: '.',
         ignore: ['.*']
       }]),
-      new MonacoWebpackPlugin(),
+      new MonacoWebpackPlugin({
+        languages: ['typescript', 'json', 'markdown'],
+        output: './static/plugin/monaco-editor'
+      }),
       new AntDesignThemePlugin(antdOptions)
     );
   },
-  chainWebpack: (config) => {
-    config.resolve.alias
-      .set('@', path.join(__dirname, 'src'));
-    config.module.rule('ts').use('ts-loader').tap(options => Object.assign(options, {
-      getCustomTransformers: () => ({
-        before: [tsImportPluginFactory({
-          libraryName: 'h3-antd-vue',
-          libraryDirectory: 'es',
-          style: true
-        })]
-      }),
-    }));
-  },
-  productionSourceMap: false,
+  productionSourceMap: true,
+  lintOnSave: true,
   devServer: {
-    host: envLocal.host,
+    // host: envLocal.host,
     port: envLocal.port,
     open: false,
     // openPage: 'designer/',

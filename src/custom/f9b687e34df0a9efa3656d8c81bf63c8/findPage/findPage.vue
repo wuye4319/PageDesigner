@@ -2,7 +2,7 @@
   <div class="findPage">
     <div class="header">
       <a-input placeholder="搜索">
-        <a-icon slot="prefix" type="search" />
+        <a-icon slot="prefix" type="search"/>
       </a-input>
       <!-- <a-icon type="appstore" style="margin-left: 8px;font-size: 16px;color: white" /> -->
     </div>
@@ -10,7 +10,7 @@
       <div class="item">
         <div class="title">
           <span>featurelist</span>
-          <a-icon type="right" />
+          <a-icon type="right"/>
         </div>
         <div class="content">
           <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1620906161,2794597244&fm=26&gp=0.jpg" alt="">
@@ -22,7 +22,8 @@
       <div
         class="tag"
         v-for="(item,i) in 5"
-        :key="i">
+        :key="i"
+      >
         <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1111603952,1083408135&fm=26&gp=0.jpg" alt="">
         <div class="right">
           <div class="time">2019/12/06</div>

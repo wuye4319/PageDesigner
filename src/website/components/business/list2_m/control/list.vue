@@ -17,7 +17,8 @@
       :compIndex="compIndex"
       :compsDataParent="compsDataParent"
       @change="listChange"
-      :options="options" />
+      :options="options"
+    />
   </div>
 </template>
 

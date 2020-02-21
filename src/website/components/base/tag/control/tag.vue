@@ -6,7 +6,7 @@
         <a-list-item-meta>
           <div slot="description">显示标签:</div>
         </a-list-item-meta>
-        <a-switch v-model="visible" @change="changeVal('visible')" />
+        <a-switch v-model="visible" @change="changeVal('visible')"/>
       </a-list-item>
 
       <a-list-item>
@@ -30,7 +30,7 @@
         <a-list-item-meta>
           <div slot="description">状态(普通/只读):</div>
         </a-list-item-meta>
-        <a-switch v-model="closable" @change="changeVal('closable')" />
+        <a-switch v-model="closable" @change="changeVal('closable')"/>
       </a-list-item>
 
       <a-list-item>
@@ -44,7 +44,7 @@
         <a-list-item-meta>
           <div slot="description">是否必填:</div>
         </a-list-item-meta>
-        <a-switch v-model="required" @change="changeVal('required')" />
+        <a-switch v-model="required" @change="changeVal('required')"/>
       </a-list-item>
 
       <!-- <a-list-item>
@@ -59,7 +59,7 @@
 
     </a-list>
     <!-- api描述提示 -->
-    <api-user-tip :apiList="apiList" />
+    <api-user-tip :apiList="apiList"/>
   </div>
 </template>
 

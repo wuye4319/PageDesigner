@@ -5,13 +5,15 @@
       class="option-list"
       :buttonStyle="buttonStyle"
       v-model="myVal"
-      @change="radioChange">
+      @change="radioChange"
+    >
       <a-radio-button
         class="option-list-item"
         v-for="(item,i) of compAttr.data"
         :key="i"
         :class="{tab: compAttr.style === 'tabs'}"
-        :value="i.toString()">{{ item.label }}</a-radio-button>
+        :value="i.toString()"
+      >{{ item.label }}</a-radio-button>
     </a-radio-group>
   </div>
 </template>

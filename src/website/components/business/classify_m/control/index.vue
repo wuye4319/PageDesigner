@@ -20,17 +20,19 @@
               <div
                 class="list-data"
                 v-for="(item,i) of data"
-                :key="i">
+                :key="i"
+              >
                 <div class="label">
                   标签名{{ i+1 }}
-                  <a-input v-model="item.label" disabled />
+                  <a-input v-model="item.label" disabled/>
                 </div>
                 <div class="value">
                   绑定值{{ i+1 }}
                   <a-input
                     v-model="item.value"
                     @blur="getTotal(item,i)"
-                    :disabled="!dataModel.tableName || !compData.dataModel.mapData[0].tableMap"/>
+                    :disabled="!dataModel.tableName || !compData.dataModel.mapData[0].tableMap"
+                  />
                 </div>
               </div>
             </div>
@@ -92,7 +94,8 @@
               size="small"
               class="handle-add"
               icon="plus"
-              @click="addOptions">添加</a-button>
+              @click="addOptions"
+            >添加</a-button>
           </div>
         </a-list-item>
         <div class="cont-base  ">
@@ -105,12 +108,13 @@
                   class="handle-icon"
                   shape="circle"
                   icon="delete"
-                  @click="deleteOptions(i)" />
+                  @click="deleteOptions(i)"
+                />
               </div>
               <div class="list-data-base">
                 <div class="item-base">
                   <div class="name-base">标签名{{ i+1 }}</div>
-                  <div class="desc-base"><a-input v-model="item.label" /></div>
+                  <div class="desc-base"><a-input v-model="item.label"/></div>
                 </div>
                 <div class="item-base">
                   <div class="name-base">图标{{ i+1 }}</div>
@@ -118,21 +122,24 @@
                     <icon-selec
                       v-model="item.icon"
                       :textSet="{select:' '}"
-                      :optionSet="{size: false,color: false}" />
+                      :optionSet="{size: false,color: false}"
+                    />
                   </div>
                 </div>
                 <div class="item-base">
                   <div class="name-base">跳转{{ i+1 }}</div>
-                  <div class="desc-base" >
+                  <div class="desc-base">
                     <a-select
                       v-model="item.urlType"
                       style="width:100%"
-                      @change="handleChange">
+                      @change="handleChange"
+                    >
                       <a-select-opt-group label="本地路由">
                         <a-select-option
                           v-for="item of pageList"
                           :key="item"
-                          :value="item">{{ item }}</a-select-option>
+                          :value="item"
+                        >{{ item }}</a-select-option>
                       </a-select-opt-group>
                       <a-select-opt-group label="自定义链接">
                         <a-select-option value="用户自定义">自定义</a-select-option>
@@ -140,9 +147,9 @@
                     </a-select>
                   </div>
                 </div>
-                <div class="item-base" v-if="item.urlType === '用户自定义'" >
+                <div class="item-base" v-if="item.urlType === '用户自定义'">
                   <div class="name-base">链接{{ i+1 }}</div>
-                  <div class="desc-base"><a-input v-model="item.url" /></div>
+                  <div class="desc-base"><a-input v-model="item.url"/></div>
                 </div>
               </div>
             </div>

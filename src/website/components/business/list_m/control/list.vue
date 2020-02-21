@@ -10,7 +10,8 @@
         <a-select
           style="width:100%"
           :defaultValue="selec"
-          @change="userSelec">
+          @change="userSelec"
+        >
           <a-select-option v-for="i in postionList" :key="i.key">
             {{ i.title }}
           </a-select-option>
@@ -24,11 +25,13 @@
           type="number"
           style="width:45%;margin-right:5%"
           v-model="input"
-          @change="inputChange"></a-input>
+          @change="inputChange"
+        ></a-input>
         <a-select
           style="width:50%"
           v-model="unit"
-          @change="uuu">
+          @change="uuu"
+        >
           <a-select-option v-for="i in unitList" :key="i.key">
             {{ i.key }}
           </a-select-option>
