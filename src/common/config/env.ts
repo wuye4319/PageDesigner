@@ -3,8 +3,8 @@ let production = 'http://120.25.77.12:7001/web/v1'
 let dev = '/web/v1'
 
 let admin = {
-  pro: `http://${window.location.hostname}:82/`,
-  dev: `http://${window.location.hostname}:8002/`
+  pro: `http://${window.location.hostname}/`,
+  dev: `http://${window.location.hostname}:8001/`
 }
 
 let ispro = process.env.NODE_ENV === 'production'

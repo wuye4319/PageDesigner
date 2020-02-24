@@ -127,7 +127,7 @@ module.exports = {
   devServer: {
     // host: envLocal.host,
     port: envLocal.port,
-    open: false,
+    open: true,
     // openPage: 'designer/',
     https: false,
     hotOnly: false,

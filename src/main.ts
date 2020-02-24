@@ -22,6 +22,7 @@ Vue.use(Router);
 vuexEvent(store)
 
 Vue.prototype.$utils = utils;
+Vue.prototype.$confirm = Modal.confirm;
 window.$utils = utils;
 
 const router = new Router({
